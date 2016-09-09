@@ -1,4 +1,4 @@
-package pl.pvkk.profit;
+package pl.pvkk.profit.exchange;
 
 import static org.springframework.test.web.servlet.request.MockMvcRequestBuilders.post;
 import static org.springframework.test.web.servlet.result.MockMvcResultMatchers.content;
@@ -16,10 +16,9 @@ import org.springframework.test.web.servlet.MockMvc;
 import org.springframework.test.web.servlet.setup.MockMvcBuilders;
 import org.springframework.web.context.WebApplicationContext;
 
-
 @RunWith(SpringRunner.class)
 @SpringBootTest(webEnvironment = WebEnvironment.DEFINED_PORT)
-public class ResTfulProfitApplicationTests {
+public class ExchangeServiceTest {
 
 	@Autowired
 	private WebApplicationContext wac;
@@ -30,9 +29,9 @@ public class ResTfulProfitApplicationTests {
 	public void setup() {
 		this.mockMvc = MockMvcBuilders.webAppContextSetup(this.wac).build();
 	}
-
+	
 	@Test
-	public void testBuyShare() throws Exception {
+	public void testBuyShares() throws Exception {
 		//cool version
 		this.mockMvc
 			.perform(post("/transfer/buy?name=alior&number=5")
@@ -40,11 +39,16 @@ public class ResTfulProfitApplicationTests {
 			.andExpect(status().isOk())
 			.andExpect(content().contentType("application/json;charset=UTF-8"));
 		
-		//bad version
+		//wrong number
 		this.mockMvc
-		.perform(post("/transfer/buy?name=alior&number=a")
-			.accept(MediaType.parseMediaType("application/json;charset=UTF-8")))
-		.andExpect(status().isBadRequest());
+			.perform(post("/transfer/buy?name=alior&number=a")
+					.accept(MediaType.parseMediaType("application/json;charset=UTF-8")))
+			.andExpect(status().isBadRequest());
+		
+		//wrong name (im workin with this)
+		/*this.mockMvc
+			.perform(post("/transfer/buy?name=aasd&number=5")
+				.accept(MediaType.parseMediaType("application/json;charset=UTF-8")))
+			.andExpect(status().isBadRequest());*/
 	}
-
 }
