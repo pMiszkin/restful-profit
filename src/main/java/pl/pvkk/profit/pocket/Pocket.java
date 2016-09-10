@@ -32,9 +32,14 @@ public class Pocket {
 
 	public void setShares(String name, int number) {
 		if(shares.containsKey(name))
-			shares.remove(name);
+			shares.put(name, shares.get(name)+number);
 		else
 			shares.put(name, number);
+		if(shares.get(name) == 0)
+			shares.remove(name);
+	}
+	public boolean isShareExist(String name, int number){
+		return (shares.containsKey(name) && shares.get(name) >= number);
 	}
 
 	@Override

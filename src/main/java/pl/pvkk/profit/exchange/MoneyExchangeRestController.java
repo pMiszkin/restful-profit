@@ -22,13 +22,13 @@ public class MoneyExchangeRestController {
 			@RequestParam("name") String shareName,
 			@RequestParam("number") int shareNumber) throws IOException{
 		
-		return exchangeService.buyShares(shareName, shareNumber);
+		return exchangeService.buyShares(shareName.toUpperCase(), shareNumber);
 	}
 	@PostMapping("/sell")
 	public ResponseEntity<String> sellShares(
 			@RequestParam("name") String shareName,
 			@RequestParam("number") int shareNumber) throws IOException{
 		
-		return exchangeService.sellShares(shareName, shareNumber);
+		return exchangeService.sellShares(shareName.toUpperCase(), shareNumber);
 	}
 }

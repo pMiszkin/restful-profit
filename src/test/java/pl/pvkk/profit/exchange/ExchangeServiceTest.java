@@ -45,10 +45,11 @@ public class ExchangeServiceTest {
 					.accept(MediaType.parseMediaType("application/json;charset=UTF-8")))
 			.andExpect(status().isBadRequest());
 		
-		//wrong name (im workin with this)
-		/*this.mockMvc
+		//wrong name
+		this.mockMvc
 			.perform(post("/transfer/buy?name=aasd&number=5")
 				.accept(MediaType.parseMediaType("application/json;charset=UTF-8")))
-			.andExpect(status().isBadRequest());*/
+			.andExpect(status().isBadRequest());
 	}
+
 }

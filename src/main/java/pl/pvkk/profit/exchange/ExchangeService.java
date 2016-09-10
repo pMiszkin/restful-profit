@@ -32,12 +32,12 @@ public class ExchangeService {
 			response = "You're trying to sell 0 or less shares";
 			return new ResponseEntity<String>(response, HttpStatus.BAD_REQUEST);
 		}
-		if(pocket.getShares().get(shareName) < shareNumber) {
+		if(!pocket.isShareExist(shareName, shareNumber)) {
 			response = "You don't have so many shares";
 			return new ResponseEntity<String>(response, HttpStatus.BAD_REQUEST);
 		}	
-		pocket.setMoney(pocket.getMoney()-sharePrice*shareNumber);
-		pocket.setShares(shareName, shareNumber);
+		pocket.setMoney(pocket.getMoney()+sharePrice*shareNumber);
+		pocket.setShares(shareName, -shareNumber);
 		
 		response = "You've sold "+shareNumber+" from "+shareName+" company, for "+shareNumber*sharePrice;
 		return new ResponseEntity<String>(response, HttpStatus.OK);
@@ -55,7 +55,12 @@ public class ExchangeService {
 		double sharePrice = sharesService.findSharePriceByName(shareName);
 		String response;
 		
-		if(shareNumber <= 0){
+		//sharePrice is set as 0 when share with that name doesn't exist (ohhh gosh)
+		if(sharePrice == 0) {
+			response = "This share doesn't exist!";
+			return new ResponseEntity<String>(response, HttpStatus.BAD_REQUEST);
+		}
+		else if(shareNumber <= 0){
 			response = "You're trying to buy 0 or less shares";
 			return new ResponseEntity<String>(response, HttpStatus.BAD_REQUEST);
 		}
