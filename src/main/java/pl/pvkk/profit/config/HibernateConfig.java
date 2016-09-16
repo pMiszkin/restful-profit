@@ -13,8 +13,10 @@ import org.springframework.orm.jpa.JpaVendorAdapter;
 import org.springframework.orm.jpa.LocalContainerEntityManagerFactoryBean;
 import org.springframework.orm.jpa.vendor.HibernateJpaVendorAdapter;
 import org.springframework.transaction.PlatformTransactionManager;
+import org.springframework.transaction.annotation.EnableTransactionManagement;
 
 @Configuration
+@EnableTransactionManagement
 public class HibernateConfig {
 
 	@Bean
@@ -33,6 +35,7 @@ public class HibernateConfig {
 	    properties.setProperty("hibernate.hbm2ddl.auto", "create-drop");
 	    properties.setProperty("hibernate.dialect", "org.hibernate.dialect.HSQLDialect");
 	    properties.setProperty("hibernate.show_sql", "true");
+	    properties.setProperty("hibernate.transaction", "true");
 	    return properties;
 	}
 	

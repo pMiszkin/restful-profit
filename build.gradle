@@ -31,6 +31,8 @@ dependencies {
 	compile('org.springframework.boot:spring-boot-starter-aop')
 	compile('org.springframework.boot:spring-boot-starter-web')
 	compile('org.springframework.boot:spring-boot-starter-web-services')
+	compile('org.springframework.boot:spring-boot-starter-security')
+	
 	compile "org.jsoup:jsoup:1.9.2"
 	
     compile group: 'org.hsqldb', name: 'hsqldb', version: '2.3.2'

@@ -1,35 +1,35 @@
 package pl.pvkk.profit.user;
 
 import javax.persistence.EntityManager;
-import javax.persistence.EntityManagerFactory;
-
-import org.springframework.beans.factory.annotation.Autowired;
+import javax.persistence.PersistenceContext;
+import javax.persistence.Query;
 import org.springframework.stereotype.Repository;
+import org.springframework.transaction.annotation.Transactional;
 
 @Repository
+@Transactional
 public class UserDao {
 
-	@Autowired
-	private EntityManagerFactory emf;
+	@PersistenceContext
+	private EntityManager em;
 	
-	public String getUser(){
-		EntityManager em = emf.createEntityManager();
+	public User getUserById(int id){		
 		
-		em.getTransaction().begin();
-		User user = em.find(User.class, 1);
-		em.getTransaction().commit();		
-		return user.toString();
+		return em.find(User.class, id);
 	}
-	
-	public void saveUser(){
-		User user = new User();
-		user.setLogin("ernest");
-		user.setPassword("pass");
+	public boolean checkIfLoginIsTaken(User user){
+		Query query = em.createQuery("SELECT COUNT(*) FROM User WHERE login = :login");
+		query.setParameter("login", user.getLogin());
+		if((long) query.getSingleResult() > 0){
+			//return false if login is taken
+			return false;
+		}
+		return true;		
+	}
 
-		EntityManager em = emf.createEntityManager();
-		
-		em.getTransaction().begin();
-		em.persist(user);
-		em.getTransaction().commit();
+	public boolean saveUser(User user){
+			em.persist(user);
+		return true;
 	}
+
 }
