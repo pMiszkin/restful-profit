@@ -17,6 +17,10 @@ import org.springframework.test.web.servlet.setup.MockMvcBuilders;
 import org.springframework.transaction.annotation.Transactional;
 import org.springframework.web.context.WebApplicationContext;
 
+import com.fasterxml.jackson.databind.ObjectMapper;
+import com.fasterxml.jackson.databind.ObjectWriter;
+import com.fasterxml.jackson.databind.SerializationFeature;
+
 @RunWith(SpringRunner.class)
 @SpringBootTest
 @Transactional
@@ -26,54 +30,79 @@ public class LoggingIntegrationTests {
 	private WebApplicationContext wac;
 	
 	private MockMvc mockMvc;
+	private ObjectWriter ow;
 	
 	@Before
 	public void setup() {
 		this.mockMvc = MockMvcBuilders.webAppContextSetup(this.wac).build();
+		ObjectMapper mapper = new ObjectMapper();
+	    mapper.configure(SerializationFeature.WRAP_ROOT_VALUE, false);
+	    ow = mapper.writer().withDefaultPrettyPrinter();
 	}
 	
 	@Test
 	public void testAddAndPrintUser() throws Exception {
+		User user = new User();
+		user.setLogin("ernest");
+		user.setPassword("pass");
+		
+	    String requestJson=ow.writeValueAsString(user);
+
 		//add example user
 		this.mockMvc
-			.perform(post("/user/add?login=ernest&password=pass")
-					.accept(MediaType.parseMediaType("application/json;charset=UTF-8")))
-			.andExpect(status().isOk())
-			.andExpect(content().contentType("application/json;charset=UTF-8"));
+			.perform(post("/user/add")
+					.contentType(MediaType.APPLICATION_JSON_UTF8)
+					.content(requestJson))
+			.andExpect(status().isOk());
 
 		//and try to get him
 		this.mockMvc
 			.perform(get("/user/print/1")
 					.accept(MediaType.parseMediaType("application/json;charset=UTF-8")))
-			.andExpect(status().isOk())
-			.andExpect(content().contentType("application/json;charset=UTF-8"));
+			.andExpect(status().isOk());
 	}
 	
 	@Test
 	public void testAddUserWithWrongData() throws Exception {
-		this.mockMvc
-			.perform(post("/user/add?login=ern&password=pass")
-					.accept(MediaType.parseMediaType("application/json;charset=UTF-8")))
-			.andExpect(status().isBadRequest())
-			.andExpect(content().contentType("application/json;charset=UTF-8"));
+		User user = new User();
+		user.setLogin("ern");
+		user.setPassword("pass");
 		
+	    String requestJson=ow.writeValueAsString(user);
+
+	    //login is too short
+		this.mockMvc
+			.perform(post("/user/add")
+					.contentType(MediaType.APPLICATION_JSON_UTF8)
+					.content(requestJson))
+			.andExpect(status().isBadRequest());
+		
+		//hope he hasn't been saved
 		this.mockMvc
 			.perform(post("/user/print/1")
 					.accept(MediaType.parseMediaType("application/json;charset=UTF-8")))
-			.andExpect(status().isMethodNotAllowed())
-			.andExpect(content().contentType("application/json;charset=UTF-8"));
+			.andExpect(status().isMethodNotAllowed());
 	}
 	
 	@Test
 	public void testAddTakenLogin() throws Exception {
-		this.mockMvc
-			.perform(post("/user/add?login=ernest&password=pass")
-					.accept(MediaType.parseMediaType("application/json;charset=UTF-8")))
+		User user = new User();
+		user.setLogin("ernest");
+		user.setPassword("pass");
+		
+	    String requestJson=ow.writeValueAsString(user);
+		
+	    this.mockMvc
+			.perform(post("/user/add")
+					.contentType(MediaType.APPLICATION_JSON_UTF8)
+					.content(requestJson))
 			.andExpect(status().isOk());
 		
-		this.mockMvc
-			.perform(post("/user/add?login=ernest&password=pass")
-					.accept(MediaType.parseMediaType("application/json;charset=UTF-8")))
+	    //tryin to save the same user two times
+	    this.mockMvc
+			.perform(post("/user/add")
+					.contentType(MediaType.APPLICATION_JSON_UTF8)
+					.content(requestJson))
 			.andExpect(status().isBadRequest());
 	}
 
