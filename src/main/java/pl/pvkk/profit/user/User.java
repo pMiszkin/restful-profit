@@ -4,12 +4,15 @@ import javax.persistence.Entity;
 import javax.persistence.GeneratedValue;
 import javax.persistence.Id;
 
+import org.hibernate.validator.constraints.Length;
+
 @Entity
 public class User {
 
 	@Id
 	@GeneratedValue
 	private int id;
+	@Length(min=5)
 	private String login;
 	private String password;
 	

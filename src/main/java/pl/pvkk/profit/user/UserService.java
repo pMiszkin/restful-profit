@@ -20,16 +20,14 @@ public class UserService {
 				: new ResponseEntity<User>(user, HttpStatus.OK);
 	}
 	
-	public ResponseEntity<String> tryToSaveUser(String login, String password) {
+	public ResponseEntity<String> tryToSaveUser(User user) {
 		BCryptPasswordEncoder passwordEncoder = new BCryptPasswordEncoder();
-		User user = new User();
-		user.setLogin(login);
-		user.setPassword(passwordEncoder.encode(password));
+		user.setPassword(passwordEncoder.encode(user.getPassword()));
+		if(userDao.isLoginTaken(user.getLogin()))
+			return new ResponseEntity<String>("Your login is taken", HttpStatus.BAD_REQUEST);
 
-		return userDao.saveUser(user) ?
-				new ResponseEntity<String>("Hi "+login+"!", HttpStatus.OK)
-				: new ResponseEntity<String>("Your login is taken", HttpStatus.BAD_REQUEST);
-
+		userDao.saveUser(user);
+		return new ResponseEntity<String>("Hi "+user.getLogin()+"!", HttpStatus.OK);
 	}
 }
 

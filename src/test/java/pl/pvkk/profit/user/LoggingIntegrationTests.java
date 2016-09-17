@@ -49,13 +49,32 @@ public class LoggingIntegrationTests {
 			.andExpect(content().contentType("application/json;charset=UTF-8"));
 	}
 	
-	/*@Test
+	@Test
 	public void testAddUserWithWrongData() throws Exception {
 		this.mockMvc
-		.perform(post("/user/add?login=ern&password=pass")
-				.accept(MediaType.parseMediaType("application/json;charset=UTF-8")))
-		.andExpect(status().isOk())
-		.andExpect(content().contentType("application/json;charset=UTF-8"));
+			.perform(post("/user/add?login=ern&password=pass")
+					.accept(MediaType.parseMediaType("application/json;charset=UTF-8")))
+			.andExpect(status().isBadRequest())
+			.andExpect(content().contentType("application/json;charset=UTF-8"));
+		
+		this.mockMvc
+			.perform(post("/user/print/1")
+					.accept(MediaType.parseMediaType("application/json;charset=UTF-8")))
+			.andExpect(status().isMethodNotAllowed())
+			.andExpect(content().contentType("application/json;charset=UTF-8"));
 	}
-*/
+	
+	@Test
+	public void testAddTakenLogin() throws Exception {
+		this.mockMvc
+			.perform(post("/user/add?login=ernest&password=pass")
+					.accept(MediaType.parseMediaType("application/json;charset=UTF-8")))
+			.andExpect(status().isOk());
+		
+		this.mockMvc
+			.perform(post("/user/add?login=ernest&password=pass")
+					.accept(MediaType.parseMediaType("application/json;charset=UTF-8")))
+			.andExpect(status().isBadRequest());
+	}
+
 }
