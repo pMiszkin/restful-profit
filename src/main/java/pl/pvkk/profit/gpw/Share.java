@@ -1,13 +1,21 @@
-package pl.pvkk.profit.gwd;
+package pl.pvkk.profit.gpw;
 
+import javax.persistence.Entity;
+import javax.persistence.GeneratedValue;
+import javax.persistence.Id;
+
+@Entity
 public class Share {
 
 	// i'm really not sure about this sheet of code <face_with_tears_of_joy>
+	@Id
+	@GeneratedValue
+	private int id;
 	private String name;
 	private String shortcut;
 	private String currency;
 	private String lastTransactionTime;
-	private String referencePrice;
+	private double referencePrice;
 	private String theoreticalOpenPrice;
 	private String open;
 	private String low;
@@ -17,12 +25,16 @@ public class Share {
 	private String cumulatedVolume;
 	private String cumulatedValue;
 
+	public Share() {}
+	
 	private Share(Builder builder) {
 		this.name = builder.name;
 		this.shortcut = builder.shortcut;
 		this.currency = builder.currency;
 		this.lastTransactionTime = builder.lastTransactionTime;
-		this.referencePrice = builder.referencePrice;
+		//try to remove space -> press "space" button -> error
+		//try again -> copy space from text -> working         WHAT THE HELL?!!?!!??
+		this.referencePrice = Double.parseDouble(builder.referencePrice.replaceAll(" ", ""));
 		this.theoreticalOpenPrice = builder.theoreticalOpenPrice;
 		this.open = builder.open;
 		this.low = builder.low;
@@ -32,7 +44,16 @@ public class Share {
 		this.cumulatedVolume = builder.cumulatedVolume;
 		this.cumulatedValue = builder.cumulatedValue;
 	}
-
+	
+	@Override
+	public String toString() {
+		return "Share [name=" + name + ", shortcut=" + shortcut + ", currency=" + currency + ", lastTransactionTime="
+				+ lastTransactionTime + ", referencePrice=" + referencePrice + ", theoreticalOpenPrice="
+				+ theoreticalOpenPrice + ", open=" + open + ", low=" + low + ", high=" + high + ", lastClosing="
+				+ lastClosing + ", change=" + change + ", cumulatedVolume=" + cumulatedVolume + ", cumulatedValue="
+				+ cumulatedValue + "]";
+	}
+	
 	public String getName() {
 		return name;
 	}
@@ -49,7 +70,7 @@ public class Share {
 		return lastTransactionTime;
 	}
 
-	public String getReferencePrice() {
+	public double getReferencePrice() {
 		return referencePrice;
 	}
 

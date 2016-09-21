@@ -1,4 +1,4 @@
-package pl.pvkk.profit.gwd;
+package pl.pvkk.profit.gpw;
 
 public enum StockIndexUrl {
 	

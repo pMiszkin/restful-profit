@@ -1,7 +1,5 @@
 package pl.pvkk.profit.exchange;
 
-import java.io.IOException;
-
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.http.ResponseEntity;
 import org.springframework.web.bind.annotation.PostMapping;
@@ -19,16 +17,16 @@ public class MoneyExchangeRestController {
 	
 	@PostMapping("/buy")
 	public ResponseEntity<String> buyShares(
-			@RequestParam("name") String shareName,
-			@RequestParam("number") int shareNumber) throws IOException{
+			@RequestParam("id") int shareId,
+			@RequestParam("number") int shareNumber) {
 		
-		return exchangeService.buyShares(shareName.toUpperCase(), shareNumber);
+		return exchangeService.buyShares(shareId, shareNumber);
 	}
 	@PostMapping("/sell")
 	public ResponseEntity<String> sellShares(
-			@RequestParam("name") String shareName,
-			@RequestParam("number") int shareNumber) throws IOException{
+			@RequestParam("id") int shareId,
+			@RequestParam("number") int shareNumber) {
 		
-		return exchangeService.sellShares(shareName.toUpperCase(), shareNumber);
+		return exchangeService.sellShares(shareId, shareNumber);
 	}
 }

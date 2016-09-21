@@ -7,11 +7,11 @@ public class Pocket {
 
 	private static final Pocket instance = new Pocket();
 	private double money;
-	private Map<String, Integer> shares;
+	private Map<Integer, Integer> shares;
 	
 	private Pocket() {
 		money = 5000;
-		shares = new HashMap<String, Integer>();
+		shares = new HashMap<Integer, Integer>();
 	}
 	
 	public static Pocket getInstance(){
@@ -26,20 +26,20 @@ public class Pocket {
 		return money;
 	}
 	
-	public Map<String, Integer> getShares() {
+	public Map<Integer, Integer> getShares() {
 		return shares;
 	}
 
-	public void setShares(String name, int number) {
-		if(shares.containsKey(name))
-			shares.put(name, shares.get(name)+number);
+	public void setShares(int id, int number) {
+		if(shares.containsKey(id))
+			shares.put(id, shares.get(id)+number);
 		else
-			shares.put(name, number);
-		if(shares.get(name) == 0)
-			shares.remove(name);
+			shares.put(id, number);
+		if(shares.get(id) == 0)
+			shares.remove(id);
 	}
-	public boolean isShareExist(String name, int number){
-		return (shares.containsKey(name) && shares.get(name) >= number);
+	public boolean isShareExist(int id, int number){
+		return (shares.containsKey(id) && shares.get(id) >= number);
 	}
 
 	@Override

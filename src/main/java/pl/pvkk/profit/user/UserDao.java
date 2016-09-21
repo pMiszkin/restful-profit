@@ -2,16 +2,15 @@ package pl.pvkk.profit.user;
 
 import javax.persistence.EntityManager;
 import javax.persistence.PersistenceContext;
-import javax.persistence.PersistenceContextType;
 import javax.persistence.Query;
 import org.springframework.stereotype.Repository;
 import org.springframework.transaction.annotation.Transactional;
 
 @Repository
-@Transactional()
+@Transactional
 public class UserDao {
 
-	@PersistenceContext(type=PersistenceContextType.EXTENDED)
+	@PersistenceContext
 	private EntityManager em;
 	
 	@Transactional(readOnly=true)
@@ -27,9 +26,7 @@ public class UserDao {
 		return (long) query.getSingleResult() > 0;		
 	}
 
-	public boolean saveUser(User user){
+	public void saveUser(User user){
 		em.persist(user);
-	
-		return true;
 	}
 }

@@ -91,13 +91,14 @@ public class LoggingIntegrationTests {
 		
 	    String requestJson=ow.writeValueAsString(user);
 		
+	    //save user
 	    this.mockMvc
 			.perform(post("/user/add")
 					.contentType(MediaType.APPLICATION_JSON_UTF8)
 					.content(requestJson))
 			.andExpect(status().isOk());
 		
-	    //tryin to save the same user two times
+	    //try to save the same user two times
 	    this.mockMvc
 			.perform(post("/user/add")
 					.contentType(MediaType.APPLICATION_JSON_UTF8)

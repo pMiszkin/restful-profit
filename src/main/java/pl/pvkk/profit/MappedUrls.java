@@ -25,7 +25,7 @@ import com.thoughtworks.paranamer.CachingParanamer;
 import com.thoughtworks.paranamer.Paranamer;
 
 @RestController
-public class AllRequestMappingUrls {
+public class MappedUrls {
 
 	@Autowired
 	private ApplicationContext context;

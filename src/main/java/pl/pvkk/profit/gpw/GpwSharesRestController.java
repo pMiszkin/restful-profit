@@ -1,4 +1,4 @@
-package pl.pvkk.profit.gwd;
+package pl.pvkk.profit.gpw;
 
 import java.io.IOException;
 import java.util.List;
@@ -14,27 +14,38 @@ import org.springframework.web.bind.annotation.RestController;
 
 
 @RestController
-@RequestMapping("share")
-public class GwdSharesRestController {
+@RequestMapping("shares")
+public class GpwSharesRestController {
 
 	@Autowired
 	private SharesService sharesService;
+	
+	/*@GetMapping("/update")
+	public String updateTables() {
+		sharesService.addShares();
+		
+		return "OK!";
+	}*/
 	/**
 	 * FIND STOCK INDEX TABLE
 	 * @param stockIndex
 	 * @return
 	 * @throws IOException
 	 */
-	@GetMapping("/{stockIndex}")
-	public HttpEntity<List<Share>> findSharesTable(@PathVariable String stockIndex) throws IOException {
+	@GetMapping("/stock/{stockIndex}")
+	public HttpEntity<List<Share>> findSharesTable(@PathVariable String stockIndex) {
 		String stockName = stockIndex.toUpperCase();
 
 		//return stock exchange table
 		try{
-			return ResponseEntity.ok(sharesService.findShares(StockIndexUrl.valueOf(stockName).toString()));
+			return ResponseEntity.ok(sharesService.findShares(StockIndexUrl.valueOf(stockName)));
 		} catch(Exception e){
 			return new ResponseEntity<>(HttpStatus.NOT_FOUND);
 		}
+	}
+	@GetMapping("{shareId}")
+	public HttpEntity<Share> findShare(@PathVariable int shareId) {
+		return ResponseEntity.ok(sharesService.findShareById(shareId));
 	}
 
 }

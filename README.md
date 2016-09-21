@@ -4,9 +4,10 @@ Stock market simulator - RESTful application
 - Gradle
 - Hibernate 5.2.2
 - Hsqldb/postgresql
+- REST
 
 
-Here you have mapped URLs. You can check olso /mappedurls for current list. Each adress works on **localhost:8080**
+Here you have mapped URLs. Each adress works on **localhost:8080**. Also you can check /mappedurls for current list.
 ```
 "[/mappedurls] -> [GET] PARAMS: ",
 "[/transfer/sell] -> [POST] PARAMS: @RequestParam String shareName, @RequestParam int shareNumber",
