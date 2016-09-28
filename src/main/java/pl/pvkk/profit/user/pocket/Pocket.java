@@ -1,4 +1,4 @@
-package pl.pvkk.profit.pocket;
+package pl.pvkk.profit.user.pocket;
 
 import java.util.HashMap;
 import java.util.Map;
@@ -7,11 +7,11 @@ public class Pocket {
 
 	private static final Pocket instance = new Pocket();
 	private double money;
-	private Map<Integer, Integer> shares;
+	private Map<Long, Integer> shares;
 	
 	private Pocket() {
 		money = 5000;
-		shares = new HashMap<Integer, Integer>();
+		shares = new HashMap<Long, Integer>();
 	}
 	
 	public static Pocket getInstance(){
@@ -26,11 +26,11 @@ public class Pocket {
 		return money;
 	}
 	
-	public Map<Integer, Integer> getShares() {
+	public Map<Long, Integer> getShares() {
 		return shares;
 	}
 
-	public void setShares(int id, int number) {
+	public void setShares(long id, int number) {
 		if(shares.containsKey(id))
 			shares.put(id, shares.get(id)+number);
 		else
@@ -38,7 +38,7 @@ public class Pocket {
 		if(shares.get(id) == 0)
 			shares.remove(id);
 	}
-	public boolean isShareExist(int id, int number){
+	public boolean isShareExist(long id, int number){
 		return (shares.containsKey(id) && shares.get(id) >= number);
 	}
 

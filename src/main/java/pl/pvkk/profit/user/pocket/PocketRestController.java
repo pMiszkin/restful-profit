@@ -1,4 +1,4 @@
-package pl.pvkk.profit.pocket;
+package pl.pvkk.profit.user.pocket;
 
 import org.springframework.web.bind.annotation.GetMapping;
 import org.springframework.web.bind.annotation.RequestMapping;

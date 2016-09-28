@@ -4,6 +4,7 @@ import java.util.List;
 
 import javax.persistence.EntityManager;
 import javax.persistence.PersistenceContext;
+import javax.persistence.Query;
 
 import org.jsoup.nodes.Element;
 import org.jsoup.select.Elements;
@@ -19,6 +20,7 @@ public class SharesDao {
 	
 	public void updateShares(Elements allShares) {
 		for(Element element : allShares) {
+			//just cut a row with "shareName = Name"
 			if(!element.child(1).text().equals("Name"))
 				em.persist(new Share.Builder(element.child(1).text())
 						.shortcut(element.child(2).text())
@@ -42,8 +44,14 @@ public class SharesDao {
 		return shares;
 	}
 	
-	public Share finShareById(int id) {
+	public Share finShareById(long id) {
 		return em.find(Share.class, id);
+	}
+	
+	public boolean isShareExists(long id) {
+		Query query = em.createQuery("SELECT COUNT(*) FROM Share WHERE id = :id");
+		query.setParameter("id", id);
+		return (long) query.getSingleResult() > 0;
 	}
 
 }

@@ -23,7 +23,7 @@ public class SharesService {
 		Connection connect = Jsoup.connect(stockIndexUrl.toString());
 		Document content = connect.get();
 		Elements allElements = content.getElementsByTag("html");
-		Document table = Jsoup.parse(allElements.text());
+		Document table = Jsoup.parse(allElements.text(), "ISO-8859-9");
 		Elements allShares = table.getElementsByTag("tr");
 		
 		//need to remove first and last "tr" object from table
@@ -33,15 +33,23 @@ public class SharesService {
 		return allShares;
 	}
 	
-	public Share findShareById(int id) {
+	public Share findShareById(long id) {
 		Share share = sharesDao.finShareById(id);
-		//Share has not found
+		if(share == null)
+			return null;
+		if(share.toString().equals(""))
+			System.out.println("waaa");
 		return share;
 	}
 	
 	public List<Share> findShares(StockIndexUrl stockIndexUrl) {
 		return sharesDao.findSharesTable(stockIndexUrl);
 	}
+	
+	public boolean isShareExists(long id){
+		return sharesDao.isShareExists(id);
+	}
+	
 	@PostConstruct
 	public boolean addShares() {
 		try {

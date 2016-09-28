@@ -10,7 +10,7 @@ public class Share {
 	// i'm really not sure about this sheet of code <face_with_tears_of_joy>
 	@Id
 	@GeneratedValue
-	private int id;
+	private long id;
 	private String name;
 	private String shortcut;
 	private String currency;
@@ -32,9 +32,8 @@ public class Share {
 		this.shortcut = builder.shortcut;
 		this.currency = builder.currency;
 		this.lastTransactionTime = builder.lastTransactionTime;
-		//try to remove space -> press "space" button -> error
-		//try again -> copy space from text -> working         WHAT THE HELL?!!?!!??
-		this.referencePrice = Double.parseDouble(builder.referencePrice.replaceAll(" ", ""));
+		//its not normal space. its no-break space!      							  V
+		this.referencePrice = Double.parseDouble(builder.referencePrice.replaceAll("\u00A0", ""));
 		this.theoreticalOpenPrice = builder.theoreticalOpenPrice;
 		this.open = builder.open;
 		this.low = builder.low;

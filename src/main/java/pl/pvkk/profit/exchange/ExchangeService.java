@@ -9,7 +9,7 @@ import org.springframework.stereotype.Service;
 
 import pl.pvkk.profit.gpw.Share;
 import pl.pvkk.profit.gpw.SharesService;
-import pl.pvkk.profit.pocket.Pocket;
+import pl.pvkk.profit.user.pocket.Pocket;
 
 @Service
 public class ExchangeService {
@@ -24,21 +24,19 @@ public class ExchangeService {
 	 * @return
 	 * @throws IOException
 	 */
-	public ResponseEntity<String> buyShares(int shareId, int shareNumber) {
+	public ResponseEntity<String> buyShares(long shareId, int shareNumber) {
+		String response;
+
+		if(!sharesService.isShareExists(shareId)) {
+			response = "This share doesn't exists!";
+			return new ResponseEntity<String>(response, HttpStatus.BAD_REQUEST);
+		}
 		
 		Pocket pocket = Pocket.getInstance();
 		Share share = sharesService.findShareById(shareId);
 		double sharePrice = share.getReferencePrice();
-		String response;
-		System.out.println(share);
-		
-		//^^^^^^THROWWWWWWWWWWWWW
-		//no works V
-		if(sharePrice<=0) {
-			response = "This share doesn't exist!";
-			return new ResponseEntity<String>(response, HttpStatus.BAD_REQUEST);
-		}
-		else if(shareNumber <= 0){
+
+		if(shareNumber <= 0){
 			response = "You're trying to buy 0 or less shares";
 			return new ResponseEntity<String>(response, HttpStatus.BAD_REQUEST);
 		}
@@ -60,12 +58,17 @@ public class ExchangeService {
 	 * @return
 	 * @throws IOException
 	 */
-	public ResponseEntity<String> sellShares(int shareId, int shareNumber) {
+	public ResponseEntity<String> sellShares(long shareId, int shareNumber) {
+		String response;
+
+		if(!sharesService.isShareExists(shareId)) {
+			response = "This share doesn't exists!";
+			return new ResponseEntity<String>(response, HttpStatus.BAD_REQUEST);
+		}
 		
 		Pocket pocket = Pocket.getInstance();
 		Share share = sharesService.findShareById(shareId);
 		double sharePrice = share.getReferencePrice();
-		String response;
 		
 		if(shareNumber <= 0){
 			response = "You're trying to sell 0 or less shares";
