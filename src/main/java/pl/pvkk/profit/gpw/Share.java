@@ -32,7 +32,7 @@ public class Share {
 		this.shortcut = builder.shortcut;
 		this.currency = builder.currency;
 		this.lastTransactionTime = builder.lastTransactionTime;
-		//its not normal space. its no-break space!      							  V
+		//its not normal space. it is no-break space!      							  V
 		this.referencePrice = Double.parseDouble(builder.referencePrice.replaceAll("\u00A0", ""));
 		this.theoreticalOpenPrice = builder.theoreticalOpenPrice;
 		this.open = builder.open;

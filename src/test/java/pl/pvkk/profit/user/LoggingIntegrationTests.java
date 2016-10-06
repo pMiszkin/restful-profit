@@ -43,7 +43,7 @@ public class LoggingIntegrationTests {
 	public void testAddAndPrintUser() throws Exception {
 		User user = new User();
 		user.setLogin("ernest");
-		user.setPassword("pass");
+		user.setPassword("pass1234");
 		
 	    String requestJson=ow.writeValueAsString(user);
 
@@ -87,7 +87,7 @@ public class LoggingIntegrationTests {
 	public void testAddTakenLogin() throws Exception {
 		User user = new User();
 		user.setLogin("ernest");
-		user.setPassword("pass");
+		user.setPassword("pass1234");
 		
 	    String requestJson=ow.writeValueAsString(user);
 		

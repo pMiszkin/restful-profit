@@ -10,15 +10,16 @@ import org.mockito.MockitoAnnotations;
 import org.mockito.runners.MockitoJUnitRunner;
 
 import pl.pvkk.profit.gpw.SharesService;
+import pl.pvkk.profit.user.trades.TradesService;
 
 @RunWith(MockitoJUnitRunner.class)
-public class ExchangeServiceTest {
+public class TradesServiceTest {
 	
 	@Mock	
 	private SharesService sharesService;
 	
 	@InjectMocks
-	private ExchangeService exchangeService;
+	private TradesService tradesService;
 
 	@Before
 	public void setUp() {
@@ -28,7 +29,7 @@ public class ExchangeServiceTest {
     @After  
     public void tearDown() {  
         sharesService = null;     
-        exchangeService = null;
+        tradesService = null;
     } 
     
     @Test

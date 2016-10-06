@@ -1,50 +1,56 @@
 package pl.pvkk.profit.user.pocket;
 
-import java.util.HashMap;
-import java.util.Map;
+import java.util.LinkedList;
+import java.util.List;
+import javax.persistence.Entity;
+import javax.persistence.GeneratedValue;
+import javax.persistence.GenerationType;
+import javax.persistence.Id;
+import javax.persistence.OneToMany;
+import pl.pvkk.profit.gpw.Share;
 
+@Entity
 public class Pocket {
 
-	private static final Pocket instance = new Pocket();
+	@Id
+	@GeneratedValue(strategy = GenerationType.IDENTITY)
+	private long id;
 	private double money;
-	private Map<Long, Integer> shares;
-	
-	private Pocket() {
+	@OneToMany
+	private List<Share> shares;
+
+	public Pocket() {
 		money = 5000;
-		shares = new HashMap<Long, Integer>();
+		shares = new LinkedList<Share>();
 	}
-	
-	public static Pocket getInstance(){
-		return instance;
+
+	public long getId() {
+		return id;
 	}
-	
-	public void setMoney(double money){
+
+	public void setId(long id) {
+		this.id = id;
+	}
+
+	public double getMoney() {
+		return money;
+	}
+
+	public void setMoney(double money) {
 		this.money = money;
 	}
 
-	public double getMoney(){
-		return money;
-	}
-	
-	public Map<Long, Integer> getShares() {
+	public List<Share> getShares() {
 		return shares;
 	}
 
-	public void setShares(long id, int number) {
-		if(shares.containsKey(id))
-			shares.put(id, shares.get(id)+number);
-		else
-			shares.put(id, number);
-		if(shares.get(id) == 0)
-			shares.remove(id);
-	}
-	public boolean isShareExist(long id, int number){
-		return (shares.containsKey(id) && shares.get(id) >= number);
+	public void setShares(List<Share> shares) {
+		this.shares = shares;
 	}
 
 	@Override
 	public String toString() {
-		return "Pocket [money=" + money + ", shares=" + shares + "]";
+		return "Pocket [id=" + id + ", money=" + money + ", shares=" + shares + "]";
 	}
-	
+
 }

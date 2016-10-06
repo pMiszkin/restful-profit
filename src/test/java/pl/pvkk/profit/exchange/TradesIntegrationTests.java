@@ -17,7 +17,7 @@ import org.springframework.web.context.WebApplicationContext;
 
 @RunWith(SpringRunner.class)
 @SpringBootTest
-public class ExchangeIntegrationTests {
+public class TradesIntegrationTests {
 
 	@Autowired
 	private WebApplicationContext wac;

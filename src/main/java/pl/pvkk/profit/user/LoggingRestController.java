@@ -23,7 +23,7 @@ public class LoggingRestController {
 	private UserService userService;
 	
 	@GetMapping("/print/{userId}")
-	public HttpEntity<User> printUser(@PathVariable int userId){
+	public HttpEntity<User> printUser(@PathVariable long userId){
 		return userService.tryToPrintUser(userId);
 	}
 	
@@ -31,7 +31,7 @@ public class LoggingRestController {
 	public ResponseEntity<String> addUser(@Valid @RequestBody User user, BindingResult result){
 		
 		//maybe this is hard to understand but looks beautiful
-		//just check are some errors -> try to save -> if login is taken get error -> if not welcome user
+		//just check are validation errors -> try to save -> if login is taken get error -> if not welcome user
 		return result.hasErrors() ?
 				new ResponseEntity<String>(
 					result.getFieldError().getField()+" "+result.getFieldError().getDefaultMessage(),

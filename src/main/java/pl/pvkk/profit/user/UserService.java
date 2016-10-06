@@ -13,9 +13,8 @@ public class UserService {
 	@Autowired
 	private UserDao userDao;
 	
-	public HttpEntity<User> tryToPrintUser(int userId) {
+	public HttpEntity<User> tryToPrintUser(long userId) {
 		User user = userDao.getUserById(userId);
-		
 		return user == null ? new ResponseEntity<>(HttpStatus.NOT_FOUND)
 				: new ResponseEntity<User>(user, HttpStatus.OK);
 	}

@@ -6,6 +6,8 @@ import javax.persistence.Query;
 import org.springframework.stereotype.Repository;
 import org.springframework.transaction.annotation.Transactional;
 
+import pl.pvkk.profit.user.pocket.Pocket;
+
 @Repository
 @Transactional
 public class UserDao {
@@ -13,8 +15,8 @@ public class UserDao {
 	@PersistenceContext
 	private EntityManager em;
 	
-	@Transactional(readOnly=true)
-	public User getUserById(int id){		
+	//@Transactional(readOnly=true)
+	public User getUserById(long id){		
 		return em.find(User.class, id);
 	}
 	
@@ -27,6 +29,12 @@ public class UserDao {
 	}
 
 	public void saveUser(User user){
+		UserProfile profile = new UserProfile();
+		Pocket pocket = new Pocket();
+		user.setProfile(profile);
+		profile.setPocket(pocket);
 		em.persist(user);
+		em.persist(profile);
+		em.persist(pocket);
 	}
 }

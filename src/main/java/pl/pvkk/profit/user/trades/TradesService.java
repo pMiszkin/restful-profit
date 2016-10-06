@@ -1,4 +1,4 @@
-package pl.pvkk.profit.exchange;
+package pl.pvkk.profit.user.trades;
 
 import java.io.IOException;
 
@@ -10,13 +10,17 @@ import org.springframework.stereotype.Service;
 import pl.pvkk.profit.gpw.Share;
 import pl.pvkk.profit.gpw.SharesService;
 import pl.pvkk.profit.user.pocket.Pocket;
+import pl.pvkk.profit.user.pocket.PocketDao;
+import pl.pvkk.profit.user.pocket.PocketService;
 
 @Service
-public class ExchangeService {
+public class TradesService {
 
 	@Autowired
 	private SharesService sharesService;
 	
+	@Autowired
+	private PocketService pocketService;
 	/**
 	 * BUY SHARES
 	 * @param shareId
@@ -32,20 +36,8 @@ public class ExchangeService {
 			return new ResponseEntity<String>(response, HttpStatus.BAD_REQUEST);
 		}
 		
-		Pocket pocket = Pocket.getInstance();
 		Share share = sharesService.findShareById(shareId);
 		double sharePrice = share.getReferencePrice();
-
-		if(shareNumber <= 0){
-			response = "You're trying to buy 0 or less shares";
-			return new ResponseEntity<String>(response, HttpStatus.BAD_REQUEST);
-		}
-		else if(shareNumber*sharePrice > pocket.getMoney()) {
-			response = "You have no money for that";
-			return new ResponseEntity<String>(response, HttpStatus.BAD_REQUEST);	
-		}
-		pocket.setMoney(pocket.getMoney()-sharePrice*shareNumber);
-		pocket.setShares(shareId, shareNumber);
 		
 		response = "You've bought "+shareNumber+" from "+share.getName()+" company, for "+shareNumber*sharePrice;
 		return new ResponseEntity<String>(response, HttpStatus.OK);
@@ -66,20 +58,9 @@ public class ExchangeService {
 			return new ResponseEntity<String>(response, HttpStatus.BAD_REQUEST);
 		}
 		
-		Pocket pocket = Pocket.getInstance();
+		Pocket pocket = pocketService.getPocketById(1);
 		Share share = sharesService.findShareById(shareId);
 		double sharePrice = share.getReferencePrice();
-		
-		if(shareNumber <= 0){
-			response = "You're trying to sell 0 or less shares";
-			return new ResponseEntity<String>(response, HttpStatus.BAD_REQUEST);
-		}
-		if(!pocket.isShareExist(shareId, shareNumber)) {
-			response = "You don't have so many shares";
-			return new ResponseEntity<String>(response, HttpStatus.BAD_REQUEST);
-		}	
-		pocket.setMoney(pocket.getMoney()+sharePrice*shareNumber);
-		pocket.setShares(shareId, -shareNumber);
 		
 		response = "You've sold "+shareNumber+" from "+share.getName()+" company, for "+shareNumber*sharePrice;
 		return new ResponseEntity<String>(response, HttpStatus.OK);

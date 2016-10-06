@@ -1,4 +1,4 @@
-package pl.pvkk.profit.exchange;
+package pl.pvkk.profit.user.trades;
 
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.http.ResponseEntity;
@@ -10,10 +10,10 @@ import org.springframework.web.bind.annotation.RestController;
 
 @RestController
 @RequestMapping("transfer")
-public class MoneyExchangeRestController {
+public class TradesRestController {
 
 	@Autowired
-	private ExchangeService exchangeService;
+	private TradesService exchangeService;
 	
 	@PostMapping("/buy")
 	public ResponseEntity<String> buyShares(
