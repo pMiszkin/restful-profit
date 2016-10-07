@@ -17,7 +17,18 @@ public class SharesService {
 	
 	@Autowired
 	private SharesDao sharesDao;
-		
+	
+	@PostConstruct
+	public boolean addShares() {
+		try {
+			sharesDao.updateShares(getSharesFromUrl(StockIndexUrl.ALL));
+		} catch (IOException e) {
+			e.printStackTrace();
+			return false;
+		}
+		return true;
+	}	
+	
 	private Elements getSharesFromUrl(StockIndexUrl stockIndexUrl) throws IOException {
 		//document parsing uffff
 		Connection connect = Jsoup.connect(stockIndexUrl.toString());
@@ -33,11 +44,11 @@ public class SharesService {
 		return allShares;
 	}
 	
-	public Share findShareById(long id) {
-		Share share = sharesDao.finShareById(id);
+	public Share findShareByShortcut(String shortcut) {
+		Share share = sharesDao.finShareByShortcut(shortcut.toUpperCase());
 		if(share == null)
 			return null;
-		if(share.toString().equals(""))
+		if(share.toString().equals("")) ///////////////////////////////////////////////!!!!!!!!
 			System.out.println("waaa");
 		return share;
 	}
@@ -46,18 +57,7 @@ public class SharesService {
 		return sharesDao.findSharesTable(stockIndexUrl);
 	}
 	
-	public boolean isShareExists(long id){
-		return sharesDao.isShareExists(id);
-	}
-	
-	@PostConstruct
-	public boolean addShares() {
-		try {
-			sharesDao.updateShares(getSharesFromUrl(StockIndexUrl.ALL));
-		} catch (IOException e) {
-			e.printStackTrace();
-			return false;
-		}
-		return true;
+	public boolean isShareExists(String shortcut){
+		return sharesDao.isShareExists(shortcut);
 	}
 }

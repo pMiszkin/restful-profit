@@ -1,17 +1,14 @@
 package pl.pvkk.profit.gpw;
 
 import javax.persistence.Entity;
-import javax.persistence.GeneratedValue;
 import javax.persistence.Id;
 
 @Entity
 public class Share {
 
 	// i'm really not sure about this sheet of code <face_with_tears_of_joy>
-	@Id
-	@GeneratedValue
-	private long id;
 	private String name;
+	@Id
 	private String shortcut;
 	private String currency;
 	private String lastTransactionTime;

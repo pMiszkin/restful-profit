@@ -44,13 +44,13 @@ public class SharesDao {
 		return shares;
 	}
 	
-	public Share finShareById(long id) {
-		return em.find(Share.class, id);
+	public Share finShareByShortcut(String shortcut) {
+		return em.find(Share.class, shortcut);
 	}
 	
-	public boolean isShareExists(long id) {
-		Query query = em.createQuery("SELECT COUNT(*) FROM Share WHERE id = :id");
-		query.setParameter("id", id);
+	public boolean isShareExists(String shortcut) {
+		Query query = em.createQuery("SELECT COUNT(*) FROM Share WHERE shortcut = :shortcut");
+		query.setParameter("shortcut", shortcut);
 		return (long) query.getSingleResult() > 0;
 	}
 

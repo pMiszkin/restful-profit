@@ -1,13 +1,14 @@
 package pl.pvkk.profit.user.pocket;
 
-import java.util.LinkedList;
-import java.util.List;
+import java.util.HashMap;
+import java.util.Map;
+
+import javax.persistence.ElementCollection;
 import javax.persistence.Entity;
 import javax.persistence.GeneratedValue;
 import javax.persistence.GenerationType;
 import javax.persistence.Id;
-import javax.persistence.OneToMany;
-import pl.pvkk.profit.gpw.Share;
+import javax.persistence.MapKeyColumn;
 
 @Entity
 public class Pocket {
@@ -16,12 +17,13 @@ public class Pocket {
 	@GeneratedValue(strategy = GenerationType.IDENTITY)
 	private long id;
 	private double money;
-	@OneToMany
-	private List<Share> shares;
+	@ElementCollection
+    @MapKeyColumn(name="share_shortcut")
+	private Map<String, Integer> shares;
 
 	public Pocket() {
 		money = 5000;
-		shares = new LinkedList<Share>();
+		shares = new HashMap<String, Integer>();
 	}
 
 	public long getId() {
@@ -40,11 +42,11 @@ public class Pocket {
 		this.money = money;
 	}
 
-	public List<Share> getShares() {
+	public Map<String, Integer> getShares() {
 		return shares;
 	}
 
-	public void setShares(List<Share> shares) {
+	public void setShares(Map<String, Integer> shares) {
 		this.shares = shares;
 	}
 

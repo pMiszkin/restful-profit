@@ -1,6 +1,5 @@
 package pl.pvkk.profit.gpw;
 
-import java.io.IOException;
 import java.util.List;
 
 import org.springframework.beans.factory.annotation.Autowired;
@@ -26,12 +25,8 @@ public class GpwSharesRestController {
 		
 		return "OK!";
 	}*/
-	/**
-	 * FIND STOCK INDEX TABLE
-	 * @param stockIndex
-	 * @return
-	 * @throws IOException
-	 */
+	
+	
 	@GetMapping("/stock/{stockIndex}")
 	public HttpEntity<List<Share>> findSharesTable(@PathVariable String stockIndex) {
 		String stockName = stockIndex.toUpperCase();
@@ -43,9 +38,9 @@ public class GpwSharesRestController {
 			return new ResponseEntity<>(HttpStatus.NOT_FOUND);
 		}
 	}
-	@GetMapping("{shareId}")
-	public HttpEntity<Share> findShare(@PathVariable int shareId) {
-		return ResponseEntity.ok(sharesService.findShareById(shareId));
+	@GetMapping("{shareShortcut}")
+	public HttpEntity<Share> findShare(@PathVariable String shareShortcut) {
+		return ResponseEntity.ok(sharesService.findShareByShortcut(shareShortcut));
 	}
 
 }

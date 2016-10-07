@@ -17,16 +17,16 @@ public class TradesRestController {
 	
 	@PostMapping("/buy")
 	public ResponseEntity<String> buyShares(
-			@RequestParam("id") int shareId,
+			@RequestParam("name") String shareShortcut,
 			@RequestParam("number") int shareNumber) {
 		
-		return exchangeService.buyShares(shareId, shareNumber);
+		return exchangeService.buyShares(shareShortcut, shareNumber);
 	}
 	@PostMapping("/sell")
 	public ResponseEntity<String> sellShares(
-			@RequestParam("id") int shareId,
+			@RequestParam("name") String shareShortcut,
 			@RequestParam("number") int shareNumber) {
 		
-		return exchangeService.sellShares(shareId, shareNumber);
+		return exchangeService.sellShares(shareShortcut, shareNumber);
 	}
 }

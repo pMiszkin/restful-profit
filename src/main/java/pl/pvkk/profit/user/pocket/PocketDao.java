@@ -17,4 +17,9 @@ public class PocketDao {
 		Pocket pocket = em.find(Pocket.class, id);
 		return pocket;
 	}
+	
+	public void updateSharesAndMoneyInPocket(Pocket pocket){
+		System.out.println("jest");
+		em.merge(pocket);
+	}
 }
