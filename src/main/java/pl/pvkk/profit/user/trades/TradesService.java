@@ -44,7 +44,7 @@ public class TradesService {
 		
 		pocketService.setShares(pocket, shareShortcut, shareNumber, sharePrice);
 		
-		response = "You've bought "+shareNumber+" from "+share.getName()+" company, for "+shareNumber*sharePrice;
+		response = "You've bought "+shareNumber+" shares from "+share.getName()+" company, for "+shareNumber*sharePrice;
 		return new ResponseEntity<String>(response, HttpStatus.OK);
 	}
 	

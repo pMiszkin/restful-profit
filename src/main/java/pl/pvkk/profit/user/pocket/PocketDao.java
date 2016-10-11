@@ -19,7 +19,6 @@ public class PocketDao {
 	}
 	
 	public void updateSharesAndMoneyInPocket(Pocket pocket){
-		System.out.println("jest");
 		em.merge(pocket);
 	}
 }
