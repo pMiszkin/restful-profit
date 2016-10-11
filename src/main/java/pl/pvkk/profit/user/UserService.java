@@ -1,5 +1,7 @@
 package pl.pvkk.profit.user;
 
+import javax.annotation.PostConstruct;
+
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.http.HttpEntity;
 import org.springframework.http.HttpStatus;
@@ -12,6 +14,14 @@ public class UserService {
 
 	@Autowired
 	private UserDao userDao;
+	
+	@PostConstruct
+	public void addFirstUser() {
+		User user = new User();
+		user.setLogin("login");
+		user.setPassword("password");
+		tryToSaveUser(user);
+	}
 	
 	public HttpEntity<User> tryToPrintUser(long userId) {
 		User user = userDao.getUserById(userId);

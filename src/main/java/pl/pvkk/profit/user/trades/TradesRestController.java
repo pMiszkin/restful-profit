@@ -13,20 +13,20 @@ import org.springframework.web.bind.annotation.RestController;
 public class TradesRestController {
 
 	@Autowired
-	private TradesService exchangeService;
+	private TradesService tradesService;
 	
 	@PostMapping("/buy")
 	public ResponseEntity<String> buyShares(
 			@RequestParam("name") String shareShortcut,
 			@RequestParam("number") int shareNumber) {
 		
-		return exchangeService.buyShares(shareShortcut, shareNumber);
+		return tradesService.buyShares(shareShortcut.toUpperCase(), shareNumber);
 	}
 	@PostMapping("/sell")
 	public ResponseEntity<String> sellShares(
 			@RequestParam("name") String shareShortcut,
 			@RequestParam("number") int shareNumber) {
 		
-		return exchangeService.sellShares(shareShortcut, shareNumber);
+		return tradesService.sellShares(shareShortcut.toUpperCase(), shareNumber);
 	}
 }

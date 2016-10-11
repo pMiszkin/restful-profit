@@ -56,7 +56,7 @@ public class LoggingIntegrationTests {
 
 		//and try to get him
 		this.mockMvc
-			.perform(get("/user/print/1")
+			.perform(get("/user/print/2")
 					.accept(MediaType.parseMediaType("application/json;charset=UTF-8")))
 			.andExpect(status().isOk());
 	}
@@ -78,7 +78,7 @@ public class LoggingIntegrationTests {
 		
 		//hope he hasn't been saved
 		this.mockMvc
-			.perform(post("/user/print/1")
+			.perform(post("/user/print/2")
 					.accept(MediaType.parseMediaType("application/json;charset=UTF-8")))
 			.andExpect(status().isMethodNotAllowed());
 	}
