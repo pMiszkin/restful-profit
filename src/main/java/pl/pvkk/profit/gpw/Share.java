@@ -1,5 +1,6 @@
 package pl.pvkk.profit.gpw;
 
+import java.util.LinkedList;
 import java.util.List;
 
 import javax.persistence.Entity;
@@ -15,7 +16,10 @@ public class Share {
 	@OneToMany
 	private List<Quotation> quotations;
 	
-
+	public Share() {
+		quotations = new LinkedList<Quotation>();
+	}
+	
 	@Override
 	public String toString() {
 		return "Share [name=" + name + ", shortcut=" + shortcut + ", quotations=" + quotations + "]";

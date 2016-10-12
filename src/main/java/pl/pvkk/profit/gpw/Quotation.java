@@ -3,13 +3,10 @@ package pl.pvkk.profit.gpw;
 import javax.persistence.Entity;
 import javax.persistence.GeneratedValue;
 import javax.persistence.Id;
-import javax.persistence.JoinColumn;
-import javax.persistence.ManyToOne;
 
 @Entity
 public class Quotation {
 
-	//I'm really not sure about this builder <face with tears of joy>
 	@Id
 	@GeneratedValue
 	private long id;

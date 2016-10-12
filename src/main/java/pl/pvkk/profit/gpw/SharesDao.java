@@ -23,14 +23,13 @@ public class SharesDao {
 		for(Element element : allShares) {
 			//just cut a row with "shareName = Name"
 			if(!element.child(1).text().equals("Name")) {
-				//Share share = findShareByShortcut(element.child(2).text());
-				//if(share == null) {
-					Share share = new Share();
+				Share share = findShareByShortcut(element.child(2).text());
+				if(share == null) {
+					share = new Share();
 					share.setName(element.child(1).text());
 					share.setShortcut(element.child(2).text());
-					share.setQuotations(new LinkedList<Quotation>());
 					createShare(share);
-				//}
+				}
 				List<Quotation> quotations = share.getQuotations();
 				Quotation quotation = new Quotation();
 				quotation.setCurrency(element.child(3).text());
@@ -50,7 +49,7 @@ public class SharesDao {
 				share.setQuotations(quotations);
 				
 				em.persist(quotation);
-				//em.merge(share);
+				em.merge(share);
 			}
 		}	
 	}
