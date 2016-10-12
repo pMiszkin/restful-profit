@@ -1,5 +1,6 @@
 package pl.pvkk.profit.gpw;
 
+import java.util.LinkedList;
 import java.util.List;
 
 import javax.persistence.EntityManager;
@@ -21,21 +22,36 @@ public class SharesDao {
 	public void updateShares(Elements allShares) {
 		for(Element element : allShares) {
 			//just cut a row with "shareName = Name"
-			if(!element.child(1).text().equals("Name"))
-				em.persist(new Share.Builder(element.child(1).text())
-						.shortcut(element.child(2).text())
-						.currency(element.child(3).text())
-						.lastTransactionTime(element.child(4).text())
-						.referencePrice(element.child(5).text())
-						.theoreticalOpenPrice(element.child(6).text())
-						.open(element.child(7).text())
-						.low(element.child(8).text())
-						.high(element.child(9).text())
-						.lastClosing(element.child(10).text())
-						.change(element.child(11).text())
-						.cumulatedVolume(element.child(12).text())
-						.cumulatedValue(element.child(13).text())
-						.build());
+			if(!element.child(1).text().equals("Name")) {
+				//Share share = findShareByShortcut(element.child(2).text());
+				//if(share == null) {
+					Share share = new Share();
+					share.setName(element.child(1).text());
+					share.setShortcut(element.child(2).text());
+					share.setQuotations(new LinkedList<Quotation>());
+					createShare(share);
+				//}
+				List<Quotation> quotations = share.getQuotations();
+				Quotation quotation = new Quotation();
+				quotation.setCurrency(element.child(3).text());
+				quotation.setLastTransactionTime(element.child(4).text());
+				//its not normal space. it is no-break space!
+				quotation.setReferencePrice(Double.parseDouble(element.child(5).text().replaceAll("\u00A0", "")));
+				quotation.setTheoreticalOpenPrice(element.child(6).text());
+				quotation.setOpen(element.child(7).text());
+				quotation.setLow(element.child(8).text());
+				quotation.setHigh(element.child(9).text());
+				quotation.setLastClosing(element.child(10).text());
+				quotation.setChange(element.child(11).text());
+				quotation.setCumulatedVolume(element.child(12).text());
+				quotation.setCumulatedValue(element.child(13).text());
+				
+				quotations.add(quotation);
+				share.setQuotations(quotations);
+				
+				em.persist(quotation);
+				//em.merge(share);
+			}
 		}	
 	}
 	
@@ -44,7 +60,11 @@ public class SharesDao {
 		return shares;
 	}
 	
-	public Share finShareByShortcut(String shortcut) {
+	private void createShare(Share share) {
+		em.persist(share);
+	}
+	
+	public Share findShareByShortcut(String shortcut) {
 		return em.find(Share.class, shortcut);
 	}
 	

@@ -31,7 +31,7 @@ public class TradesService {
 		}
 		
 		Share share = sharesService.findShareByShortcut(shareShortcut);
-		double sharePrice = share.getReferencePrice();
+		double sharePrice = 50.00d; //share.getReferencePrice();
 		
 		if(shareNumber <= 0){
 			response = "You're trying to buy 0 or less shares";
@@ -68,7 +68,7 @@ public class TradesService {
 		}
 		
 		Share share = sharesService.findShareByShortcut(shareShortcut);
-		double sharePrice = share.getReferencePrice();
+		double sharePrice = 50.00d; //share.getReferencePrice();
 		
 		pocketService.setShares(pocket, shareShortcut, -shareNumber, sharePrice);
 		

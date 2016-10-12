@@ -38,7 +38,8 @@ public class GpwSharesRestController {
 			return new ResponseEntity<>(HttpStatus.NOT_FOUND);
 		}
 	}
-	@GetMapping("{shareShortcut}")
+	
+	@GetMapping("/{shareShortcut}")
 	public HttpEntity<Share> findShare(@PathVariable String shareShortcut) {
 		return ResponseEntity.ok(sharesService.findShareByShortcut(shareShortcut));
 	}

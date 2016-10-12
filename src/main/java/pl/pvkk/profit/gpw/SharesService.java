@@ -37,7 +37,7 @@ public class SharesService {
 		Document table = Jsoup.parse(allElements.text(), "ISO-8859-9");
 		Elements allShares = table.getElementsByTag("tr");
 		
-		//need to remove first and last "tr" object from table
+		//need to remove first and last "tr" object from the table
 		allShares.remove(0);
 		allShares.remove(allShares.size()-1);
 		
@@ -45,11 +45,11 @@ public class SharesService {
 	}
 	
 	public Share findShareByShortcut(String shortcut) {
-		Share share = sharesDao.finShareByShortcut(shortcut.toUpperCase());
-		if(share == null)
-			return null;
-		if(share.toString().equals("")) ///////////////////////////////////////////////!!!!!!!!
-			System.out.println("waaa");
+		Share share = sharesDao.findShareByShortcut(shortcut.toUpperCase());
+		//if(share == null)
+			//return null;
+		//if(share.toString().equals("")) ///////////////////////////////////////////////!!!!!!!!
+			//System.out.println("waaa");
 		return share;
 	}
 	

@@ -99,7 +99,9 @@ public class TradesServiceTest {
 	}
 
 	private Share getShareStubData() {
-		share = new Share.Builder("PVKK").shortcut("PVK").referencePrice("50.45").build();
+		share = new Share();
+		share.setName("PVKKKK");
+		share.setShortcut("PVK");
 
 		return share;
 	}
