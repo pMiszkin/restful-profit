@@ -25,6 +25,7 @@ public class UserService {
 	
 	public HttpEntity<User> tryToPrintUser(long userId) {
 		User user = userDao.getUserById(userId);
+		
 		return user == null ? new ResponseEntity<>(HttpStatus.NOT_FOUND)
 				: new ResponseEntity<User>(user, HttpStatus.OK);
 	}

@@ -16,7 +16,8 @@ public class UserDao {
 	private EntityManager em;
 	
 	//@Transactional(readOnly=true)
-	public User getUserById(long id){		
+	public User getUserById(long id){
+
 		return em.find(User.class, id);
 	}
 	
@@ -31,8 +32,8 @@ public class UserDao {
 	public void saveUser(User user){
 		UserProfile profile = new UserProfile();
 		Pocket pocket = new Pocket();
-		user.setProfile(profile);
 		profile.setPocket(pocket);
+		user.setProfile(profile);
 		em.persist(user);
 		em.persist(profile);
 		em.persist(pocket);

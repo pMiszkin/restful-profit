@@ -1,6 +1,5 @@
 package pl.pvkk.profit.gpw;
 
-import java.util.LinkedList;
 import java.util.List;
 
 import javax.persistence.EntityManager;

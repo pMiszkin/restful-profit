@@ -41,6 +41,11 @@ public class UserProfile {
 		this.pocket = pocket;
 	}
 
+	@Override
+	public String toString() {
+		return "UserProfile [id=" + id + ", pocket=" + pocket + "]";
+	}
+
 	public List<Transaction> getSales() {
 		return sales;
 	}
@@ -55,6 +60,6 @@ public class UserProfile {
 
 	public void setPurchase(List<Transaction> purchase) {
 		this.purchase = purchase;
-	}
-
+	}	
+	
 }
