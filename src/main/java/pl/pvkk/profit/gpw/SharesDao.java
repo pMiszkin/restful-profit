@@ -1,5 +1,7 @@
 package pl.pvkk.profit.gpw;
 
+import java.time.ZonedDateTime;
+import java.util.Date;
 import java.util.List;
 
 import javax.persistence.EntityManager;
@@ -19,6 +21,7 @@ public class SharesDao {
 	private EntityManager em;
 	
 	public void updateShares(Elements allShares) {
+		Date date = new Date();
 		for(Element element : allShares) {
 			//just cut a row with "shareName = Name"
 			if(!element.child(1).text().equals("Name")) {
@@ -31,6 +34,7 @@ public class SharesDao {
 				}
 				List<Quotation> quotations = share.getQuotations();
 				Quotation quotation = new Quotation();
+				quotation.setDate(date);
 				quotation.setCurrency(element.child(3).text());
 				quotation.setLastTransactionTime(element.child(4).text());
 				//its not normal space. it is no-break space!

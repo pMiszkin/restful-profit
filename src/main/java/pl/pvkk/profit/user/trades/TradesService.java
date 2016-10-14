@@ -1,10 +1,13 @@
 package pl.pvkk.profit.user.trades;
 
+import java.util.List;
+
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.http.HttpStatus;
 import org.springframework.http.ResponseEntity;
 import org.springframework.stereotype.Service;
 
+import pl.pvkk.profit.gpw.Quotation;
 import pl.pvkk.profit.gpw.Share;
 import pl.pvkk.profit.gpw.SharesService;
 import pl.pvkk.profit.user.pocket.Pocket;
@@ -31,7 +34,8 @@ public class TradesService {
 		}
 		
 		Share share = sharesService.findShareByShortcut(shareShortcut);
-		double sharePrice = 50.00d; //share.getReferencePrice();
+		List<Quotation> quotations = share.getQuotations();
+		double sharePrice = quotations.get(quotations.size()-1).getReferencePrice();
 		
 		if(shareNumber <= 0){
 			response = "You're trying to buy 0 or less shares";
@@ -68,7 +72,8 @@ public class TradesService {
 		}
 		
 		Share share = sharesService.findShareByShortcut(shareShortcut);
-		double sharePrice = 50.00d; //share.getReferencePrice();
+		List<Quotation> quotations = share.getQuotations();
+		double sharePrice = quotations.get(quotations.size()-1).getReferencePrice();
 		
 		pocketService.setShares(pocket, shareShortcut, -shareNumber, sharePrice);
 		

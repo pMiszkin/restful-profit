@@ -1,8 +1,12 @@
 package pl.pvkk.profit.gpw;
 
+import java.util.Date;
+
 import javax.persistence.Entity;
 import javax.persistence.GeneratedValue;
 import javax.persistence.Id;
+import javax.persistence.Temporal;
+import javax.persistence.TemporalType;
 
 @Entity
 public class Quotation {
@@ -10,7 +14,8 @@ public class Quotation {
 	@Id
 	@GeneratedValue
 	private long id;
-	
+	@Temporal(value = TemporalType.TIMESTAMP)
+	private Date date;
 	private String currency;
 	private String lastTransactionTime;
 	private double referencePrice;
@@ -23,13 +28,20 @@ public class Quotation {
 	private String cumulatedVolume;
 	private String cumulatedValue;
 
-	
 	public long getId() {
 		return id;
 	}
 
 	public void setId(long id) {
 		this.id = id;
+	}
+
+	public Date getDate() {
+		return date;
+	}
+
+	public void setDate(Date date) {
+		this.date = date;
 	}
 
 	public String getCurrency() {
