@@ -10,6 +10,9 @@ import org.jsoup.Jsoup;
 import org.jsoup.nodes.Document;
 import org.jsoup.select.Elements;
 import org.springframework.beans.factory.annotation.Autowired;
+import org.springframework.http.HttpEntity;
+import org.springframework.http.HttpStatus;
+import org.springframework.http.ResponseEntity;
 import org.springframework.stereotype.Service;
 
 @Service
@@ -44,13 +47,11 @@ public class SharesService {
 		return allShares;
 	}
 	
-	public Share findShareByShortcut(String shortcut) {
+	public HttpEntity<Share> findShareByShortcut(String shortcut) {
 		Share share = sharesDao.findShareByShortcut(shortcut.toUpperCase());
-		//if(share == null)
-			//return null;
-		//if(share.toString().equals("")) ///////////////////////////////////////////////!!!!!!!!
-			//System.out.println("waaa");
-		return share;
+		
+		return share == null ? new ResponseEntity<>(HttpStatus.NOT_FOUND) : 
+			new ResponseEntity<Share>(share, HttpStatus.OK);
 	}
 	
 	public List<Share> findShares(StockIndexUrl stockIndexUrl) {
