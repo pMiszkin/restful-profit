@@ -47,11 +47,10 @@ public class SharesService {
 		return allShares;
 	}
 	
-	public HttpEntity<Share> findShareByShortcut(String shortcut) {
+	public Share findShareByShortcut(String shortcut) {
 		Share share = sharesDao.findShareByShortcut(shortcut.toUpperCase());
 		
-		return share == null ? new ResponseEntity<>(HttpStatus.NOT_FOUND) : 
-			new ResponseEntity<Share>(share, HttpStatus.OK);
+		return share;
 	}
 	
 	public List<Share> findShares(StockIndexUrl stockIndexUrl) {
