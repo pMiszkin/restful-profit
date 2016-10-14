@@ -5,6 +5,9 @@ import static org.mockito.Matchers.anyObject;
 import static org.mockito.Matchers.anyString;
 import static org.mockito.Mockito.when;
 
+import java.util.LinkedList;
+import java.util.List;
+
 import org.junit.Before;
 import org.junit.Test;
 import org.junit.runner.RunWith;
@@ -15,6 +18,7 @@ import org.mockito.runners.MockitoJUnitRunner;
 import org.springframework.http.HttpStatus;
 import org.springframework.http.ResponseEntity;
 
+import pl.pvkk.profit.gpw.Quotation;
 import pl.pvkk.profit.gpw.Share;
 import pl.pvkk.profit.gpw.SharesService;
 import pl.pvkk.profit.user.pocket.Pocket;
@@ -102,7 +106,13 @@ public class TradesServiceTest {
 		share = new Share();
 		share.setName("PVKKKK");
 		share.setShortcut("PVK");
-
+		
+		List<Quotation> quotations = new LinkedList<Quotation>();
+		Quotation quotation = new Quotation();
+		quotation.setReferencePrice(50.25);
+		quotations.add(quotation);
+		share.setQuotations(quotations);
+		
 		return share;
 	}
 }
