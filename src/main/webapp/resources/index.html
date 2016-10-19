@@ -1,0 +1,82 @@
+<!doctype html>
+<html ng-app="app">
+	<head>
+		<title>Hello AngularJS</title>
+		<script src="resources/js/angular.min.js"></script>
+		<script src="resources/js/index.js"></script>
+		<link rel="stylesheet" href="resources/css/main.css">
+	</head>
+	<body>
+		<div class="container">
+			<div class="containerpage">
+				<div class="column_menu">
+					<h1>NOTES</h1>
+					<div id="tab_box_title">
+						
+					</div>
+					<div id="tab_box_search">
+						<br>
+						<form>
+							<div class="search_shares_line">
+								<label>Name:</label>
+								<input type="text"" ng-model="searchText">
+								<label>sort by:</label>
+								<select class="search_select" ng-model="selected">
+									<option style="display:none" value="">select a type</option>
+									<option value="quotations[0].referencePrice">price</option>
+									<option value="name" ng-selected=true>name</option>
+									<option value="shortcut">code</option>
+								</select>
+								<input type="radio" ng-model="order" ng-value="false" ng-checked="true">
+								<label>ascending</label>
+								<input type="radio" ng-model="order" ng-value="true">
+								<label>descending</label>
+							</div>
+							<br>
+							<div class="search_shares_line">
+								<label>Stock:</label>
+								<select class="search_select">
+									<option>all</option>
+									<option>WIG20</option>
+									<option>MWIG40</option>
+									<option>SWIG80</option>
+									<option>RESPECT</option>
+									<option>PWP</option>
+								</select>
+							</div>
+						</form>
+					</div>
+
+					<table id="shares_table" ng-controller="searchSharesTable">
+						<thead>
+							<tr>
+								<th scope="col" abbr="Code">Code</th>
+								<th scope="col" abbr="Name">Name</th>
+								<th scope="col" abbr="Currency">Currency</th>
+								<th scope="col" abbr="Price">Price</th>
+								<th scope="col" abbr="High">High</th>
+								<th scope="col" abbr="Low">Low</th>
+							</tr>
+						</thead>
+						<tbody>
+							<tr ng-repeat="x in shares | filter : searchText | orderBy : selected:order | limitTo : 20">
+								<td>{{x.shortcut}}</td>
+								<td><a href="shares/{{x.shortcut}}">{{x.name}}</a></td>
+								<td>{{x.quotations[0].currency}}</td>
+								<td>{{x.quotations[0].referencePrice}}</td>
+								<td>{{x.quotations[0].high}}</td>
+								<td>{{x.quotations[0].low}}</td>
+							</tr>
+						</tbody>
+					</table>
+				</div>
+			</div>
+		</div>
+	</body>
+</html>
+
+
+<!-- <div ng-controller="UserController">
+	<p>The ID is {{user.id}}</p>
+	<p>Welcome {{user.login}}</p>
+</div> -->

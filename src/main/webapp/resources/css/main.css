@@ -1,0 +1,62 @@
+body {
+	margin: 0;
+	padding: 30px 0px 0px 0px;
+	background-color: #26263a;
+}
+
+h1 {
+	border-bottom: 1px solid #c5c5c5;
+}
+
+.container {
+	width: 90%;
+	height: 1200px;
+	margin: auto;
+	position: relative;
+	background-color: #fff;
+}
+
+.containerpage {
+	width: 100%;
+	margin: 0;
+	padding: 0;
+}
+
+.column_menu {
+	width: 60%;
+	margin: auto;
+	padding: 50px 0px;
+}
+
+.search_shares_line {
+	width: 100%;
+	margin: auto;
+}
+
+.search_select {
+	width: 155px;
+}
+
+#tab_box_title {
+	position: relative;
+	height: 30px;
+	background-color: #85a4c0;
+	border: 1px solid #51718a;
+	border-bottom: 0;
+}
+
+#tab_box_search {
+	padding: 10px;
+	position: relative;
+	margin: 0;
+	margin-bottom: 60px;
+	min-height: 120px;
+	background-color: #efefef;
+	border: 1px solid #51718a;
+	border-top: 0;
+}
+
+#shares_table {	
+	width: 100%;
+	position: relative;
+}

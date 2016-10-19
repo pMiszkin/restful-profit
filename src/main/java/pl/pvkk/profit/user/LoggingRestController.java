@@ -22,6 +22,11 @@ public class LoggingRestController {
 	@Autowired
 	private UserService userService;
 	
+	@GetMapping("/hello")
+	public HttpEntity<User> printUser(){
+		return userService.tryToPrintUser(1L);
+	}
+	
 	@GetMapping("/print/{userId}")
 	public HttpEntity<User> printUser(@PathVariable long userId){
 		return userService.tryToPrintUser(userId);
