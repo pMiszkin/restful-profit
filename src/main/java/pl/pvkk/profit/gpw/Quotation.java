@@ -19,14 +19,14 @@ public class Quotation {
 	private String currency;
 	private String lastTransactionTime;
 	private double referencePrice;
-	private String theoreticalOpenPrice;
-	private String open;
-	private String low;
-	private String high;
-	private String lastClosing;
-	private String change;
-	private String cumulatedVolume;
-	private String cumulatedValue;
+	private double theoreticalOpenPrice;
+	private double open;
+	private double low;
+	private double high;
+	private double lastClosing;
+	private double change;
+	private double cumulatedVolume;
+	private double cumulatedValue;
 
 	public long getId() {
 		return id;
@@ -68,67 +68,67 @@ public class Quotation {
 		this.referencePrice = referencePrice;
 	}
 
-	public String getTheoreticalOpenPrice() {
+	public double getTheoreticalOpenPrice() {
 		return theoreticalOpenPrice;
 	}
 
-	public void setTheoreticalOpenPrice(String theoreticalOpenPrice) {
+	public void setTheoreticalOpenPrice(double theoreticalOpenPrice) {
 		this.theoreticalOpenPrice = theoreticalOpenPrice;
 	}
 
-	public String getOpen() {
+	public double getOpen() {
 		return open;
 	}
 
-	public void setOpen(String open) {
+	public void setOpen(double open) {
 		this.open = open;
 	}
 
-	public String getLow() {
+	public double getLow() {
 		return low;
 	}
 
-	public void setLow(String low) {
+	public void setLow(double low) {
 		this.low = low;
 	}
 
-	public String getHigh() {
+	public double getHigh() {
 		return high;
 	}
 
-	public void setHigh(String high) {
+	public void setHigh(double high) {
 		this.high = high;
 	}
 
-	public String getLastClosing() {
+	public double getLastClosing() {
 		return lastClosing;
 	}
 
-	public void setLastClosing(String lastClosing) {
+	public void setLastClosing(double lastClosing) {
 		this.lastClosing = lastClosing;
 	}
 
-	public String getChange() {
+	public double getChange() {
 		return change;
 	}
 
-	public void setChange(String change) {
+	public void setChange(double change) {
 		this.change = change;
 	}
 
-	public String getCumulatedVolume() {
+	public double getCumulatedVolume() {
 		return cumulatedVolume;
 	}
 
-	public void setCumulatedVolume(String cumulatedVolume) {
+	public void setCumulatedVolume(double cumulatedVolume) {
 		this.cumulatedVolume = cumulatedVolume;
 	}
 
-	public String getCumulatedValue() {
+	public double getCumulatedValue() {
 		return cumulatedValue;
 	}
 
-	public void setCumulatedValue(String cumulatedValue) {
+	public void setCumulatedValue(double cumulatedValue) {
 		this.cumulatedValue = cumulatedValue;
 	}
 

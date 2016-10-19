@@ -1,15 +1,11 @@
 package pl.pvkk.profit.gpw;
 
-import java.time.ZonedDateTime;
-import java.util.Date;
 import java.util.List;
 
 import javax.persistence.EntityManager;
 import javax.persistence.PersistenceContext;
 import javax.persistence.Query;
 
-import org.jsoup.nodes.Element;
-import org.jsoup.select.Elements;
 import org.springframework.stereotype.Repository;
 import org.springframework.transaction.annotation.Transactional;
 
@@ -20,41 +16,9 @@ public class SharesDao {
 	@PersistenceContext
 	private EntityManager em;
 	
-	public void updateShares(Elements allShares) {
-		Date date = new Date();
-		for(Element element : allShares) {
-			//just cut a row with "shareName = Name"
-			if(!element.child(1).text().equals("Name")) {
-				Share share = findShareByShortcut(element.child(2).text());
-				if(share == null) {
-					share = new Share();
-					share.setName(element.child(1).text());
-					share.setShortcut(element.child(2).text());
-					createShare(share);
-				}
-				List<Quotation> quotations = share.getQuotations();
-				Quotation quotation = new Quotation();
-				quotation.setDate(date);
-				quotation.setCurrency(element.child(3).text());
-				quotation.setLastTransactionTime(element.child(4).text());
-				//its not normal space. it is no-break space!
-				quotation.setReferencePrice(Double.parseDouble(element.child(5).text().replaceAll("\u00A0", "")));
-				quotation.setTheoreticalOpenPrice(element.child(6).text());
-				quotation.setOpen(element.child(7).text());
-				quotation.setLow(element.child(8).text());
-				quotation.setHigh(element.child(9).text());
-				quotation.setLastClosing(element.child(10).text());
-				quotation.setChange(element.child(11).text());
-				quotation.setCumulatedVolume(element.child(12).text());
-				quotation.setCumulatedValue(element.child(13).text());
-				
-				quotations.add(quotation);
-				share.setQuotations(quotations);
-				
-				em.persist(quotation);
-				em.merge(share);
-			}
-		}	
+	public void updateQuotationsInShare(Share share, Quotation quotation) {
+		em.persist(quotation);
+		em.merge(share);
 	}
 	
 	public List<Share> findSharesTable(StockIndexUrl stockIndexUrl) {
@@ -62,7 +26,7 @@ public class SharesDao {
 		return shares;
 	}
 	
-	private void createShare(Share share) {
+	public void createShare(Share share) {
 		em.persist(share);
 	}
 	

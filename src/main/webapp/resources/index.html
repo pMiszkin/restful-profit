@@ -7,10 +7,19 @@
 		<link rel="stylesheet" href="resources/css/main.css">
 	</head>
 	<body>
+		<div class="top_bar">
+			<div class="home_button">
+				<a href="/">HOME</a>
+			</div>
+			<div class="login_wrapper">
+				<a href="#">REGISTRATION</a>
+				<a href="#" float="right">LOGIN</a>
+			</div>
+		</div>
 		<div class="container">
 			<div class="containerpage">
 				<div class="column_menu">
-					<h1>NOTES</h1>
+					<h1>SEARCH</h1>
 					<div id="tab_box_title">
 						
 					</div>
@@ -23,9 +32,12 @@
 								<label>sort by:</label>
 								<select class="search_select" ng-model="selected">
 									<option style="display:none" value="">select a type</option>
-									<option value="quotations[0].referencePrice">price</option>
 									<option value="name" ng-selected=true>name</option>
 									<option value="shortcut">code</option>
+									<option value="quotations[0].referencePrice">price</option>
+									<option value="quotations[0].change">change</option>
+									<option value="quotations[0].cumulatedVolume">volume</option>
+									<option value="quotations[0].cumulatedValue">value</option>
 								</select>
 								<input type="radio" ng-model="order" ng-value="false" ng-checked="true">
 								<label>ascending</label>
@@ -46,7 +58,7 @@
 							</div>
 						</form>
 					</div>
-
+					<h1>SHARES - CONTINUOUS TRADING</h1>
 					<table id="shares_table" ng-controller="searchSharesTable">
 						<thead>
 							<tr>
@@ -56,16 +68,23 @@
 								<th scope="col" abbr="Price">Price</th>
 								<th scope="col" abbr="High">High</th>
 								<th scope="col" abbr="Low">Low</th>
+								<th scope="col" abbr="Change">Change</th>
+								<th scope="col" abbr="Volume">Volume</th>
+								<th scope="col" abbr="Value">Value (thous.)</th>
 							</tr>
 						</thead>
-						<tbody>
-							<tr ng-repeat="x in shares | filter : searchText | orderBy : selected:order | limitTo : 20">
+						<tbody align="right">
+							<tr ng-repeat="x in shares | filter : searchText | orderBy : selected:order | limitTo : 20"
+								ng-style="x.quotations[0].change < 0 && {'color': 'red'} || x.quotations[0].change > 0 && {'color': 'green'}">
 								<td>{{x.shortcut}}</td>
 								<td><a href="shares/{{x.shortcut}}">{{x.name}}</a></td>
 								<td>{{x.quotations[0].currency}}</td>
 								<td>{{x.quotations[0].referencePrice}}</td>
 								<td>{{x.quotations[0].high}}</td>
 								<td>{{x.quotations[0].low}}</td>
+								<td>{{x.quotations[0].change}}</td>
+								<td>{{x.quotations[0].cumulatedVolume}}</td>
+								<td>{{x.quotations[0].cumulatedValue}}</td>
 							</tr>
 						</tbody>
 					</table>
