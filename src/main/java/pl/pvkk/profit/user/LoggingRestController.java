@@ -1,5 +1,7 @@
 package pl.pvkk.profit.user;
 
+import java.security.Principal;
+
 import javax.validation.Valid;
 
 import org.springframework.beans.factory.annotation.Autowired;
@@ -22,14 +24,15 @@ public class LoggingRestController {
 	@Autowired
 	private UserService userService;
 	
-	@GetMapping("/hello")
-	public HttpEntity<User> printUser(){
-		return userService.tryToPrintUser(1L);
+	@RequestMapping
+	public Principal user(Principal user) {
+		System.out.println(user);
+		return user;
 	}
 	
-	@GetMapping("/print/{userId}")
-	public HttpEntity<User> printUser(@PathVariable long userId){
-		return userService.tryToPrintUser(userId);
+	@GetMapping("/print/{username}")
+	public HttpEntity<User> printUser(@PathVariable String username){
+		return userService.tryToPrintUser(username);
 	}
 	
 	@PostMapping("/add")

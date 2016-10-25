@@ -1,8 +1,6 @@
 package pl.pvkk.profit.user;
 
 import javax.persistence.Entity;
-import javax.persistence.GeneratedValue;
-import javax.persistence.GenerationType;
 import javax.persistence.Id;
 import javax.persistence.OneToOne;
 
@@ -12,8 +10,6 @@ import org.hibernate.validator.constraints.Length;
 public class User {
 
 	@Id
-	@GeneratedValue(strategy = GenerationType.IDENTITY)
-	private long id;
 	@Length(min = 5, max = 30)
 	private String login;
 	@Length(min = 5)
@@ -21,13 +17,6 @@ public class User {
 	@OneToOne
 	private UserProfile profile;
 	
-	public long getId() {
-		return id;
-	}
-
-	public void setId(long id) {
-		this.id = id;
-	}
 
 	public String getLogin() {
 		return login;
@@ -55,7 +44,7 @@ public class User {
 
 	@Override
 	public String toString() {
-		return "User [id=" + id + ", login=" + login + ", password=" + password + ", profile=" + profile + "]";
+		return "User " + "login=" + login + ", password=" + password + ", profile=" + profile + "]";
 	}	
 
 }

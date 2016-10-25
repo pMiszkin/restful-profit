@@ -16,9 +16,9 @@ public class UserDao {
 	private EntityManager em;
 	
 	//@Transactional(readOnly=true)
-	public User getUserById(long id){
+	public User getUserByName(String username){
 
-		return em.find(User.class, id);
+		return em.find(User.class, username);
 	}
 	
 	public boolean isLoginTaken(String login){

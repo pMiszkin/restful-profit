@@ -1,0 +1,29 @@
+<!doctype html>
+<html ng-app="app">
+	<head>
+		<title>Hello AngularJS</title>
+		<script src="resources/js/angular.min.js"></script>
+		<script src="resources/js/index.js"></script>
+		<link rel="stylesheet" href="resources/css/main.css">
+	</head>
+	<body>
+		<div class="container">
+			<div class="containerpage" ng-controller="lolz">
+				<div ng-show="error">
+    				There was a problem logging in. Please try again.
+				</div>
+				<form role="form" ng-submit="login()">
+				    <div>
+				        <label for="username">Username:</label>
+				        <input type="text" id="username" name="username" ng-model="username"/>
+				    </div>
+				    <div>
+				        <label for="password">Password:</label>
+				        <input type="password" id="password" name="password" ng-model="password"/>
+				    </div>
+				    <button type="submit">Submit</button>
+				</form>
+			</div>
+		</div>
+	</body>
+</html>

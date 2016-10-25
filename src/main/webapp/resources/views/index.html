@@ -11,9 +11,12 @@
 			<div class="home_button">
 				<a href="/">HOME</a>
 			</div>
-			<div class="login_wrapper">
+			<div class="login_wrapper" ng-show="!authenticated">
 				<a href="#">REGISTRATION</a>
-				<a href="#" float="right">LOGIN</a>
+				<a href="login" float="right">LOGIN</a>
+			</div>
+			<div class="login_wrapper" ng-show="authenticated">
+				<a href="logout" float="right">LOGOUT</a>
 			</div>
 		</div>
 		<div class="container">
@@ -93,9 +96,3 @@
 		</div>
 	</body>
 </html>
-
-
-<!-- <div ng-controller="UserController">
-	<p>The ID is {{user.id}}</p>
-	<p>Welcome {{user.login}}</p>
-</div> -->

@@ -23,8 +23,8 @@ public class UserService {
 		tryToSaveUser(user);
 	}
 	
-	public HttpEntity<User> tryToPrintUser(long userId) {
-		User user = userDao.getUserById(userId);
+	public HttpEntity<User> tryToPrintUser(String username) {
+		User user = userDao.getUserByName(username);
 		
 		return user == null ? new ResponseEntity<>(HttpStatus.NOT_FOUND)
 				: new ResponseEntity<User>(user, HttpStatus.OK);

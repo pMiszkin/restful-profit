@@ -20,17 +20,23 @@ public class SecurityConfig extends WebSecurityConfigurerAdapter {
 	DataSource dataSource;
 	
 	protected void configure(HttpSecurity http) throws Exception {
-		http.authorizeRequests().anyRequest().permitAll();
+		http
+			.authorizeRequests()
+        	.antMatchers("/").authenticated()
+        	.anyRequest().permitAll();
 		
 		http
-			.csrf().disable()
 			.formLogin()
-				.loginPage("/user/login")
-				.defaultSuccessUrl("/user/print")
+				.loginPage("/login")
+				.usernameParameter("username")
+		        .passwordParameter("password")
+				.defaultSuccessUrl("/user/print/login")
 				.and()
 			.logout()
                 .logoutUrl("/logout")
-                .logoutSuccessUrl("/");				
+                .logoutSuccessUrl("/home")
+                .and()
+            .csrf().disable();
 	}
  
     @Override
