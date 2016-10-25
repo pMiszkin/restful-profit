@@ -1,5 +1,5 @@
 angular.module('app', [])
-.controller('searchSharesTable', function($scope, $http) {
+.controller('searchSharesTable', function($rootScope, $scope, $http) {
     $http.get('http://localhost:8080/shares/stock/wig20').
         then(function(response) {
             $scope.shares = response.data;
@@ -18,7 +18,6 @@ angular.module('app', [])
     		headers: {'Content-Type': 'application/x-www-form-urlencoded'},
     		data: string
 		}).success(function(data) {
-			console.log(data.login);
 	    	if ($scope.username === data.login) {
 				$rootScope.authenticated = true;
 	    	} else {

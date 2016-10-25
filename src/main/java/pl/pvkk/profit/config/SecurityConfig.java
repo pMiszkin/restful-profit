@@ -22,20 +22,20 @@ public class SecurityConfig extends WebSecurityConfigurerAdapter {
 	protected void configure(HttpSecurity http) throws Exception {
 		http
 			.authorizeRequests()
-        	.antMatchers("/").authenticated()
+        	.antMatchers("/user/print/**").authenticated()
         	.anyRequest().permitAll();
 		
 		http
 			.formLogin()
 				.loginPage("/login")
-				.usernameParameter("username")
-		        .passwordParameter("password")
 				.defaultSuccessUrl("/user/print/login")
 				.and()
 			.logout()
                 .logoutUrl("/logout")
                 .logoutSuccessUrl("/home")
                 .and()
+            .rememberMe()
+            	.and()
             .csrf().disable();
 	}
  

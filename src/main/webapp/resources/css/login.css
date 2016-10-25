@@ -1,0 +1,26 @@
+
+.login_div {
+	width: 300px;
+	position: relative;
+	margin: auto;
+	margin-top: 50px;
+}
+
+.login_form {
+	margin-top: 50px;
+}
+
+.form_button {
+	text-align: center;
+	margin-top: 20px;
+}
+
+.form_button button {
+	width: 100px;
+	height: 35px;
+}
+
+.login_error {
+	color: red;
+	padding-top: 25px;
+}
