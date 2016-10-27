@@ -10,7 +10,7 @@
 		<link rel="stylesheet" href="resources/css/bootstrap.min.css">
 		<link rel="stylesheet" href="resources/css/main.css">
 	</head>
-	<body>
+	<body ng-controller="getStockIndices">
 		<div class="top_bar">
 			<div class="home_button">
 				<a href="/">HOME</a>
@@ -54,19 +54,15 @@
 							<br>
 							<div class="search_shares_line">
 								<label>Stock Index:</label>
-								<select class="search_select">
-									<option>all</option>
-									<option>WIG20</option>
-									<option>MWIG40</option>
-									<option>SWIG80</option>
-									<option>RESPECT</option>
-									<option>PWP</option>
+								<select class="search_select" ng-model="selectedIndex">
+									<option ng-selected="true" value="">all</option>
+									<option value="{{index.name}}" ng-repeat="index in indices">{{index.name}}</option>
 								</select>
 							</div>
 						</form>
 					</div>
 					<h1>SHARES - CONTINUOUS TRADING</h1>
-					<div id="shares_table_div" ng-controller="searchSharesTable">
+					<div id="shares_table_div" ng-controller="getSharesTable">
 						<div class="table_header">
 							<p>{{filtered.length}} shares founded</p>
 							<dir-pagination-controls
@@ -90,7 +86,8 @@
 								</tr>
 							</thead>
 							<tbody align="right">
-								<tr dir-paginate="x in filtered = (shares| filter:searchText) | orderBy:selected:order | itemsPerPage:20"
+								<tr dir-paginate="x in filtered = (shares | filter:searchText | filter:{indices:selectedIndex}) 
+									| orderBy:selected:order | itemsPerPage:20"
 									ng-style="x.quotations[0].change < 0 && {'color': 'red'} || x.quotations[0].change > 0 && {'color': 'green'}">
 									<td>{{x.shortcut}}</td>
 									<td><a href="shares/company/{{x.shortcut}}">{{x.name}}</a></td>

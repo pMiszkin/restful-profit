@@ -142,7 +142,8 @@ public class GpwSharesDownloader {
 		
 		List<String> indices = new ArrayList<String>();
 		for(Element indexName : td.children()) {
-			indices.add(indexName.text());
+			if(!indexName.text().equals(""))
+				indices.add(indexName.text());
 		}
 		
 		return indices;

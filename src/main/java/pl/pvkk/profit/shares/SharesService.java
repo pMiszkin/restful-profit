@@ -26,4 +26,12 @@ public class SharesService {
 	public boolean isShareExists(String shortcut){
 		return sharesDao.isShareExists(shortcut);
 	}
+	
+	/*
+	 * Stock Indices Part
+	 */
+	
+	public List<StockIndices> findAllIndices() {
+		return sharesDao.findAllIndices();
+	}
 }

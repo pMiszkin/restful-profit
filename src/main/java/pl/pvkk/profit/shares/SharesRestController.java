@@ -35,5 +35,10 @@ public class SharesRestController {
 		return share == null ? new ResponseEntity<>(HttpStatus.NOT_FOUND) : 
 			new ResponseEntity<Share>(share, HttpStatus.OK);
 	}
+	
+	@GetMapping("/indices/all")
+	public HttpEntity<List<StockIndices>> findIndices() {
+		return ResponseEntity.ok(sharesService.findAllIndices());
+	}
 
 }

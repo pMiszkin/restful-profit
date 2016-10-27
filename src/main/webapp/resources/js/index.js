@@ -1,8 +1,14 @@
 angular.module('app', ['angularUtils.directives.dirPagination'])
-.controller('searchSharesTable', function($rootScope, $scope, $http) {
+.controller('getSharesTable', function($rootScope, $scope, $http) {
     $http.get('/shares/all').
         then(function(response) {
             $scope.shares = response.data;
+        }); 
+})
+.controller('getStockIndices', function($rootScope, $scope, $http) {
+    $http.get('/shares/indices/all').
+        then(function(response) {
+            $scope.indices = response.data;
         }); 
 })
 .controller('lolz', function($rootScope, $scope, $http, $location, $window) {
