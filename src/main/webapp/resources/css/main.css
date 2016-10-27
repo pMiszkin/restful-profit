@@ -70,6 +70,27 @@ h1 {
 	width: 155px;
 }
 
+.pagination {
+	margin: 0;
+}
+
+.table_header {
+	padding-bottom: 10px;
+}
+
+.table_header p {
+	margin-top: 10px;
+	display: inline;
+}
+
+.table_header ul {
+	float: right;
+}
+
+.table_header li {
+	display: inline-block;
+}
+
 #tab_box_title {
 	position: relative;
 	height: 30px;
@@ -92,4 +113,18 @@ h1 {
 #shares_table {	
 	width: 100%;
 	position: relative;
+}
+
+#shares_table th {
+	text-align: center;
+	margin-bottom: 10px;
+	background-color: #85a4c0;
+}
+
+#shares_table td {
+	padding: 2px;
+}
+
+#shares_table td:not(:last-child) {
+	border-right: 1px solid #c5c5c5;
 }

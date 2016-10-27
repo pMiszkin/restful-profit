@@ -1,4 +1,4 @@
-package pl.pvkk.profit.gpw;
+package pl.pvkk.profit.shares;
 
 import java.util.List;
 
@@ -21,7 +21,7 @@ public class SharesDao {
 		em.merge(share);
 	}
 	
-	public List<Share> findSharesTable(StockIndexUrl stockIndexUrl) {
+	public List<Share> findAllShares() {
 		List<Share> shares = em.createQuery("SELECT s FROM Share s").getResultList();
 		return shares;
 	}
@@ -39,5 +39,9 @@ public class SharesDao {
 		query.setParameter("shortcut", shortcut);
 		return (long) query.getSingleResult() > 0;
 	}
-
+	
+	public void addStockIndex(StockIndices stockIndices) {
+		em.persist(stockIndices);
+	}
+	
 }

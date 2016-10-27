@@ -40,13 +40,3 @@ public class UserService {
 		return new ResponseEntity<String>("Hi "+user.getLogin()+"!", HttpStatus.OK);
 	}
 }
-
-
-
-
-
-
-
-
-
-

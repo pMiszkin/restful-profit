@@ -1,4 +1,4 @@
-package pl.pvkk.profit.gpw;
+package pl.pvkk.profit.shares;
 
 import java.util.List;
 
@@ -14,32 +14,22 @@ import org.springframework.web.bind.annotation.RestController;
 
 @RestController
 @RequestMapping("shares")
-public class GpwSharesRestController {
+public class SharesRestController {
 
 	@Autowired
-	private SharesService sharesService;
+	private SharesService sharesService;	
 	
-	/*@GetMapping("/update")
-	public String updateTables() {
-		sharesService.addShares();
-		
-		return "OK!";
-	}*/
-	
-	
-	@GetMapping("/stock/{stockIndex}")
-	public HttpEntity<List<Share>> findSharesTable(@PathVariable String stockIndex) {
-		String stockName = stockIndex.toUpperCase();
-
+	@GetMapping("/all")
+	public HttpEntity<List<Share>> findAllShares() {
 		//return stock exchange table
 		try{
-			return ResponseEntity.ok(sharesService.findShares(StockIndexUrl.valueOf(stockName)));
+			return ResponseEntity.ok(sharesService.findAllShares());
 		} catch(Exception e){
 			return new ResponseEntity<>(HttpStatus.NOT_FOUND);
 		}
 	}
 	
-	@GetMapping("/{shareShortcut}")
+	@GetMapping("/company/{shareShortcut}")
 	public HttpEntity<Share> findShare(@PathVariable String shareShortcut) {
 		Share share = sharesService.findShareByShortcut(shareShortcut);
 		return share == null ? new ResponseEntity<>(HttpStatus.NOT_FOUND) : 

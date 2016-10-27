@@ -6,7 +6,7 @@ import javax.persistence.Id;
 import javax.persistence.ManyToOne;
 import javax.persistence.OneToOne;
 
-import pl.pvkk.profit.gpw.Share;
+import pl.pvkk.profit.shares.Share;
 import pl.pvkk.profit.user.UserProfile;
 
 @Entity

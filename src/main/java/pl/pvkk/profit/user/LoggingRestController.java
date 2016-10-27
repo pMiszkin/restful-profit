@@ -48,11 +48,3 @@ public class LoggingRestController {
 	}
 
 }
-
-
-
-
-
-
-
-

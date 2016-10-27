@@ -1,9 +1,11 @@
-package pl.pvkk.profit.gpw;
+package pl.pvkk.profit.shares;
 
-import java.util.LinkedList;
+import java.util.ArrayList;
 import java.util.List;
 
+import javax.persistence.ElementCollection;
 import javax.persistence.Entity;
+import javax.persistence.FetchType;
 import javax.persistence.Id;
 import javax.persistence.OneToMany;
 
@@ -13,13 +15,15 @@ public class Share {
 	private String name;
 	@Id
 	private String shortcut;
-	@OneToMany
+	@OneToMany(fetch = FetchType.EAGER)
 	private List<Quotation> quotations;
-	
+	@ElementCollection
+	private List<String> indices;
+
 	public Share() {
-		quotations = new LinkedList<Quotation>();
+		quotations = new ArrayList<Quotation>();
 	}
-	
+
 	@Override
 	public String toString() {
 		return "Share [name=" + name + ", shortcut=" + shortcut + ", quotations=" + quotations + "]";
@@ -48,7 +52,14 @@ public class Share {
 	public void setQuotations(List<Quotation> quotations) {
 		this.quotations = quotations;
 	}
-	
-	
-	
+
+	public List<String> getIndices() {
+		return indices;
+	}
+
+	public void setIndices(List<String> indices) {
+		this.indices = indices;
+	}
+
+
 }

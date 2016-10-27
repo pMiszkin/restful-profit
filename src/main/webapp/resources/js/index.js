@@ -1,9 +1,9 @@
-angular.module('app', [])
+angular.module('app', ['angularUtils.directives.dirPagination'])
 .controller('searchSharesTable', function($rootScope, $scope, $http) {
-    $http.get('http://localhost:8080/shares/stock/wig20').
+    $http.get('/shares/all').
         then(function(response) {
             $scope.shares = response.data;
-        });
+        }); 
 })
 .controller('lolz', function($rootScope, $scope, $http, $location, $window) {
   
@@ -14,7 +14,7 @@ angular.module('app', [])
 
 	 	$http({
    			method: 'POST',
-    		url: 'http://localhost:8080/login',
+    		url: '/login',
     		headers: {'Content-Type': 'application/x-www-form-urlencoded'},
     		data: string
 		}).success(function(data) {
@@ -44,23 +44,3 @@ angular.module('app', [])
      	});
   	};
 });
-
-/*
- 	$scope.login = function() {
- 		var string = 'username=' + $scope.username + '&password=' + $scope.password;
- 		$http({
-   			method: 'POST',
-    		url: 'http://localhost:8080/login',
-    		headers: {'Content-Type': 'application/x-www-form-urlencoded'},
-    		data: string
-		}).then(function(data) {
-			$scope.authenticated = true;
-  			$scope.error = true;
-		})
-	}
-*/
-
-
-/*		.success(function (data, status, headers, config) {$scope.error = false; console.log(config.url) })
-		.error(function (data, status, headers, config) {$scope.error = true; console.log(config.url)});*/
-/*});*/

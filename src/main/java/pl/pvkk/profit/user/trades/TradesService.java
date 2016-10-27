@@ -7,9 +7,9 @@ import org.springframework.http.HttpStatus;
 import org.springframework.http.ResponseEntity;
 import org.springframework.stereotype.Service;
 
-import pl.pvkk.profit.gpw.Quotation;
-import pl.pvkk.profit.gpw.Share;
-import pl.pvkk.profit.gpw.SharesService;
+import pl.pvkk.profit.shares.Quotation;
+import pl.pvkk.profit.shares.Share;
+import pl.pvkk.profit.shares.SharesService;
 import pl.pvkk.profit.user.pocket.Pocket;
 import pl.pvkk.profit.user.pocket.PocketService;
 

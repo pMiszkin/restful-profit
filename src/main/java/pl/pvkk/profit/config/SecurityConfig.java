@@ -49,14 +49,3 @@ public class SecurityConfig extends WebSecurityConfigurerAdapter {
     		.passwordEncoder(new BCryptPasswordEncoder());
     }
 }
-    
-    
-    
-    
-    
-    
-    
-    
-    
-    
-    
