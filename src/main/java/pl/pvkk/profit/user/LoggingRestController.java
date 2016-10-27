@@ -24,11 +24,6 @@ public class LoggingRestController {
 	@Autowired
 	private UserService userService;
 	
-	@RequestMapping
-	public Principal user(Principal user) {
-		System.out.println(user);
-		return user;
-	}
 	
 	@GetMapping("/print/{username}")
 	public HttpEntity<User> printUser(@PathVariable String username){
