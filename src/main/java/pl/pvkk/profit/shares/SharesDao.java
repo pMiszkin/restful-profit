@@ -5,10 +5,6 @@ import java.util.List;
 import javax.persistence.EntityManager;
 import javax.persistence.PersistenceContext;
 import javax.persistence.Query;
-import javax.persistence.TypedQuery;
-import javax.persistence.criteria.CriteriaBuilder;
-import javax.persistence.criteria.CriteriaQuery;
-
 import org.springframework.stereotype.Repository;
 import org.springframework.transaction.annotation.Transactional;
 
@@ -24,6 +20,7 @@ public class SharesDao {
 		em.merge(share);
 	}
 	
+	@SuppressWarnings("unchecked")
 	public List<Share> findAllShares() {
 		List<Share> shares = em.createQuery("SELECT s FROM Share s").getResultList();
 		return shares;
@@ -51,6 +48,7 @@ public class SharesDao {
 		em.persist(stockIndices);
 	}
 	
+	@SuppressWarnings("unchecked")
 	public List<StockIndices> findAllIndices() {
 		List<StockIndices> indices = em.createQuery("SELECT s FROM StockIndices s").getResultList();
 		return indices;

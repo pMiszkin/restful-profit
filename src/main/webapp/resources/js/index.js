@@ -3,7 +3,11 @@ angular.module('app', ['angularUtils.directives.dirPagination'])
     $http.get('/shares/all').
         then(function(response) {
             $scope.shares = response.data;
-        }); 
+        });
+
+	$scope.isActive = function(user) {
+		return user.User.Stats[0].active === "1";
+	};
 })
 .controller('getStockIndices', function($rootScope, $scope, $http) {
     $http.get('/shares/indices/all').
@@ -11,11 +15,25 @@ angular.module('app', ['angularUtils.directives.dirPagination'])
             $scope.indices = response.data;
         }); 
 })
-.controller('lolz', function($rootScope, $scope, $http, $location, $window) {
+.controller('loginPageController', function($rootScope, $scope, $http, $location, $window) {
   
-	$scope.error = false;
+  	$scope.error = false;
+  	authenticate();
+  	var credentials = {};
 
- 	var authenticate = function(credentials, callback) {
+
+  	$scope.login = function() {
+      	authenticate($scope.credentials, function() {
+	        if ($rootScope.authenticated) {
+	        	$window.location.href = "/user/print/"+$scope.username;
+	        	$scope.error = false;
+	        } else {
+	        	$scope.error = true;
+	        }
+     	});
+  	};
+
+  	var authenticate = function(credentials, callback) {
 		var string = 'username=' + $scope.username + '&password=' + $scope.password;
 
 	 	$http({
@@ -34,19 +52,5 @@ angular.module('app', ['angularUtils.directives.dirPagination'])
 	    	$rootScope.authenticated = false;
 	    	callback && callback();
 	    });
-	}
-
-  	authenticate();
-  	var credentials = {};
-
-  	$scope.login = function() {
-      	authenticate($scope.credentials, function() {
-	        if ($rootScope.authenticated) {
-	        	$window.location.href = "/user/print/"+$scope.username;
-	        	$scope.error = false;
-	        } else {
-	        	$scope.error = true;
-	        }
-     	});
-  	};
+	};
 });

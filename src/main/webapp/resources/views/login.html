@@ -12,9 +12,9 @@
 	</head>
 	<body>
 		<div class="container">
-			<div class="containerpage" ng-controller="lolz">
+			<div class="containerpage" ng-controller="loginPageController">
 				<div class="login_div">
-					<form class="login_form" role="form" ng-submit="login()">
+					<form class="login_form" role="form" ng-submit="login()" method="POST">
 					    <div class="form-group">
 					        <label for="username">Username:</label>
 					        <input class="form-control" type="text" id="username" name="username" ng-model="username"/>

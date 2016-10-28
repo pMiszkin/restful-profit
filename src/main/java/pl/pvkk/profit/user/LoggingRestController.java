@@ -1,7 +1,5 @@
 package pl.pvkk.profit.user;
 
-import java.security.Principal;
-
 import javax.validation.Valid;
 
 import org.springframework.beans.factory.annotation.Autowired;
