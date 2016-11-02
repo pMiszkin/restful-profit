@@ -37,7 +37,7 @@ public class GpwSharesDownloader {
 	private final String STOCK_URL = "https://www.gpw.pl/portfele_indeksow";
 	private final String INDICES_URL = "https://www.gpw.pl/ajaxindex.php?action=GPWListaSp&start=quotationsTab&gls_isin=";
 	
-	@PostConstruct
+	/*@PostConstruct
 	public void addShares() {
 		try {
 			getAndSetAllStockIndices();
@@ -45,7 +45,7 @@ public class GpwSharesDownloader {
 		} catch (IOException e) {
 			e.printStackTrace();
 		}
-	}
+	}*/
 	
 	private void getAndSetAllStockIndices() throws IOException {
 		Connection connect = Jsoup.connect(STOCK_URL);

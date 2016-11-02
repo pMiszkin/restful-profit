@@ -10,22 +10,23 @@
 		<link rel="stylesheet" href="resources/css/bootstrap.min.css">
 		<link rel="stylesheet" href="resources/css/main.css">
 	</head>
-	<body ng-controller="getStockIndices">
+	<body ng-controller="mainController">
 		<div class="top_bar">
 			<div class="home_button">
 				<a href="/">HOME</a>
 			</div>
 			<div class="login_wrapper" ng-show="!authenticated">
-				<a href="#">REGISTRATION</a>
-				<a href="login" float="right">LOGIN</a>
+				<a href="#">REGISTER</a>
+				<a href="login">LOGIN</a>
 			</div>
 			<div class="login_wrapper" ng-show="authenticated">
-				<a href="logout" float="right">LOGOUT</a>
+				<a href="#">PROFILE</a>
+				<a href="logout">LOGOUT</a>
 			</div>
 		</div>
 		<div class="container">
 			<div class="containerpage">
-				<div class="column_menu">
+				<div class="column_menu" ng-controller="getSharesAndIndices">
 					<h1>SEARCH</h1>
 					<div id="tab_box_title">
 						
@@ -62,7 +63,7 @@
 						</form>
 					</div>
 					<h1>SHARES - CONTINUOUS TRADING</h1>
-					<div id="shares_table_div" ng-controller="getSharesTable">
+					<div id="shares_table_div">
 						<div class="table_header">
 							<p>{{filtered.length}} shares founded</p>
 							<dir-pagination-controls
