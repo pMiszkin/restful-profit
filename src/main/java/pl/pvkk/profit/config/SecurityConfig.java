@@ -23,6 +23,7 @@ public class SecurityConfig extends WebSecurityConfigurerAdapter {
 		http
 			.authorizeRequests()
         	.antMatchers("/user/print/**").authenticated()
+        	.antMatchers("/login").anonymous()
         	.anyRequest().permitAll();
 		
 		http
