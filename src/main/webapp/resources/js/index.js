@@ -4,6 +4,7 @@ angular.module('app', ['angularUtils.directives.dirPagination'])
 		$http.get('/user').success(function(data) {
 			if (data.name != "anonymousUser") {
 				$rootScope.authenticated = true;
+				$rootScope.username = data.name;
 			} else {
 				$rootScope.authenticated = false;
 			}
@@ -13,11 +14,15 @@ angular.module('app', ['angularUtils.directives.dirPagination'])
 			callback && callback();
 		});
 	}
+
+	$rootScope.getPocket = function() {
+		return $http.get('/pocket/'+$rootScope.username);
+	}
 })
-.controller('mainController', function($rootScope, $scope, $http) {
+.controller('mainController', function($rootScope) {
 	$rootScope.authenticate();
 })
-.controller('getSharesAndIndices', function($rootScope, $scope, $http) {
+.controller('getSharesAndIndices', function($rootScope, $scope, $http, $window) {
     $http.get('/shares/all').
         then(function(response) {
             $scope.shares = response.data;
@@ -26,8 +31,19 @@ angular.module('app', ['angularUtils.directives.dirPagination'])
     $http.get('/shares/indices/all').
         then(function(response) {
             $scope.indices = response.data;
-        }); 
+        });
 
+    $scope.open = function(share) {
+    	if($rootScope.authenticated!=true) {
+    		$window.location.href = "/login";
+    	}
+    	else {
+    		$scope.share = share;
+    		$rootScope.getPocket().then(function(data) {
+    			$scope.pocket = data.data;
+    		});
+    	}
+    } 
 })
 .controller('loginPageController', function($rootScope, $scope, $http, $window) {
 

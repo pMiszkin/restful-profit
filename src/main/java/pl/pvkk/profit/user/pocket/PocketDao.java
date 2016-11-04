@@ -13,8 +13,8 @@ public class PocketDao {
 	@PersistenceContext
 	private EntityManager em;
 	
-	public Pocket getPocketById(long id){	
-		Pocket pocket = em.find(Pocket.class, id);
+	public Pocket getPocketById(String username){	
+		Pocket pocket = em.find(Pocket.class, username);
 		return pocket;
 	}
 	

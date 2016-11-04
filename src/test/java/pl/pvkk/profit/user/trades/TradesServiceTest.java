@@ -47,7 +47,7 @@ public class TradesServiceTest {
 		pocket = getPocketStubData();
 		share = getShareStubData();
 		when(sharesService.isShareExists(anyObject())).thenReturn(true);
-		when(pocketService.getPocketById(1)).thenReturn(pocket);
+		when(pocketService.getPocketById("login")).thenReturn(pocket);
 		when(sharesService.findShareByShortcut(anyObject())).thenReturn(share);
 	}
 
@@ -97,7 +97,7 @@ public class TradesServiceTest {
 	
 	private Pocket getPocketStubData() {
 		pocket = new Pocket();
-		pocket.setId(1L);
+		pocket.setUsername("login");
 
 		return pocket;
 	}

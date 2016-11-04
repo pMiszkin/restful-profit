@@ -11,8 +11,8 @@ public class PocketService {
 	@Autowired
 	private PocketDao pocketDao;
 
-	public Pocket getPocketById(long id) {
-		return pocketDao.getPocketById(id);
+	public Pocket getPocketById(String username) {
+		return pocketDao.getPocketById(username);
 	}
 
 	public boolean isShareExistsInPocket(Pocket pocket, String shareShortcut, int shareNumber) {

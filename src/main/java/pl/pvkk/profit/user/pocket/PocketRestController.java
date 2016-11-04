@@ -1,6 +1,8 @@
 package pl.pvkk.profit.user.pocket;
 
 import org.springframework.beans.factory.annotation.Autowired;
+import org.springframework.http.HttpStatus;
+import org.springframework.http.ResponseEntity;
 import org.springframework.web.bind.annotation.GetMapping;
 import org.springframework.web.bind.annotation.PathVariable;
 import org.springframework.web.bind.annotation.RequestMapping;
@@ -13,9 +15,10 @@ public class PocketRestController {
 	@Autowired
 	private PocketService pocketService;
 	
-	@GetMapping("/{pocketId}")
-	public String getPocketData(@PathVariable long pocketId){
-		Pocket pocket = pocketService.getPocketById(pocketId);
-		return pocket == null ? "wrong id bruh" : pocket.toString();
+	@GetMapping("/{username}")
+	public ResponseEntity<Pocket> getPocketData(@PathVariable String username){
+		Pocket pocket = pocketService.getPocketById(username);
+		return pocket == null ? new ResponseEntity<>(HttpStatus.NOT_FOUND) : 
+			new ResponseEntity<Pocket>(pocket, HttpStatus.OK);
 	}
 }

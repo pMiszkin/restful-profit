@@ -20,7 +20,7 @@
 				<a href="login">LOGIN</a>
 			</div>
 			<div class="login_wrapper" ng-show="authenticated">
-				<a href="#">PROFILE</a>
+				<a href="user/print/{{username}}">PROFILE</a>
 				<a href="logout">LOGOUT</a>
 			</div>
 		</div>
@@ -75,6 +75,7 @@
 						<table id="shares_table" class="table">
 							<thead>
 								<tr>
+									<th scope="col" abbr="Buy">Buy</th>
 									<th scope="col" abbr="Code">Code</th>
 									<th scope="col" abbr="Name">Name</th>
 									<th scope="col" abbr="Currency">Currency</th>
@@ -90,6 +91,11 @@
 								<tr dir-paginate="x in filtered = (shares | filter:searchText | filter:{indices:selectedIndex}) 
 									| orderBy:selected:order | itemsPerPage:20"
 									ng-style="x.quotations[0].change < 0 && {'color': 'red'} || x.quotations[0].change > 0 && {'color': 'green'}">
+									<td>
+										<button class="buy_button btn" data-toggle="modal" data-target="#buyModal" ng-click="open(x)">
+											buy
+										</button>
+									</td>
 									<td>{{x.shortcut}}</td>
 									<td><a href="shares/company/{{x.shortcut}}">{{x.name}}</a></td>
 									<td>{{x.quotations[0].currency}}</td>
@@ -102,6 +108,51 @@
 								</tr>
 							</tbody>
 						</table>
+						<div class="modal fade" id="buyModal" tabindex="-1" role="dialog" aria-labelledby="myModalLabel" aria-hidden="true">
+							<div class="modal-dialog">
+								<div class="modal-content">
+									<div class="modal-header">
+										<div class="close" data-dismiss="modal">x</div>
+										<h4 class="modal-title">
+											<a href="shares/company/{{share.shortcut}}" style="text-decoration:none;color:black;">
+												{{share.name}}
+											</a>
+										</h4>
+									</div>
+									<div class="modal-body">
+										<div class="modal-left">
+											<div class="line_div">
+												<span class="left_span">Your money</span>
+												<span class="right_span">{{pocket.money}}$</span>
+											</div>
+											<div class="line_div">
+												<span class="left_span">Buy</span>
+												<span class="right_span">for {{share.quotations[0].cumulatedVolume*number}}$</span>
+												<span class="right_span"><input type="number" ng-model="number" ng-init="number=1" min="1" style="width:60px;"></span>
+											</div>
+											<div class="line_div">
+												<span class="left_span">Change</span>
+												<span class="right_span" ng-style="share.quotations[0].change < 0 && {'color': 'red'} || share.quotations[0].change > 0 && {'color': 'green'}">{{share.quotations[0].change}}%</span>
+											</div>
+											<div class="line_div">
+												<span class="left_span">Volume</span>
+												<span class="right_span">{{share.quotations[0].cumulatedVolume}}$</span>
+											</div>
+											<div class="line_div">
+												<span class="left_span">Value</span>
+												<span class="right_span">{{share.quotations[0].cumulatedValue}}K</span>
+											</div>
+										</div>
+										<div class="modal-right">
+											<h1 style="border-bottom:none;">CHART</h1>
+										</div>
+									</div>
+									<div class="modal-footer" style="text-align:center">
+										<button class="btn" ng-click="buyShares">BUY</button>
+									</div>
+								</div>
+							</div>
+						</div>
 					</div>
 				</div>
 			</div>

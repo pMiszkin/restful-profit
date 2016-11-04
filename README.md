@@ -26,4 +26,8 @@ Here you have mapped URLs. Each adress works on **localhost:8080**. Also you can
 "[/transfer/sell] -> [POST] PARAMS: @RequestParam String shareShortcut, @RequestParam int shareNumber, ",
 ```
 
+default user is:
+- login: "login"
+- password: "password"
+
 ![ss](/src/main/webapp/resources/ss.png?raw=true)

@@ -26,7 +26,7 @@ public class TradesService {
 	public ResponseEntity<String> buyShares(String shareShortcut, int shareNumber) {
 		String response;
 		//Ill do this
-		Pocket pocket = pocketService.getPocketById(1);
+		Pocket pocket = pocketService.getPocketById("login");
 
 		if(!sharesService.isShareExists(shareShortcut)) {
 			response = "This share doesn't exists!";
@@ -56,7 +56,7 @@ public class TradesService {
 	public ResponseEntity<String> sellShares(String shareShortcut, int shareNumber) {
 		String response;
 		//Ill do this
-		Pocket pocket = pocketService.getPocketById(1);
+		Pocket pocket = pocketService.getPocketById("login");
 		
 		if(!sharesService.isShareExists(shareShortcut)) {
 			response = "This share doesn't exists!";

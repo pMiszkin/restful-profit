@@ -3,8 +3,6 @@ package pl.pvkk.profit.user;
 import java.util.List;
 
 import javax.persistence.Entity;
-import javax.persistence.GeneratedValue;
-import javax.persistence.GenerationType;
 import javax.persistence.Id;
 import javax.persistence.OneToMany;
 import javax.persistence.OneToOne;
@@ -16,8 +14,7 @@ import pl.pvkk.profit.user.trades.Transaction;
 public class UserProfile {
 
 	@Id
-	@GeneratedValue(strategy = GenerationType.IDENTITY)
-	private long id;
+	private String username;
 	@OneToOne
 	private Pocket pocket;
 	@OneToMany(mappedBy = "seller")
@@ -25,12 +22,12 @@ public class UserProfile {
 	@OneToMany(mappedBy = "buyer")
 	private List<Transaction> purchase;
 
-	public long getId() {
-		return id;
+	public String getUsername() {
+		return username;
 	}
 
-	public void setId(long id) {
-		this.id = id;
+	public void setUsername(String username) {
+		this.username = username;
 	}
 
 	public Pocket getPocket() {
@@ -39,11 +36,6 @@ public class UserProfile {
 
 	public void setPocket(Pocket pocket) {
 		this.pocket = pocket;
-	}
-
-	@Override
-	public String toString() {
-		return "UserProfile [id=" + id + ", pocket=" + pocket + "]";
 	}
 
 	public List<Transaction> getSales() {
@@ -60,6 +52,6 @@ public class UserProfile {
 
 	public void setPurchase(List<Transaction> purchase) {
 		this.purchase = purchase;
-	}	
-	
+	}
+
 }

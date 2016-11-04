@@ -17,8 +17,9 @@ public class UserDao {
 	
 	//@Transactional(readOnly=true)
 	public User getUserByName(String username){
-
-		return em.find(User.class, username);
+		User user = em.find(User.class, username);
+		user.setPassword("nie twoja sprawa");
+		return user;
 	}
 	
 	public boolean isLoginTaken(String login){
@@ -32,6 +33,8 @@ public class UserDao {
 	public void saveUser(User user){
 		UserProfile profile = new UserProfile();
 		Pocket pocket = new Pocket();
+		profile.setUsername(user.getLogin());
+		pocket.setUsername(user.getLogin());
 		profile.setPocket(pocket);
 		user.setProfile(profile);
 		em.persist(user);

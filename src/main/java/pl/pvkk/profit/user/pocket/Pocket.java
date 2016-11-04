@@ -5,8 +5,6 @@ import java.util.Map;
 
 import javax.persistence.ElementCollection;
 import javax.persistence.Entity;
-import javax.persistence.GeneratedValue;
-import javax.persistence.GenerationType;
 import javax.persistence.Id;
 import javax.persistence.MapKeyColumn;
 
@@ -14,11 +12,10 @@ import javax.persistence.MapKeyColumn;
 public class Pocket {
 
 	@Id
-	@GeneratedValue(strategy = GenerationType.IDENTITY)
-	private long id;
+	private String username;
 	private double money;
 	@ElementCollection
-    @MapKeyColumn(name="share_shortcut")
+	@MapKeyColumn(name = "share_shortcut")
 	private Map<String, Integer> shares;
 
 	public Pocket() {
@@ -26,12 +23,12 @@ public class Pocket {
 		shares = new HashMap<String, Integer>();
 	}
 
-	public long getId() {
-		return id;
+	public String getUsername() {
+		return username;
 	}
 
-	public void setId(long id) {
-		this.id = id;
+	public void setUsername(String username) {
+		this.username = username;
 	}
 
 	public double getMoney() {
@@ -48,11 +45,6 @@ public class Pocket {
 
 	public void setShares(Map<String, Integer> shares) {
 		this.shares = shares;
-	}
-
-	@Override
-	public String toString() {
-		return "Pocket [id=" + id + ", money=" + money + ", shares=" + shares + "]";
 	}
 
 }
