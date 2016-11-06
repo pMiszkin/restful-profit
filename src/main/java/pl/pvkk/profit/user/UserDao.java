@@ -41,4 +41,5 @@ public class UserDao {
 		em.persist(profile);
 		em.persist(pocket);
 	}
+
 }

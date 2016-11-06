@@ -33,17 +33,34 @@ angular.module('app', ['angularUtils.directives.dirPagination'])
             $scope.indices = response.data;
         });
 
+	$scope.buyingError = false;
+
     $scope.open = function(share) {
     	if($rootScope.authenticated!=true) {
     		$window.location.href = "/login";
     	}
     	else {
+    		$scope.buyingError = false;
     		$scope.share = share;
     		$rootScope.getPocket().then(function(data) {
     			$scope.pocket = data.data;
     		});
     	}
-    } 
+    }
+
+    $scope.buyShares = function() {
+	 	$http({
+   			method: 'POST',
+    		url: '/transfer/buy',
+    		headers: {'Content-Type': 'application/x-www-form-urlencoded'},
+    		params: {'name': $scope.share.shortcut, 'number': $scope.number}
+		}).success(function() {
+			$window.location.href = "/pocket/"+$rootScope.username;
+		}).error(function(response) {
+			$scope.buyingError = true;
+			$scope.buyingErrorResponse = response;
+		});
+   } 
 })
 .controller('loginPageController', function($rootScope, $scope, $http, $window) {
 

@@ -108,6 +108,7 @@
 								</tr>
 							</tbody>
 						</table>
+						<!-- START MODAL !-->
 						<div class="modal fade" id="buyModal" tabindex="-1" role="dialog" aria-labelledby="myModalLabel" aria-hidden="true">
 							<div class="modal-dialog">
 								<div class="modal-content">
@@ -127,7 +128,7 @@
 											</div>
 											<div class="line_div">
 												<span class="left_span">Buy</span>
-												<span class="right_span">for {{share.quotations[0].cumulatedVolume*number}}$</span>
+												<span class="right_span">for {{share.quotations[0].referencePrice*number}}$</span>
 												<span class="right_span"><input type="number" ng-model="number" ng-init="number=1" min="1" style="width:60px;"></span>
 											</div>
 											<div class="line_div">
@@ -135,8 +136,8 @@
 												<span class="right_span" ng-style="share.quotations[0].change < 0 && {'color': 'red'} || share.quotations[0].change > 0 && {'color': 'green'}">{{share.quotations[0].change}}%</span>
 											</div>
 											<div class="line_div">
-												<span class="left_span">Volume</span>
-												<span class="right_span">{{share.quotations[0].cumulatedVolume}}$</span>
+												<span class="left_span">Price</span>
+												<span class="right_span">{{share.quotations[0].referencePrice}}$</span>
 											</div>
 											<div class="line_div">
 												<span class="left_span">Value</span>
@@ -148,11 +149,13 @@
 										</div>
 									</div>
 									<div class="modal-footer" style="text-align:center">
-										<button class="btn" ng-click="buyShares">BUY</button>
+										<p ng-show="buyingError" style="color:red;">{{buyingErrorResponse}}</p>
+										<button class="btn" ng-click="buyShares()">BUY</button>
 									</div>
 								</div>
 							</div>
 						</div>
+						<!-- END MODAL !-->
 					</div>
 				</div>
 			</div>

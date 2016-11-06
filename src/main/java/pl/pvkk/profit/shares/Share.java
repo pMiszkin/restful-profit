@@ -24,10 +24,6 @@ public class Share {
 		quotations = new ArrayList<Quotation>();
 	}
 
-	@Override
-	public String toString() {
-		return "Share [name=" + name + ", shortcut=" + shortcut + ", quotations=" + quotations + "]";
-	}
 
 	public String getName() {
 		return name;

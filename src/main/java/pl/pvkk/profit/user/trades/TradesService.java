@@ -23,10 +23,10 @@ public class TradesService {
 	private PocketService pocketService;
 	
 
-	public ResponseEntity<String> buyShares(String shareShortcut, int shareNumber) {
+	public ResponseEntity<String> buyShares(String shareShortcut, int shareNumber, String username) {
 		String response;
 		//Ill do this
-		Pocket pocket = pocketService.getPocketById("login");
+		Pocket pocket = pocketService.getPocketById(username);
 
 		if(!sharesService.isShareExists(shareShortcut)) {
 			response = "This share doesn't exists!";
@@ -46,17 +46,17 @@ public class TradesService {
 			return new ResponseEntity<String>(response, HttpStatus.BAD_REQUEST);	
 		}
 		
-		pocketService.setShares(pocket, shareShortcut, shareNumber, sharePrice);
+		pocketService.setSharesAndTransactions(pocket, share, shareNumber);
 		
 		response = "You've bought "+shareNumber+" shares from "+share.getName()+" company, for "+shareNumber*sharePrice;
 		return new ResponseEntity<String>(response, HttpStatus.OK);
 	}
 	
 	
-	public ResponseEntity<String> sellShares(String shareShortcut, int shareNumber) {
+	public ResponseEntity<String> sellShares(String shareShortcut, int shareNumber, String username) {
 		String response;
 		//Ill do this
-		Pocket pocket = pocketService.getPocketById("login");
+		Pocket pocket = pocketService.getPocketById(username);
 		
 		if(!sharesService.isShareExists(shareShortcut)) {
 			response = "This share doesn't exists!";
@@ -75,9 +75,10 @@ public class TradesService {
 		List<Quotation> quotations = share.getQuotations();
 		double sharePrice = quotations.get(quotations.size()-1).getReferencePrice();
 		
-		pocketService.setShares(pocket, shareShortcut, -shareNumber, sharePrice);
+		pocketService.setSharesAndTransactions(pocket, share, -shareNumber);
 		
 		response = "You've sold "+shareNumber+" from "+share.getName()+" company, for "+shareNumber*sharePrice;
 		return new ResponseEntity<String>(response, HttpStatus.OK);
 	}
+	
 }

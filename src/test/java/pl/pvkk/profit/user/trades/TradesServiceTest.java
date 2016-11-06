@@ -60,14 +60,14 @@ public class TradesServiceTest {
 	public void testBuyShareWhatDoesntExist() {
 		when(sharesService.isShareExists(anyObject())).thenReturn(false);
 
-		ResponseEntity<String> response = tradesService.buyShares(anyString(), 5);
+		ResponseEntity<String> response = tradesService.buyShares(anyString(), 5, "login");
 		System.out.println(response);
 		assertEquals(response.getStatusCode(), HttpStatus.BAD_REQUEST);
 	}
 
 	@Test
 	public void testBuyShare() {		
-		ResponseEntity<String> response = tradesService.buyShares(anyString(), 5);
+		ResponseEntity<String> response = tradesService.buyShares(anyString(), 5, "login");
 		System.out.println(response);
 		System.out.println(pocket);
 		
@@ -76,7 +76,7 @@ public class TradesServiceTest {
 
 	@Test
 	public void testBuyShareWithoutMoney() {
-		ResponseEntity<String> response = tradesService.buyShares(anyString(), 50000);
+		ResponseEntity<String> response = tradesService.buyShares(anyString(), 50000, "login");
 		System.out.println(response);
 		
 		assertEquals(response.getStatusCode(), HttpStatus.BAD_REQUEST);
@@ -84,7 +84,7 @@ public class TradesServiceTest {
 
 	@Test
 	public void testBuyMinusAmountOfShare() {
-		ResponseEntity<String> response = tradesService.buyShares(anyString(), -5);
+		ResponseEntity<String> response = tradesService.buyShares(anyString(), -5, "login");
 		System.out.println(response);
 		
 		assertEquals(response.getStatusCode(), HttpStatus.BAD_REQUEST);

@@ -1,5 +1,7 @@
 package pl.pvkk.profit.user.trades;
 
+import java.util.Date;
+
 import javax.persistence.Entity;
 import javax.persistence.GeneratedValue;
 import javax.persistence.Id;
@@ -7,7 +9,7 @@ import javax.persistence.ManyToOne;
 import javax.persistence.OneToOne;
 
 import pl.pvkk.profit.shares.Share;
-import pl.pvkk.profit.user.UserProfile;
+import pl.pvkk.profit.user.pocket.Pocket;
 
 @Entity
 public class Transaction {
@@ -15,10 +17,9 @@ public class Transaction {
 	@Id
 	@GeneratedValue
 	private long id;
+	private Date date;
 	@ManyToOne
-	private UserProfile seller;
-	@ManyToOne
-	private UserProfile buyer;
+	private Pocket buyer;
 	@OneToOne
 	private Share share;
 	private int share_number;
@@ -32,19 +33,19 @@ public class Transaction {
 		this.id = id;
 	}
 
-	public UserProfile getSeller() {
-		return seller;
+	public Date getDate() {
+		return date;
 	}
 
-	public void setSeller(UserProfile seller) {
-		this.seller = seller;
+	public void setDate(Date date) {
+		this.date = date;
 	}
 
-	public UserProfile getBuyer() {
+	public Pocket getBuyer() {
 		return buyer;
 	}
 
-	public void setBuyer(UserProfile buyer) {
+	public void setBuyer(Pocket buyer) {
 		this.buyer = buyer;
 	}
 

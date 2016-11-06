@@ -6,6 +6,8 @@ import javax.persistence.PersistenceContext;
 import org.springframework.stereotype.Repository;
 import org.springframework.transaction.annotation.Transactional;
 
+import pl.pvkk.profit.user.trades.Transaction;
+
 @Repository
 @Transactional
 public class PocketDao {
@@ -18,7 +20,8 @@ public class PocketDao {
 		return pocket;
 	}
 	
-	public void updateSharesAndMoneyInPocket(Pocket pocket){
+	public void updateSharesAndMoneyInPocket(Pocket pocket, Transaction transaction){
+		em.persist(transaction);
 		em.merge(pocket);
 	}
 }
