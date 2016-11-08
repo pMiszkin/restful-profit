@@ -65,7 +65,7 @@ angular.module('app', ['angularUtils.directives.dirPagination'])
 			$scope.buyingError = true;
 			$scope.buyingErrorResponse = response;
 		});
-	} 
+	}
 })
 /**
 	* /login controller
@@ -132,8 +132,8 @@ angular.module('app', ['angularUtils.directives.dirPagination'])
     		url: '/transfer/buy',
     		headers: {'Content-Type': 'application/x-www-form-urlencoded'},
     		params: {'name': $scope.share.shortcut, 'number': $scope.number}
-		}).success(function(response) {
-			$window.location.href = "/pocket/"+$rootScope.username;
+		}).success(function() {
+			$window.location.href = "/user/profile/"+$rootScope.username;
 		}).error(function(response) {
 			$scope.buyingError = true;
 			$scope.buyingErrorResponse = response;
@@ -148,6 +148,9 @@ angular.module('app', ['angularUtils.directives.dirPagination'])
 		}
 	});
 })
+/*
+	* user profile page /user/profile/{username}
+*/
 .controller('userController', function($rootScope, $scope, $http, $location, $window)  {
 	$scope.shares = [];
 
@@ -175,6 +178,20 @@ angular.module('app', ['angularUtils.directives.dirPagination'])
 
 	$scope.buyingError = false;
 
+	$scope.buyShares = function() {
+	 	$http({
+   			method: 'POST',
+    		url: '/transfer/buy',
+    		headers: {'Content-Type': 'application/x-www-form-urlencoded'},
+    		params: {'name': $scope.share.shortcut, 'number': $scope.number}
+		}).success(function() {
+			$window.location.href = "/user/profile/"+$rootScope.username;
+		}).error(function(response) {
+			$scope.buyingError = true;
+			$scope.buyingErrorResponse = response;
+		});
+	}
+
     $scope.open = function(share) {
     	if($rootScope.authenticated!=true) {
     		$window.location.href = "/login";
@@ -189,17 +206,20 @@ angular.module('app', ['angularUtils.directives.dirPagination'])
     	}
     }
 
-    $scope.buyShares = function() {
+    $scope.sellingError = false;
+
+	$scope.sellShares = function(share, number) {
 	 	$http({
    			method: 'POST',
-    		url: '/transfer/buy',
+    		url: '/transfer/sell',
     		headers: {'Content-Type': 'application/x-www-form-urlencoded'},
-    		params: {'name': $scope.share.shortcut, 'number': $scope.number}
+    		params: {'name': share.shortcut, 'number': number}
 		}).success(function() {
 			$window.location.href = "/user/profile/"+$rootScope.username;
 		}).error(function(response) {
-			$scope.buyingError = true;
-			$scope.buyingErrorResponse = response;
+			$scope.sellingError = true;
+			$scope.sellingErrorResponse = response;
 		});
 	}
+    
 });

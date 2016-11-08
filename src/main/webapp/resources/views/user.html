@@ -29,7 +29,7 @@
 				<div class="column_menu" data-ng-controller="userController" data-ng-init="init()">
 					<h1>Welcome {{user.login}}</h1>
 					<p>You have just {{user.profile.pocket.money}}$ so go back to work.</p>
-
+					<p ng-show="sellingError" style="color:red;">{{sellingErrorResponse}}</p>
 					<div>
 						<h1>Your shares:</h1>
 						<table id="shares_table" class="table">
@@ -58,11 +58,11 @@
 										</button>
 									</td>
 									<td>
-										<button class="buy_button btn" ng-click="sell()">
+										<button class="buy_button btn" ng-click="sellShares(x, toSellNumber[$index])">
 											sell
 										</button>
 									</td>
-									<td>{{user.profile.pocket.shares[x.shortcut]}}</td>
+									<td><input type="number" ng-model="toSellNumber[$index]" ng-init="toSellNumber[$index]=user.profile.pocket.shares[x.shortcut]" min="1" style="width:40px;"> /{{user.profile.pocket.shares[x.shortcut]}}</td>
 									<td>{{x.shortcut}}</td>
 									<td><a href="shares/company/{{x.shortcut}}">{{x.name}}</a></td>
 									<td>{{x.quotations[0].currency}}</td>

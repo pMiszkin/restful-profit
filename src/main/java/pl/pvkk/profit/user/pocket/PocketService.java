@@ -1,7 +1,6 @@
 package pl.pvkk.profit.user.pocket;
 
 import java.math.BigDecimal;
-import java.math.RoundingMode;
 import java.util.Date;
 import java.util.List;
 import java.util.Map;
@@ -28,7 +27,11 @@ public class PocketService {
 	public boolean isShareExistsInPocket(Pocket pocket, String shareShortcut, int shareNumber) {
 		Map<String, Integer> shares = pocket.getShares();
 
-		return shares.containsKey(shareShortcut.toUpperCase());
+		if(!shares.containsKey(shareShortcut.toUpperCase()))
+				return false;
+		else if(shares.get(shareShortcut) < shareNumber)
+			return false;
+		return true;
 	}
 
 	@Transactional
