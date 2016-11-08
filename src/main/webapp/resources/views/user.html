@@ -1,0 +1,131 @@
+<!doctype html>
+<html ng-app="app">
+	<head>
+		<title>Restful Profit</title>
+		<script src="/resources/js/angular.min.js"></script>
+		<script src="https://ajax.googleapis.com/ajax/libs/jquery/1.12.4/jquery.min.js"></script>
+		<script src="/resources/js/bootstrap.min.js"></script>
+		<script src="/resources/js/dirPagination.js"></script>
+		<script src="/resources/js/index.js"></script>
+		<link rel="stylesheet" href="/resources/css/bootstrap.min.css">
+		<link rel="stylesheet" href="/resources/css/main.css">
+	</head>
+	<body ng-controller="mainController">
+		<div class="top_bar">
+			<div class="home_button">
+				<a href="/">HOME</a>
+			</div>
+			<div class="login_wrapper" ng-show="!authenticated">
+				<a href="#">REGISTER</a>
+				<a href="/login">LOGIN</a>
+			</div>
+			<div class="login_wrapper" ng-show="authenticated">
+				<a href="/user/profile/{{username}}">PROFILE</a>
+				<a href="/logout">LOGOUT</a>
+			</div>
+		</div>
+		<div class="container" ng-cloak="true">
+			<div class="containerpage">
+				<div class="column_menu" data-ng-controller="userController" data-ng-init="init()">
+					<h1>Welcome {{user.login}}</h1>
+					<p>You have just {{user.profile.pocket.money}}$ so go back to work.</p>
+
+					<div>
+						<h1>Your shares:</h1>
+						<table id="shares_table" class="table">
+							<thead>
+								<tr>
+									<th scope="col" abbr="Buy">Buy</th>
+									<th scope="col" abbr="Sell">Sell</th>
+									<th scope="col" abbr="Number">Number</th>
+									<th scope="col" abbr="Code">Code</th>
+									<th scope="col" abbr="Name">Name</th>
+									<th scope="col" abbr="Currency">Currency</th>
+									<th scope="col" abbr="Price">Price</th>
+									<th scope="col" abbr="High">High</th>
+									<th scope="col" abbr="Low">Low</th>
+									<th scope="col" abbr="Change">Change</th>
+									<th scope="col" abbr="Volume">Volume</th>
+									<th scope="col" abbr="Value">Value (thous.)</th>
+								</tr>
+							</thead>
+							<tbody align="right">
+								<tr ng-repeat="x in shares"
+									ng-style="x.quotations[0].change < 0 && {'color': 'red'} || x.quotations[0].change > 0 && {'color': 'green'}">
+									<td>
+										<button class="buy_button btn" data-toggle="modal" data-target="#buyModal" ng-click="open(x)">
+											buy
+										</button>
+									</td>
+									<td>
+										<button class="buy_button btn" ng-click="sell()">
+											sell
+										</button>
+									</td>
+									<td>{{user.profile.pocket.shares[x.shortcut]}}</td>
+									<td>{{x.shortcut}}</td>
+									<td><a href="shares/company/{{x.shortcut}}">{{x.name}}</a></td>
+									<td>{{x.quotations[0].currency}}</td>
+									<td>{{x.quotations[0].referencePrice}}</td>
+									<td>{{x.quotations[0].high}}</td>
+									<td>{{x.quotations[0].low}}</td>
+									<td>{{x.quotations[0].change}}</td>
+									<td>{{x.quotations[0].cumulatedVolume}}</td>
+									<td>{{x.quotations[0].cumulatedValue}}</td>
+								</tr>
+							</tbody>
+						</table>
+					</div>
+					<!-- START MODAL !-->
+					<div class="modal fade" id="buyModal" tabindex="-1" role="dialog" aria-labelledby="myModalLabel" aria-hidden="true">
+						<div class="modal-dialog">
+							<div class="modal-content">
+								<div class="modal-header">
+									<div class="close" data-dismiss="modal">x</div>
+									<h4 class="modal-title">
+										<a href="shares/company/{{share.shortcut}}" style="text-decoration:none;color:black;">
+											{{share.name}}
+										</a>
+									</h4>
+								</div>
+								<div class="modal-body">
+									<div class="modal-left">
+										<div class="line_div">
+											<span class="left_span">Your money</span>
+											<span class="right_span">{{pocket.money}}$</span>
+										</div>
+										<div class="line_div">
+											<span class="left_span">Buy</span>
+											<span class="right_span">for {{(share.quotations[0].referencePrice*number).toFixed(2)}}$</span>
+											<span class="right_span"><input type="number" ng-model="number" ng-init="number=1" min="1" style="width:60px;"></span>
+										</div>
+										<div class="line_div">
+											<span class="left_span">Change</span>
+											<span class="right_span" ng-style="share.quotations[0].change < 0 && {'color': 'red'} || share.quotations[0].change > 0 && {'color': 'green'}">{{share.quotations[0].change}}%</span>
+										</div>
+										<div class="line_div">
+											<span class="left_span">Price</span>
+											<span class="right_span">{{share.quotations[0].referencePrice}}$</span>
+										</div>
+										<div class="line_div">
+											<span class="left_span">Value</span>
+											<span class="right_span">{{share.quotations[0].cumulatedValue}}K</span>
+										</div>
+									</div>
+									<div class="modal-right">
+										<h1 style="border-bottom:none;">CHART</h1>
+									</div>
+								</div>
+								<div class="modal-footer" style="text-align:center">
+									<p ng-show="buyingError" style="color:red;">{{buyingErrorResponse}}</p>
+									<button class="btn" ng-click="buyShares()">BUY</button>
+								</div>
+							</div>
+						</div>
+					</div>
+					<!-- END MODAL !-->
+				</div>
+			</div>
+		</div>
+	</body>
+</html>

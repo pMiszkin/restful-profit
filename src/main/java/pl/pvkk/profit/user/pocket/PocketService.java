@@ -1,5 +1,7 @@
 package pl.pvkk.profit.user.pocket;
 
+import java.math.BigDecimal;
+import java.math.RoundingMode;
 import java.util.Date;
 import java.util.List;
 import java.util.Map;
@@ -55,7 +57,8 @@ public class PocketService {
 		transaction.setDate(new Date());
 		
 		pocket.setShares(shares);
-		pocket.setMoney(pocket.getMoney()-sharePrice*shareNumber);
+		BigDecimal cost = BigDecimal.valueOf(sharePrice*shareNumber);
+		pocket.setMoney(pocket.getMoney().subtract(cost));
 		pocketDao.updateSharesAndMoneyInPocket(pocket, transaction);
 	}
 

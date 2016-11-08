@@ -1,5 +1,6 @@
 package pl.pvkk.profit.user.pocket;
 
+import java.math.BigDecimal;
 import java.util.HashMap;
 import java.util.List;
 import java.util.Map;
@@ -19,7 +20,7 @@ public class Pocket {
 	@Id
 	private String username;
 	@Column(scale = 2)
-	private double money;
+	private BigDecimal money;
 	@ElementCollection
 	@MapKeyColumn(name = "share_shortcut")
 	private Map<String, Integer> shares;
@@ -27,7 +28,7 @@ public class Pocket {
 	private List<Transaction> purchases;
 
 	public Pocket() {
-		money = 5000;
+		money = new BigDecimal(5000);
 		shares = new HashMap<String, Integer>();
 	}
 
@@ -39,11 +40,11 @@ public class Pocket {
 		this.username = username;
 	}
 
-	public double getMoney() {
+	public BigDecimal getMoney() {
 		return money;
 	}
 
-	public void setMoney(double money) {
+	public void setMoney(BigDecimal money) {
 		this.money = money;
 	}
 

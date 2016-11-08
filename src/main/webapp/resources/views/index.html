@@ -2,13 +2,13 @@
 <html ng-app="app">
 	<head>
 		<title>Restful Profit</title>
-		<script src="resources/js/angular.min.js"></script>
+		<script src="/resources/js/angular.min.js"></script>
 		<script src="https://ajax.googleapis.com/ajax/libs/jquery/1.12.4/jquery.min.js"></script>
-		<script src="resources/js/bootstrap.min.js"></script>
-		<script src="resources/js/dirPagination.js"></script>
-		<script src="resources/js/index.js"></script>
-		<link rel="stylesheet" href="resources/css/bootstrap.min.css">
-		<link rel="stylesheet" href="resources/css/main.css">
+		<script src="/resources/js/bootstrap.min.js"></script>
+		<script src="/resources/js/dirPagination.js"></script>
+		<script src="/resources/js/index.js"></script>
+		<link rel="stylesheet" href="/resources/css/bootstrap.min.css">
+		<link rel="stylesheet" href="/resources/css/main.css">
 	</head>
 	<body ng-controller="mainController">
 		<div class="top_bar">
@@ -17,11 +17,11 @@
 			</div>
 			<div class="login_wrapper" ng-show="!authenticated">
 				<a href="#">REGISTER</a>
-				<a href="login">LOGIN</a>
+				<a href="/login">LOGIN</a>
 			</div>
 			<div class="login_wrapper" ng-show="authenticated">
-				<a href="user/print/{{username}}">PROFILE</a>
-				<a href="logout">LOGOUT</a>
+				<a href="/user/profile/{{username}}">PROFILE</a>
+				<a href="/logout">LOGOUT</a>
 			</div>
 		</div>
 		<div class="container">
@@ -128,7 +128,7 @@
 											</div>
 											<div class="line_div">
 												<span class="left_span">Buy</span>
-												<span class="right_span">for {{share.quotations[0].referencePrice*number}}$</span>
+												<span class="right_span">for {{(share.quotations[0].referencePrice*number).toFixed(2)}}$</span>
 												<span class="right_span"><input type="number" ng-model="number" ng-init="number=1" min="1" style="width:60px;"></span>
 											</div>
 											<div class="line_div">

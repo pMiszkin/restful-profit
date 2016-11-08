@@ -41,7 +41,7 @@ public class TradesService {
 			response = "You're trying to buy 0 or less shares";
 			return new ResponseEntity<String>(response, HttpStatus.BAD_REQUEST);
 		}
-		else if(shareNumber*sharePrice > pocket.getMoney()) {
+		else if(shareNumber*sharePrice > pocket.getMoney().doubleValue()) {
 			response = "You have no money for that";
 			return new ResponseEntity<String>(response, HttpStatus.BAD_REQUEST);	
 		}

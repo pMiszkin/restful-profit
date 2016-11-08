@@ -7,8 +7,8 @@ import org.springframework.http.HttpEntity;
 import org.springframework.http.HttpStatus;
 import org.springframework.http.ResponseEntity;
 import org.springframework.web.bind.annotation.GetMapping;
-import org.springframework.web.bind.annotation.PathVariable;
 import org.springframework.web.bind.annotation.RequestMapping;
+import org.springframework.web.bind.annotation.RequestParam;
 import org.springframework.web.bind.annotation.RestController;
 
 
@@ -29,9 +29,9 @@ public class SharesRestController {
 		}
 	}
 	
-	@GetMapping("/company/{shareShortcut}")
-	public HttpEntity<Share> findShare(@PathVariable String shareShortcut) {
-		Share share = sharesService.findShareByShortcut(shareShortcut);
+	@GetMapping("/company")
+	public HttpEntity<Share> findShare(@RequestParam String shortcut) {
+		Share share = sharesService.findShareByShortcut(shortcut);
 		return share == null ? new ResponseEntity<>(HttpStatus.NOT_FOUND) : 
 			new ResponseEntity<Share>(share, HttpStatus.OK);
 	}

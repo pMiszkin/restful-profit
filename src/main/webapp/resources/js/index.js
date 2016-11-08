@@ -18,10 +18,14 @@ angular.module('app', ['angularUtils.directives.dirPagination'])
 	$rootScope.getPocket = function() {
 		return $http.get('/pocket/'+$rootScope.username);
 	}
+
 })
 .controller('mainController', function($rootScope) {
 	$rootScope.authenticate();
 })
+	/**
+		* homepage controller 
+	**/
 .controller('getSharesAndIndices', function($rootScope, $scope, $http, $window) {
     $http.get('/shares/all').
         then(function(response) {
@@ -41,6 +45,7 @@ angular.module('app', ['angularUtils.directives.dirPagination'])
     	}
     	else {
     		$scope.buyingError = false;
+    		$scope.number = 1;
     		$scope.share = share;
     		$rootScope.getPocket().then(function(data) {
     			$scope.pocket = data.data;
@@ -55,13 +60,16 @@ angular.module('app', ['angularUtils.directives.dirPagination'])
     		headers: {'Content-Type': 'application/x-www-form-urlencoded'},
     		params: {'name': $scope.share.shortcut, 'number': $scope.number}
 		}).success(function() {
-			$window.location.href = "/pocket/"+$rootScope.username;
+			$window.location.href = "/user/profile/"+$rootScope.username;
 		}).error(function(response) {
 			$scope.buyingError = true;
 			$scope.buyingErrorResponse = response;
 		});
-   } 
+	} 
 })
+/**
+	* /login controller
+**/
 .controller('loginPageController', function($rootScope, $scope, $http, $window) {
 
   	$scope.login = function(credentials, callback) {
@@ -87,4 +95,111 @@ angular.module('app', ['angularUtils.directives.dirPagination'])
 			$rootScope.authenticated = false;
 		})
 	};
+})
+/*
+	* /share/company/{shortcut} controller (share site)
+*/
+.controller('shareController', function($rootScope, $scope, $http, $location, $window) {
+	var share = $location.absUrl();
+	$scope.number = 1;
+	$scope.buyingError = false;
+
+
+	$http({
+		method: 'get',
+    	url: '/shares/company',
+    	headers: {'Content-Type': 'application/x-www-form-urlencoded'},
+    	params: {'shortcut': share.substr(share.length-3)}
+	}).success(function(response) {
+		console.log(response);
+		$scope.share = response;
+		var date = new Date($scope.share.quotations[0].date);
+		/*format date*/
+		var hour = date.getHours();
+		var min = date.getMinutes();
+		var sec = date.getSeconds();
+
+		hour = (hour < 10 ? "0" : "") + hour;
+		min = (min < 10 ? "0" : "") + min;
+		sec = (sec < 10 ? "0" : "") + sec;
+
+		$scope.formattedDate = hour+':'+min+':'+sec;
+	});
+	
+	$scope.buyShares = function() {
+	 	$http({
+   			method: 'POST',
+    		url: '/transfer/buy',
+    		headers: {'Content-Type': 'application/x-www-form-urlencoded'},
+    		params: {'name': $scope.share.shortcut, 'number': $scope.number}
+		}).success(function(response) {
+			$window.location.href = "/pocket/"+$rootScope.username;
+		}).error(function(response) {
+			$scope.buyingError = true;
+			$scope.buyingErrorResponse = response;
+		});
+	}
+
+	$scope.$watch('username', function (value) {
+		if(value) {
+			$rootScope.getPocket().then(function(data) {
+	    		$scope.pocket = data.data;
+			});
+		}
+	});
+})
+.controller('userController', function($rootScope, $scope, $http, $location, $window)  {
+	$scope.shares = [];
+
+	$scope.$watch('username', function (value) {
+		if(value) {
+			$http({
+				method: 'GET',
+				url: '/user/print/'+$rootScope.username,
+				headers: {'Content-Type': 'application/x-www-form-urlencoded'}
+			}).success(function(response) {
+				$scope.user = response;
+				angular.forEach($scope.user.profile.pocket.shares, function(value, key){
+					$http({
+						method: 'get',
+				    	url: '/shares/company',
+				    	headers: {'Content-Type': 'application/x-www-form-urlencoded'},
+				    	params: {'shortcut': key}
+					}).success(function(response) {
+						$scope.shares.push(response);
+					});
+				});
+			});
+		}
+	});
+
+	$scope.buyingError = false;
+
+    $scope.open = function(share) {
+    	if($rootScope.authenticated!=true) {
+    		$window.location.href = "/login";
+    	}
+    	else {
+    		$scope.buyingError = false;
+    		$scope.number = 1;
+    		$scope.share = share;
+    		$rootScope.getPocket().then(function(data) {
+    			$scope.pocket = data.data;
+    		});
+    	}
+    }
+
+    $scope.buyShares = function() {
+	 	$http({
+   			method: 'POST',
+    		url: '/transfer/buy',
+    		headers: {'Content-Type': 'application/x-www-form-urlencoded'},
+    		params: {'name': $scope.share.shortcut, 'number': $scope.number}
+		}).success(function() {
+			$window.location.href = "/user/profile/"+$rootScope.username;
+		}).error(function(response) {
+			$scope.buyingError = true;
+			$scope.buyingErrorResponse = response;
+		});
+	}
 });

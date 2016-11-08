@@ -15,4 +15,19 @@ public class ViewsController {
 	public String login() {
 		return "login";
 	}
+	
+	@GetMapping("/register")
+	public String register() {
+		return "register";
+	}
+	
+	@GetMapping("/shares/company/{shareShortcut}")
+	public String share() {
+		return "share";
+	}
+	
+	@GetMapping("/user/profile/{username}")
+	public String user() {
+		return "user";
+	}
 }

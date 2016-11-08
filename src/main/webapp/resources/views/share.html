@@ -1,0 +1,86 @@
+<!doctype html>
+<html ng-app="app">
+	<head>
+		<title>Restful Profit</title>
+		<script src="/resources/js/angular.min.js"></script>
+		<script src="https://ajax.googleapis.com/ajax/libs/jquery/1.12.4/jquery.min.js"></script>
+		<script src="/resources/js/bootstrap.min.js"></script>
+		<script src="/resources/js/dirPagination.js"></script>
+		<script src="/resources/js/index.js"></script>
+		<link rel="stylesheet" href="/resources/css/bootstrap.min.css">
+		<link rel="stylesheet" href="/resources/css/main.css">
+		<link rel="stylesheet" href="/resources/css/share.css">
+	</head>
+	<body ng-controller="mainController">
+		<div class="top_bar">
+			<div class="home_button">
+				<a href="/">HOME</a>
+			</div>
+			<div class="login_wrapper" ng-show="!authenticated">
+				<a href="#">REGISTER</a>
+				<a href="/login">LOGIN</a>
+			</div>
+			<div class="login_wrapper" ng-show="authenticated">
+				<a href="/user/profile/{{username}}">PROFILE</a>
+				<a href="/logout">LOGOUT</a>
+			</div>
+		</div>
+		<div class="container">
+			<div class="containerpage">
+				<div class="column_menu" ng-controller="shareController">
+					<h1>{{share.name}}</h1>
+					<div style="float:right;width:20%;">
+						<p ng-repeat="index in share.indices" style="text-align:right;"><a href="#">{{index}}</a></p>
+					</div>
+					<p style="margin:0;">{{share.shortcut}}</p>
+					<div class="share_table_div">
+						<table width="100%">
+							<tr class="even" style="height:12px;background-color:#355b7d;">
+								<td></td>
+								<td></td>
+								<td></td>
+								<td></td>
+							</tr>
+							<tr class="odd">
+								<td>Price</td>
+								<td>{{share.quotations[0].referencePrice}}</td>
+								<td>Change</td>
+								<td>{{share.quotations[0].change}}</td>
+							</tr>
+							<tr class="even">
+								<td>Max</td>
+								<td>{{share.quotations[0].high}}</td>
+								<td>Min</td>
+								<td>{{share.quotations[0].low}}</td>
+							</tr>
+							<tr class="odd">
+								<td>Volume</td>
+								<td>{{share.quotations[0].cumulatedVolume}}</td>
+								<td>Value</td>
+								<td>{{share.quotations[0].cumulatedValue}}K</td>
+							</tr>
+							<tr class="even">
+								<td>Last quotation time</td>
+								<td>{{formattedDate}}</td>
+								<td>Last transaction date</td>
+								<td>{{share.quotations[0].lastTransactionTime}}</td>
+							</tr>
+						</table>
+					</div>
+					<div ng-show="authenticated" style="float:left;margin-top:25px;" ng-click="getPocket()">
+						<div>
+							<span><input type="number" ng-model="number" ng-init="number=1" min="1" style="width:60px;"></span>
+							<span>for {{(share.quotations[0].referencePrice*number).toFixed(2)}}$</span>
+							<span style="margin-left:20px;"><button class="btn btn-long" ng-click="buyShares()">Buy</button></span>
+						</div>
+						<div>
+							<span>Your money: </span>
+							<span>{{pocket.money}}$</span>
+						</div>
+						<p ng-show="buyingError" style="color:red;">{{buyingErrorResponse}}</p>
+					</div>
+				</div>
+			</div>
+		</div>
+	</body>
+</html>
