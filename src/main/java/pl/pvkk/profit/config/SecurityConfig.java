@@ -10,6 +10,9 @@ import org.springframework.security.config.annotation.web.builders.HttpSecurity;
 import org.springframework.security.config.annotation.web.configuration.EnableWebSecurity;
 import org.springframework.security.config.annotation.web.configuration.WebSecurityConfigurerAdapter;
 import org.springframework.security.crypto.bcrypt.BCryptPasswordEncoder;
+import org.springframework.security.web.csrf.CsrfFilter;
+import org.springframework.security.web.csrf.CsrfTokenRepository;
+import org.springframework.security.web.csrf.HttpSessionCsrfTokenRepository;
 
 @Configuration
 @EnableWebSecurity
@@ -24,7 +27,8 @@ public class SecurityConfig extends WebSecurityConfigurerAdapter {
 			.authorizeRequests()
         	.antMatchers("/user/print/**").authenticated()
         	.antMatchers("/login").anonymous()
-        	.anyRequest().permitAll();
+        	.anyRequest().permitAll()
+        	.and().addFilterAfter(new CsrfHeaderFilter(), CsrfFilter.class);;
 		
 		http
 			.formLogin()
@@ -36,7 +40,9 @@ public class SecurityConfig extends WebSecurityConfigurerAdapter {
                 .and()
             .rememberMe()
             	.and()
-            .csrf().disable();
+            .csrf().csrfTokenRepository(csrfTokenRepository());
+		
+		/*http.addFilterAfter(new CsrfHeaderFilter(), CsrfHeaderFilter.class);*/
 	}
  
     @Override
@@ -47,5 +53,11 @@ public class SecurityConfig extends WebSecurityConfigurerAdapter {
     		.usersByUsernameQuery("select login, password, 1 from User where login=?")
     		.authoritiesByUsernameQuery("select login, 'ROLE_USER' from User where login=?")
     		.passwordEncoder(new BCryptPasswordEncoder());
+    }
+    
+    private CsrfTokenRepository csrfTokenRepository() {
+    	HttpSessionCsrfTokenRepository repository = new HttpSessionCsrfTokenRepository();
+    	repository.setHeaderName("X-XSRF-TOKEN");
+    	return repository;
     }
 }

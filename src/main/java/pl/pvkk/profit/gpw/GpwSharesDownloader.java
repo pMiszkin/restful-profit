@@ -22,9 +22,9 @@ import pl.pvkk.profit.shares.StockIndices;
 
 
 /**
- * This class is for downloading shares, quotations and stock indexes from the outside site - gpw.pl
- * Here is really heavy @PostConstruct method so you can just comment her if you respect your gpu
- * through that you won't have fill "Share" and "StockIndices" database tables
+ * This class downloads shares, quotations and stock indices from another site - gpw.pl
+ * Here is really heavy @PostConstruct method so you can just comment it but
+ * you won't have filled "Share" and "StockIndices" database tables
  */
 @Service
 public class GpwSharesDownloader {
@@ -74,13 +74,14 @@ public class GpwSharesDownloader {
 		List<String> s = new ArrayList<String>();
 		int i = 1;
 		
-		for(Element e : element.children()) {
+		element.children().forEach((e) -> {
 			if(e.text().equals("---"))
 				s.add("0");
 			else
 				//its not normal space. it is no-break space!
 				s.add(e.text().replaceAll("\u00A0", ""));
-		}
+		});
+		
 		Share share = sharesDao.findShareByShortcut(element.child(2).text());
 		if(share == null) {
 			share = new Share();
