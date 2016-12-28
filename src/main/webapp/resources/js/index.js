@@ -20,8 +20,17 @@ angular.module('app', ['angularUtils.directives.dirPagination'])
 	}
 
 })
-.controller('mainController', function($rootScope) {
+.controller('mainController', function($rootScope, $scope, $http, $window) {
 	$rootScope.authenticate();
+
+	$scope.logout = function() {
+		$http.post('/logout', {}).success(function() {
+    		$rootScope.authenticated = false;
+    		$window.location.href = "/";
+		}).error(function(data) {
+			$rootScope.authenticated = false;
+		});
+	}
 })
 	/**
 		* homepage controller 

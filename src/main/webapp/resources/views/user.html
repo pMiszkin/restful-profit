@@ -21,7 +21,7 @@
 			</div>
 			<div class="login_wrapper" ng-show="authenticated">
 				<a href="/user/profile/{{username}}">PROFILE</a>
-				<a href="/logout">LOGOUT</a>
+				<a href="/logout" ng-click="logout()">LOGOUT</a>
 			</div>
 		</div>
 		<div class="container" ng-cloak="true">
