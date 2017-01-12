@@ -1,0 +1,39 @@
+<!doctype html>
+<html ng-app="app">
+	<head>
+		<title>Restful Profit</title>
+		<script src="/resources/js/angular.min.js"></script>
+		<script src="https://ajax.googleapis.com/ajax/libs/jquery/1.12.4/jquery.min.js"></script>
+		<script src="/resources/js/bootstrap.min.js"></script>
+		<script src="/resources/js/dirPagination.js"></script>
+		<script src="/resources/js/index.js"></script>
+		<link rel="stylesheet" href="/resources/css/bootstrap.min.css">
+		<link rel="stylesheet" href="/resources/css/main.css">
+		<link rel="stylesheet" href="/resources/css/login.css">
+	</head>
+	<body ng-controller="mainController">
+		<div class="container">
+			<a href="/"><img src="/resources/Restful.png" width="200" height="100" style="float:right"></a>
+			<div class="containerpage" ng-controller="loginPageController">
+				<div class="login_div">
+					<form class="login_form" role="form" ng-submit="login()" method="POST">
+					    <div class="form-group">
+					        <label for="username">Username:</label>
+					        <input class="form-control" type="text" id="username" name="username" ng-model="username"/>
+					    </div>
+					    <div class="form-group">
+					        <label for="password">Password:</label>
+					        <input class="form-control" type="password" id="password" name="password" ng-model="password"/>
+					    </div>
+					    <div class="form_button">
+					    	<button type="submit">Submit</button>
+					    </div>
+					</form>
+					<div class="login_error" ng-show="error">
+	    				There was a problem logging in. Please try again.
+					</div>
+				</div>
+			</div>
+		</div>
+	</body>
+</html>

@@ -16,7 +16,7 @@
 				<a href="/">HOME</a>
 			</div>
 			<div class="login_wrapper" ng-show="!authenticated">
-				<a href="#">REGISTER</a>
+				<a href="/register">REGISTER</a>
 				<a href="/login">LOGIN</a>
 			</div>
 			<div class="login_wrapper" ng-show="authenticated">
@@ -26,6 +26,7 @@
 		</div>
 		<div class="container" ng-cloak="true">
 			<div class="containerpage">
+				<a href="/"><img src="/resources/Restful.png" width="200" height="100" style="float:right"></a>
 				<div class="column_menu" data-ng-controller="userController" data-ng-init="init()">
 					<h1>Welcome {{user.login}}</h1>
 					<p>You have just {{user.profile.pocket.money}}$ so go back to work.</p>

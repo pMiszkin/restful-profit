@@ -3,6 +3,10 @@ package pl.pvkk.profit;
 import org.springframework.stereotype.Controller;
 import org.springframework.web.bind.annotation.GetMapping;
 
+
+/**
+ * VIEWS *
+ */
 @Controller
 public class ViewsController {
 

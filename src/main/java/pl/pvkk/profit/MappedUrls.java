@@ -30,6 +30,11 @@ public class MappedUrls {
 	@Autowired
 	private ApplicationContext context;
 	
+	
+	/**
+	 * it gets all REST and views mapped urls and shows accepted parameters 
+	 * @return List<String>
+	 */
 	@GetMapping("mappedurls")
 	public List<String> getAllMappedUrls() {
 		Map<String, RequestMappingHandlerMapping> matchingBeans = BeanFactoryUtils
