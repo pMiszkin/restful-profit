@@ -8,7 +8,7 @@ Stock market simulator - RESTful application
 - Angularjs
 
 # Long starting?
-Application starting about 5 minutes through the one method  - addShares in [GpwSharesDownloader](src/main/java/pl/pvkk/profit/gpw/GpwSharesDownloader.java) with @PostConstruct annotation. This gets connect with outside site [gpw.pl](https://www.gpw.pl/) downloads quotations at stock exchange and they are going to save at HSQL database.
+The application has a long start through the one method  - addShares in [GpwSharesDownloader](src/main/java/pl/pvkk/profit/gpw/GpwSharesDownloader.java) with @PostConstruct annotation. It gets content from other site [gpw.pl](https://www.gpw.pl/), it downloads quotations at stock exchange and they are saving at HSQL database.
 
 # About
 Here you have mapped URLs. Each adress works on **localhost:8080**. Also you can check /mappedurls for current list.
