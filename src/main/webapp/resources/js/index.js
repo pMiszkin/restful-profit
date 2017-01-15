@@ -105,6 +105,15 @@ angular.module('app', ['angularUtils.directives.dirPagination'])
 		})
 	};
 })
+/**
+	* /register controller
+**/
+.controller('registerPageController', function($rootScope, $scope, $http, $window) {
+
+  	$scope.register = function(credentials, callback) {
+  		console.log("cool");
+	};
+})
 /*
 	* /share/company/{shortcut} controller (share site)
 */

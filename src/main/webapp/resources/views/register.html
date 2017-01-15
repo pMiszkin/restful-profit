@@ -7,6 +7,7 @@
 		<script src="/resources/js/bootstrap.min.js"></script>
 		<script src="/resources/js/dirPagination.js"></script>
 		<script src="/resources/js/index.js"></script>
+		<script src="/resources/js/validator.js"></script>
 		<link rel="stylesheet" href="/resources/css/bootstrap.min.css">
 		<link rel="stylesheet" href="/resources/css/main.css">
 		<link rel="stylesheet" href="/resources/css/login.css">
@@ -14,16 +15,32 @@
 	<body ng-controller="mainController">
 		<div class="container">
 			<a href="/"><img src="/resources/Restful.png" width="200" height="100" style="float:right"></a>
-			<div class="containerpage" ng-controller="loginPageController">
+			<div class="containerpage" ng-controller="registerPageController">
 				<div class="login_div">
-					<form class="login_form" role="form" ng-submit="login()" method="POST">
-					    <div class="form-group">
+					<form class="login_form" data-toggle="validator" role="form" ng-submit="register()" method="POST">
+						<div class="form-group">
+					        <label for="email">E-mail:</label>
+					        <input class="form-control" type="email" id="email" name="email" ng-model="email" data-error="That email address is invalid" required/>
+					        <div class="help-block with-errors"></div>
+					    </div>
+					    <div class="form-group" id="username_div">
 					        <label for="username">Username:</label>
-					        <input class="form-control" type="text" id="username" name="username" ng-model="username"/>
+					        <input class="form-control" type="text" id="username" name="username" ng-model="username" data-minlength="5" required/>
+					        <div class="help-block">Minimum of 5 characters</div>
 					    </div>
 					    <div class="form-group">
 					        <label for="password">Password:</label>
-					        <input class="form-control" type="password" id="password" name="password" ng-model="password"/>
+					        <input class="form-control" type="password" id="password" name="password" ng-model="password" data-minlength="6" required/>
+					        <div class="help-block">Minimum of 6 characters</div>
+					    </div>
+					    <div class="form-group">
+					        <label for="_password">Repeat password:</label>
+					        <input class="form-control" type="password" id="_password" name="_password" ng-model="_password" data-match="#password" data-match-error="Whoops, these don't match" required/>
+					         <div class="help-block with-errors"></div>
+					    </div>
+					    <div class="form-group">
+					        <label for="captcha">We don't have any rules of use but you must check this box anyway.</label>
+					        <input class="form-control" type="checkbox" id="captcha" name="captcha" ng-model="captcha" ng-value="true" required />
 					    </div>
 					    <div class="form_button">
 					    	<button type="submit">Submit</button>
