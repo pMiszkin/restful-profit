@@ -9,14 +9,14 @@
 		<script src="/resources/js/index.js"></script>
 		<link rel="stylesheet" href="/resources/css/bootstrap.min.css">
 		<link rel="stylesheet" href="/resources/css/main.css">
-		<link rel="stylesheet" href="/resources/css/login.css">
+		<link rel="stylesheet" href="/resources/css/form.css">
 	</head>
 	<body ng-controller="mainController">
 		<div class="container">
 			<a href="/"><img src="/resources/Restful.png" width="200" height="100" style="float:right"></a>
 			<div class="containerpage" ng-controller="loginPageController">
-				<div class="login_div">
-					<form class="login_form" role="form" ng-submit="login()" method="POST">
+				<div class="form_div">
+					<form class="css_form" role="form" ng-submit="login()" method="POST">
 					    <div class="form-group">
 					        <label for="username">Username:</label>
 					        <input class="form-control" type="text" id="username" name="username" ng-model="username"/>

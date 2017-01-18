@@ -20,7 +20,7 @@ import org.springframework.web.bind.annotation.RestController;
 
 @RestController
 @RequestMapping("user")
-public class LoggingRestController {
+public class UserRestController {
 
 	@Autowired
 	private UserService userService;
@@ -36,15 +36,11 @@ public class LoggingRestController {
 		return userService.tryToPrintUser(username);
 	}
 	
-	@PostMapping("/add")
+	@PostMapping(value = "/add", consumes = "application/json")
 	public ResponseEntity<String> addUser(@Valid @RequestBody User user, BindingResult result){
-		
-		//maybe this is hard to understand but looks beautiful
-		//just check are validation errors -> try to save -> if login is taken get error -> if not welcome user
+		//check are validation errors -> try to save -> if login is taken get error 400-> if not welcome user
 		return result.hasErrors() ?
-				new ResponseEntity<String>(
-					result.getFieldError().getField()+" "+result.getFieldError().getDefaultMessage(),
-					HttpStatus.BAD_REQUEST) :
+				new ResponseEntity<String>(HttpStatus.BAD_REQUEST) :
 				userService.tryToSaveUser(user);
 	}
 

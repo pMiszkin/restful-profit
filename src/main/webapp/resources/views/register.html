@@ -10,14 +10,14 @@
 		<script src="/resources/js/validator.js"></script>
 		<link rel="stylesheet" href="/resources/css/bootstrap.min.css">
 		<link rel="stylesheet" href="/resources/css/main.css">
-		<link rel="stylesheet" href="/resources/css/login.css">
+		<link rel="stylesheet" href="/resources/css/form.css">
 	</head>
 	<body ng-controller="mainController">
 		<div class="container">
 			<a href="/"><img src="/resources/Restful.png" width="200" height="100" style="float:right"></a>
 			<div class="containerpage" ng-controller="registerPageController">
-				<div class="login_div">
-					<form class="login_form" data-toggle="validator" role="form" ng-submit="register()" method="POST">
+				<div class="form_div">
+					<form class="css_form" data-toggle="validator" role="form" ng-submit="register(register_form)" method="POST" name="register_form">
 						<div class="form-group">
 					        <label for="email">E-mail:</label>
 					        <input class="form-control" type="email" id="email" name="email" ng-model="email" data-error="That email address is invalid" required/>
@@ -27,11 +27,12 @@
 					        <label for="username">Username:</label>
 					        <input class="form-control" type="text" id="username" name="username" ng-model="username" data-minlength="5" required/>
 					        <div class="help-block">Minimum of 5 characters</div>
+					        <div class="login_error" ng-show="error">Your login is taken. Sorry.</div>
 					    </div>
 					    <div class="form-group">
 					        <label for="password">Password:</label>
-					        <input class="form-control" type="password" id="password" name="password" ng-model="password" data-minlength="6" required/>
-					        <div class="help-block">Minimum of 6 characters</div>
+					        <input class="form-control" type="password" id="password" name="password" ng-model="password" data-minlength="5" required/>
+					        <div class="help-block">Minimum of 5 characters</div>
 					    </div>
 					    <div class="form-group">
 					        <label for="_password">Repeat password:</label>
@@ -46,9 +47,6 @@
 					    	<button type="submit">Submit</button>
 					    </div>
 					</form>
-					<div class="login_error" ng-show="error">
-	    				There was a problem logging in. Please try again.
-					</div>
 				</div>
 			</div>
 		</div>

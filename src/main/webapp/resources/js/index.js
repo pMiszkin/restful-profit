@@ -102,7 +102,7 @@ angular.module('app', ['angularUtils.directives.dirPagination'])
 			$window.location.href = "/login";
 			$scope.error = true;
 			$rootScope.authenticated = false;
-		})
+		});
 	};
 })
 /**
@@ -110,8 +110,19 @@ angular.module('app', ['angularUtils.directives.dirPagination'])
 **/
 .controller('registerPageController', function($rootScope, $scope, $http, $window) {
 
-  	$scope.register = function(credentials, callback) {
-  		console.log("cool");
+
+  	$scope.register = function(form, credentials, callback) {
+  		if(!form.$valid)
+  			return;
+
+		var user = {'login' : $scope.username, 'email' : $scope.email, 'password' : $scope.password};
+
+		$http.post('/user/add', user)
+		.success(function(data, status) {
+			$window.location.href = "/login";
+		}).error(function() {
+			$scope.error = true;
+		});
 	};
 })
 /*

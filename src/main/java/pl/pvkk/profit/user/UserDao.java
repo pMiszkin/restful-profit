@@ -18,7 +18,7 @@ public class UserDao {
 	//@Transactional(readOnly=true)
 	public User getUserByName(String username){
 		User user = em.find(User.class, username);
-		user.setPassword("nie twoja sprawa");
+		user.setPassword("not your business");
 		return user;
 	}
 	
