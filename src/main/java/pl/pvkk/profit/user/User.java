@@ -15,7 +15,7 @@ public class User {
 	private String login;
 	@Email
 	private String email;
-	@Length(min = 5)
+	@Length(min = 5, max = 255)
 	private String password;
 	@OneToOne
 	private UserProfile profile;

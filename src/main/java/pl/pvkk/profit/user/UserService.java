@@ -35,7 +35,6 @@ public class UserService {
 		user.setPassword(passwordEncoder.encode(user.getPassword()));
 		if(userDao.isLoginTaken(user.getLogin()))
 			return new ResponseEntity<String>("Your login is taken", HttpStatus.BAD_REQUEST);
-
 		userDao.saveUser(user);
 		return new ResponseEntity<String>(HttpStatus.OK);
 	}

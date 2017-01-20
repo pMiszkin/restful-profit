@@ -34,7 +34,7 @@
 						<p ng-repeat="index in share.indices" style="text-align:right;"><a href="#">{{index}}</a></p>
 					</div>
 					<p style="margin:0;">{{share.shortcut}}</p>
-					<div class="share_table_div">
+					<div class="share_table_div" ng-if="show_table">
 						<table width="100%">
 							<tr class="even" style="height:12px;background-color:#355b7d;">
 								<td></td>

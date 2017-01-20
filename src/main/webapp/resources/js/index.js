@@ -120,7 +120,8 @@ angular.module('app', ['angularUtils.directives.dirPagination'])
 		$http.post('/user/add', user)
 		.success(function(data, status) {
 			$window.location.href = "/login";
-		}).error(function() {
+		}).error(function(status) {
+			console.log(status);
 			$scope.error = true;
 		});
 	};
@@ -140,8 +141,8 @@ angular.module('app', ['angularUtils.directives.dirPagination'])
     	headers: {'Content-Type': 'application/x-www-form-urlencoded'},
     	params: {'shortcut': share.substr(share.length-3)}
 	}).success(function(response) {
-		console.log(response);
 		$scope.share = response;
+		$scope.show_table = true;
 		var date = new Date($scope.share.quotations[0].date);
 		/*format date*/
 		var hour = date.getHours();
@@ -153,6 +154,9 @@ angular.module('app', ['angularUtils.directives.dirPagination'])
 		sec = (sec < 10 ? "0" : "") + sec;
 
 		$scope.formattedDate = hour+':'+min+':'+sec;
+	}).error(function(response) {
+		$scope.share = {'name': 'Share "'+share.substr(share.length-3)+'" has not found.'};
+		$scope.show_table = false;
 	});
 	
 	$scope.buyShares = function() {

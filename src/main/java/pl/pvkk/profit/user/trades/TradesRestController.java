@@ -17,7 +17,7 @@ public class TradesRestController {
 	@Autowired
 	private TradesService tradesService;
 	
-	@PostMapping(value = "/buy", produces = "text/plain;charset=UTF-8")
+	@PostMapping(value = "/purchases", produces = "text/plain;charset=UTF-8")
 	@PreAuthorize("hasRole('ROLE_USER')")
 	public ResponseEntity<String> buyShares(
 			@RequestParam("name") String shareShortcut,
@@ -28,7 +28,7 @@ public class TradesRestController {
 		return tradesService.buyShares(shareShortcut.toUpperCase(), shareNumber, username);
 	}
 	
-	@PostMapping(value = "/sell", produces = "text/plain;charset=UTF-8")
+	@PostMapping(value = "/sales", produces = "text/plain;charset=UTF-8")
 	@PreAuthorize("hasRole('ROLE_USER')")
 	public ResponseEntity<String> sellShares(
 			@RequestParam("name") String shareShortcut,
