@@ -13,6 +13,7 @@ import org.jsoup.nodes.Document;
 import org.jsoup.nodes.Element;
 import org.jsoup.select.Elements;
 import org.springframework.beans.factory.annotation.Autowired;
+import org.springframework.scheduling.annotation.Scheduled;
 import org.springframework.stereotype.Service;
 
 import pl.pvkk.profit.shares.Quotation;
@@ -32,7 +33,6 @@ public class GpwSharesDownloader {
 	@Autowired
 	private SharesDao sharesDao;
 	
-	
 	private final String QUOTATIONS_URL = "https://www.gpw.pl/ajaxindex.php?action=GPWQuotations&start=showTable&tab=all&lang=EN&full=0";
 	private final String STOCK_URL = "https://www.gpw.pl/portfele_indeksow";
 	private final String INDICES_URL = "https://www.gpw.pl/ajaxindex.php?action=GPWListaSp&start=quotationsTab&gls_isin=";
@@ -41,6 +41,15 @@ public class GpwSharesDownloader {
 	public void addShares() {
 		try {
 			getAndSetAllStockIndices();
+			updateShares(getAllSharesFromUrl());
+		} catch (IOException e) {
+			e.printStackTrace();
+		}
+	}
+	
+	@Scheduled(fixedRate = 900000, initialDelay = 900000)
+	public void updateQuotations() {
+		try {
 			updateShares(getAllSharesFromUrl());
 		} catch (IOException e) {
 			e.printStackTrace();

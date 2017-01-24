@@ -19,7 +19,9 @@ public class User {
 	private String password;
 	@OneToOne
 	private UserProfile profile;
-
+	//default is false before user email authentication
+	private boolean enabled;
+	
 	public String getLogin() {
 		return login;
 	}
@@ -50,6 +52,14 @@ public class User {
 
 	public void setProfile(UserProfile profile) {
 		this.profile = profile;
+	}
+
+	public boolean isEnabled() {
+		return enabled;
+	}
+
+	public void setEnabled(boolean enabled) {
+		this.enabled = enabled;
 	}
 
 	@Override

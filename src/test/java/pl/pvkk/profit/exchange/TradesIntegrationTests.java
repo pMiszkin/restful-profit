@@ -31,22 +31,22 @@ public class TradesIntegrationTests {
 	
 	@Test
 	public void testBuyShares() throws Exception {
-		//cool version
+		//fine version
 		this.mockMvc
-			.perform(post("/transfer/buy?name=06n&number=5")
+			.perform(post("/transfer/purchases?name=06n&number=5")
 					.accept(MediaType.parseMediaType("application/json;charset=UTF-8")))
 			.andExpect(status().isOk())
 			.andExpect(content().contentType("application/json;charset=UTF-8"));
 		
 		//wrong number
 		this.mockMvc
-			.perform(post("/transfer/buy?name=06n&number=a")
+			.perform(post("/transfer/purchases?name=06n&number=a")
 					.accept(MediaType.parseMediaType("application/json;charset=UTF-8")))
 			.andExpect(status().isBadRequest());
 		
 		//wrong name
 		this.mockMvc
-			.perform(post("/transfer/buy?name=aasd&number=5")
+			.perform(post("/transfer/purchases?name=aasd&number=5")
 					.accept(MediaType.parseMediaType("application/json;charset=UTF-8")))
 			.andExpect(status().isBadRequest());
 	}

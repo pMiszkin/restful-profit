@@ -9,11 +9,17 @@ import org.springframework.http.ResponseEntity;
 import org.springframework.security.crypto.bcrypt.BCryptPasswordEncoder;
 import org.springframework.stereotype.Service;
 
+import pl.pvkk.profit.user.verification.VerificationToken;
+import pl.pvkk.profit.user.verification.VerificationTokenRepository;
+
 @Service
 public class UserService {
 
 	@Autowired
 	private UserDao userDao;
+
+	@Autowired
+	private VerificationTokenRepository tokenRepository;
 	
 	@PostConstruct
 	public void addFirstUser() {
@@ -22,20 +28,41 @@ public class UserService {
 		user.setPassword("password");
 		tryToSaveUser(user);
 	}
-	
+
 	public HttpEntity<User> tryToPrintUser(String username) {
 		User user = userDao.getUserByName(username);
-		
+
 		return user == null ? new ResponseEntity<>(HttpStatus.NOT_FOUND)
 				: new ResponseEntity<User>(user, HttpStatus.OK);
 	}
-	
-	public ResponseEntity<String> tryToSaveUser(User user) {
+
+	public boolean isLoginTaken(String username) {
+		return userDao.isLoginTaken(username);
+	}
+
+	public boolean tryToSaveUser(User user) {
+		if (userDao.isEmailTaken(user.getEmail()))
+			return false;
+
 		BCryptPasswordEncoder passwordEncoder = new BCryptPasswordEncoder();
 		user.setPassword(passwordEncoder.encode(user.getPassword()));
-		if(userDao.isLoginTaken(user.getLogin()))
-			return new ResponseEntity<String>("Your login is taken", HttpStatus.BAD_REQUEST);
+		// user is not authenticated
+		user.setEnabled(false);
+
 		userDao.saveUser(user);
-		return new ResponseEntity<String>(HttpStatus.OK);
+		return true;
+	}
+
+	public void createVerificationToken(User user, String token) {
+		VerificationToken myToken = new VerificationToken(token, user);
+		tokenRepository.save(myToken);
+	}
+	
+	public VerificationToken getVerificationToken(String token) {
+		return tokenRepository.findByToken(token);
+	}
+
+	public void setEnabledUser(User user) {
+		userDao.setEnabledUser(user);
 	}
 }

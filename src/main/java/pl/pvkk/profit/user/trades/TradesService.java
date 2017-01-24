@@ -37,7 +37,7 @@ public class TradesService {
 		List<Quotation> quotations = share.getQuotations();
 		double sharePrice = quotations.get(quotations.size()-1).getReferencePrice();
 		
-		if(shareNumber <= 0){
+		if(shareNumber <= 0) {
 			response = "You're trying to buy 0 or less shares";
 			return new ResponseEntity<String>(response, HttpStatus.BAD_REQUEST);
 		}

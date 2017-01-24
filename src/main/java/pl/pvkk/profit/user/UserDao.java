@@ -30,6 +30,12 @@ public class UserDao {
 		return (long) query.getSingleResult() > 0;		
 	}
 
+	public boolean isEmailTaken(String email) {
+		Query query = em.createQuery("SELECT COUNT(*) FROM User WHERE email = :email");
+		query.setParameter("email", email);
+		return (long) query.getSingleResult() > 0;
+	}
+	
 	public void saveUser(User user){
 		UserProfile profile = new UserProfile();
 		Pocket pocket = new Pocket();
@@ -40,6 +46,10 @@ public class UserDao {
 		em.persist(user);
 		em.persist(profile);
 		em.persist(pocket);
+	}
+
+	public void setEnabledUser(User user) {
+		em.merge(user);
 	}
 
 }

@@ -31,7 +31,11 @@ dependencies {
 	compile('org.springframework.boot:spring-boot-starter-aop')
 	compile('org.springframework.boot:spring-boot-starter-web')
 	compile('org.springframework.boot:spring-boot-starter-web-services')
-	compile('org.springframework.boot:spring-boot-starter-security')	 
+	compile('org.springframework.boot:spring-boot-starter-security')	
+	//mail sender
+	compile('org.springframework:spring-context-support:4.3.5.RELEASE') 
+	compile group: 'javax.mail', name: 'mail', version: '1.4.7'
+	
 	
 	// Outside
 	compile('org.jsoup:jsoup:1.9.2')

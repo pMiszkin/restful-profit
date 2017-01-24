@@ -27,7 +27,6 @@
 					        <label for="username">Username:</label>
 					        <input class="form-control" type="text" id="username" name="username" ng-model="username" data-minlength="5" data-minlength="30" required/>
 					        <div class="help-block">Login must be between 5 and 30 characters long.</div>
-					        <div class="login_error" ng-show="error" style="padding-top:0px;">Your login is taken. Sorry.</div>
 					    </div>
 					    <div class="form-group">
 					        <label for="password">Password:</label>
@@ -43,6 +42,7 @@
 					        <label for="captcha">We don't have any rules of use but you must check this box anyway.</label>
 					        <input class="form-control" type="checkbox" id="captcha" name="captcha" ng-model="captcha" ng-value="true" required />
 					    </div>
+					    <div class="login_error" ng-show="error" style="font-size:18px;text-align:center;padding:0;">{{error_msg[0]}}</div>
 					    <div class="form_button">
 					    	<button type="submit">Submit</button>
 					    </div>

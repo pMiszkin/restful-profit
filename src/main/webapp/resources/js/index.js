@@ -120,8 +120,9 @@ angular.module('app', ['angularUtils.directives.dirPagination'])
 		$http.post('/user/add', user)
 		.success(function(data, status) {
 			$window.location.href = "/login";
-		}).error(function(status) {
-			console.log(status);
+		}).error(function(response) {
+			console.log(response);
+			$scope.error_msg = response;
 			$scope.error = true;
 		});
 	};
