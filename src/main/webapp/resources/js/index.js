@@ -65,7 +65,7 @@ angular.module('app', ['angularUtils.directives.dirPagination'])
     $scope.buyShares = function() {
 	 	$http({
    			method: 'POST',
-    		url: '/transfer/buy',
+    		url: '/transfer/purchases',
     		headers: {'Content-Type': 'application/x-www-form-urlencoded'},
     		params: {'name': $scope.share.shortcut, 'number': $scope.number}
 		}).success(function() {
@@ -163,7 +163,7 @@ angular.module('app', ['angularUtils.directives.dirPagination'])
 	$scope.buyShares = function() {
 	 	$http({
    			method: 'POST',
-    		url: '/transfer/buy',
+    		url: '/transfer/purchases',
     		headers: {'Content-Type': 'application/x-www-form-urlencoded'},
     		params: {'name': $scope.share.shortcut, 'number': $scope.number}
 		}).success(function() {
@@ -215,7 +215,7 @@ angular.module('app', ['angularUtils.directives.dirPagination'])
 	$scope.buyShares = function() {
 	 	$http({
    			method: 'POST',
-    		url: '/transfer/buy',
+    		url: '/transfer/purchases',
     		headers: {'Content-Type': 'application/x-www-form-urlencoded'},
     		params: {'name': $scope.share.shortcut, 'number': $scope.number}
 		}).success(function() {
@@ -245,7 +245,7 @@ angular.module('app', ['angularUtils.directives.dirPagination'])
 	$scope.sellShares = function(share, number) {
 	 	$http({
    			method: 'POST',
-    		url: '/transfer/sell',
+    		url: '/transfer/sales',
     		headers: {'Content-Type': 'application/x-www-form-urlencoded'},
     		params: {'name': share.shortcut, 'number': number}
 		}).success(function() {
