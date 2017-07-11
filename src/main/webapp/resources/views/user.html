@@ -65,7 +65,7 @@
 									</td>
 									<td><input type="number" ng-model="toSellNumber[$index]" ng-init="toSellNumber[$index]=user.profile.pocket.shares[x.shortcut]" min="1" style="width:40px;"> /{{user.profile.pocket.shares[x.shortcut]}}</td>
 									<td>{{x.shortcut}}</td>
-									<td><a href="shares/company/{{x.shortcut}}">{{x.name}}</a></td>
+									<td><a href="../../shares/company/{{x.shortcut}}">{{x.name}}</a></td>
 									<td>{{x.quotations[0].currency}}</td>
 									<td>{{x.quotations[0].referencePrice}}</td>
 									<td>{{x.quotations[0].high}}</td>
@@ -84,7 +84,7 @@
 								<div class="modal-header">
 									<div class="close" data-dismiss="modal">x</div>
 									<h4 class="modal-title">
-										<a href="shares/company/{{share.shortcut}}" style="text-decoration:none;color:black;">
+										<a href="../../shares/company/{{share.shortcut}}" style="text-decoration:none;color:black;">
 											{{share.name}}
 										</a>
 									</h4>
