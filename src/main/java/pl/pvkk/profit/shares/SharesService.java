@@ -15,7 +15,7 @@ public class SharesService {
 		
 	public Share findShareByShortcut(String shortcut) {
 		Share share = sharesDao.findShareByShortcut(shortcut.toUpperCase());
-		
+
 		return share;
 	}
 	

@@ -8,6 +8,7 @@ import javax.persistence.Entity;
 import javax.persistence.FetchType;
 import javax.persistence.Id;
 import javax.persistence.OneToMany;
+import javax.persistence.OrderBy;
 
 @Entity
 public class Share {
@@ -16,6 +17,7 @@ public class Share {
 	@Id
 	private String shortcut;
 	@OneToMany(fetch = FetchType.EAGER)
+	@OrderBy("date DESC")
 	private List<Quotation> quotations;
 	@ElementCollection
 	private List<String> indices;
