@@ -15,9 +15,17 @@ public class SharesDao {
 	@PersistenceContext
 	private EntityManager em;
 	
-	public void updateQuotationsInShare(Share share, Quotation quotation) {
+	public void updateQuotationInShare(Share share, Quotation quotation) {
 		em.persist(quotation);
 		em.merge(share);
+	}
+	
+	public void updateQuotationsInShare(Share share, List<Quotation> quotations) {
+		quotations.forEach((q) -> {
+				em.persist(q);
+				em.merge(share);
+		});
+		//em.persist(quotations);
 	}
 	
 	@SuppressWarnings("unchecked")

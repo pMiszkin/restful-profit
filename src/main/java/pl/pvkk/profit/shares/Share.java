@@ -16,6 +16,7 @@ public class Share {
 	private String name;
 	@Id
 	private String shortcut;
+	private String fullName;
 	@OneToMany(fetch = FetchType.EAGER)
 	@OrderBy("date DESC")
 	private List<Quotation> quotations;
@@ -25,7 +26,6 @@ public class Share {
 	public Share() {
 		quotations = new ArrayList<Quotation>();
 	}
-
 
 	public String getName() {
 		return name;
@@ -59,5 +59,12 @@ public class Share {
 		this.indices = indices;
 	}
 
+	public String getFullName() {
+		return fullName;
+	}
+
+	public void setFullName(String fullName) {
+		this.fullName = fullName;
+	}
 
 }

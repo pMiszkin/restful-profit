@@ -3,11 +3,13 @@ package pl.pvkk.profit.user;
 import javax.persistence.Entity;
 import javax.persistence.Id;
 import javax.persistence.OneToOne;
+import javax.persistence.Table;
 
 import org.hibernate.validator.constraints.Email;
 import org.hibernate.validator.constraints.Length;
 
 @Entity
+@Table(name="\"User\"")
 public class User {
 
 	@Id
@@ -19,9 +21,10 @@ public class User {
 	private String password;
 	@OneToOne
 	private UserProfile profile;
-	//default is false before user email authentication
+	// default is false before user email authentication
 	private boolean enabled;
-	
+
+
 	public String getLogin() {
 		return login;
 	}

@@ -1,6 +1,7 @@
 package pl.pvkk.profit.gpw;
 
 import java.io.IOException;
+import java.sql.SQLException;
 import java.util.ArrayList;
 import java.util.Date;
 import java.util.List;
@@ -15,6 +16,8 @@ import org.jsoup.select.Elements;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.scheduling.annotation.Scheduled;
 import org.springframework.stereotype.Service;
+
+import com.fasterxml.jackson.databind.ObjectMapper;
 
 import pl.pvkk.profit.shares.Quotation;
 import pl.pvkk.profit.shares.Share;
@@ -33,15 +36,27 @@ public class GpwSharesDownloader {
 	@Autowired
 	private SharesDao sharesDao;
 	
+	private final String CHART_URL = "https://www.gpw.pl/chart.php?req=O:8:%22stdClass%22:1:{s:1:%220%22;O:8:%22stdClass%22:4:{s:4:%22from%22;i:368135;s:4:%22mode%22;s:1:%22D%22;s:2:%22to%22;i:416608;s:4:%22isin%22;s:12:%22";
+	private final String CHART_URL2 = "%22;}}%C3%97tamp=1499789609646";
 	private final String QUOTATIONS_URL = "https://www.gpw.pl/ajaxindex.php?action=GPWQuotations&start=showTable&tab=all&lang=EN&full=0";
 	private final String STOCK_URL = "https://www.gpw.pl/portfele_indeksow";
 	private final String INDICES_URL = "https://www.gpw.pl/ajaxindex.php?action=GPWListaSp&start=quotationsTab&gls_isin=";
 	
+	
+	
+	/**
+	 * Data is now stored in files added to the project
+	 * @throws SQLException 
+	 * @throws IOException
+	 */
+	
 	@PostConstruct
-	public void addShares() {
+	public void addShares() throws SQLException {
 		try {
 			getAndSetAllStockIndices();
 			updateShares(getAllSharesFromUrl());
+			//update all time quotations
+			//getAllTimeQuotations();
 		} catch (IOException e) {
 			e.printStackTrace();
 		}
@@ -90,10 +105,14 @@ public class GpwSharesDownloader {
 				//its not normal space. it is no-break space!
 				s.add(e.text().replaceAll("\u00A0", ""));
 		});
-		
+
 		Share share = sharesDao.findShareByShortcut(element.child(2).text());
 		if(share == null) {
 			share = new Share();
+			//set share full name for get a full time quotation
+			String href = element.child(1).getElementsByTag("a").attr("href");
+			share.setFullName(href.substring(href.length() - 13, href.length() - 1));
+			//set name etc
 			share.setName(s.get(i++));
 			share.setShortcut(s.get(i++));
 			sharesDao.createShare(share);
@@ -124,7 +143,7 @@ public class GpwSharesDownloader {
 		quotations.add(quotation);
 		share.setQuotations(quotations);
 		
-		sharesDao.updateQuotationsInShare(share, quotation);
+		sharesDao.updateQuotationInShare(share, quotation);
 	}
 	
 	private Elements getAllSharesFromUrl() throws IOException {
@@ -138,7 +157,7 @@ public class GpwSharesDownloader {
 		//need to remove first and last "tr" object from the table
 		allShares.remove(0);
 		allShares.remove(allShares.size()-1);
-		
+
 		return allShares;
 	}
 	
@@ -158,4 +177,33 @@ public class GpwSharesDownloader {
 		
 		return indices;
 	}	
+	
+	//get all time quotations from history
+	private void getAllTimeQuotations() throws IOException {
+		List<Share> shares = sharesDao.findAllShares();
+		for( Share share : shares ) {
+			Connection connect = Jsoup.connect(CHART_URL+share.getFullName()+CHART_URL2);
+			String body = connect.get().getElementsByTag("body").text();
+			ObjectMapper mapper = new ObjectMapper();
+			QuotationsHistory qHistory = mapper.readValue(body.substring(1, body.length()-1), QuotationsHistory.class);
+			List<Quotation> quotations = share.getQuotations();
+			
+			for(Data qData : qHistory.getData()) {
+				Quotation quotation = new Quotation();
+				Date date = new Date();
+				date.setTime(qData.getT()*360L);
+				quotation.setDate(date);
+				quotation.setReferencePrice(qData.getC());
+				quotation.setOpen(qData.getO());
+				quotation.setHigh(qData.getH());
+				quotation.setLow(qData.getL());
+				quotation.setCumulatedVolume(qData.getV());
+				
+				quotations.add(quotation);
+			}
+			
+			share.setQuotations(quotations);
+			sharesDao.updateQuotationsInShare(share, quotations);
+		}
+	}
 }

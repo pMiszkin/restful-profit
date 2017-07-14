@@ -30,8 +30,8 @@ public class HibernateConfig {
 
 	Properties additionalProperties() {
 	    Properties properties = new Properties();
-	    properties.setProperty("hibernate.hbm2ddl.auto", "create-drop");
-	    properties.setProperty("hibernate.dialect", "org.hibernate.dialect.HSQLDialect");
+	    properties.setProperty("hibernate.hbm2ddl.auto", "update");
+	    properties.setProperty("hibernate.dialect", "org.hibernate.dialect.PostgreSQLDialect");
 	    properties.setProperty("hibernate.show_sql", "true");
 	    properties.setProperty("hibernate.transaction", "true");
 	    return properties;
@@ -40,10 +40,10 @@ public class HibernateConfig {
 	@Bean
 	public DataSource dataSource() {
 	    DriverManagerDataSource dataSource = new DriverManagerDataSource();
-	    dataSource.setDriverClassName("org.hsqldb.jdbcDriver");
-	    dataSource.setUrl("jdbc:hsqldb:data/tutorial");
-	    dataSource.setUsername("postgres");
-	    dataSource.setPassword("pass");
+	    dataSource.setDriverClassName("org.postgresql.Driver");
+	    dataSource.setUrl("jdbc:postgresql://localhost:5432/restfuldb");
+	    dataSource.setUsername("restful");
+	    dataSource.setPassword("XhuPS5%");
 	    return dataSource;
 	}
 	

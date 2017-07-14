@@ -1,3 +1,4 @@
+data/
 .classpath
 .gradle/
 .project
@@ -5,4 +6,3 @@
 bin/
 build/
 .springBeans
-data
