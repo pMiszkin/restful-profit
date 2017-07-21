@@ -54,7 +54,6 @@ public class GpwSharesDownloader {
 			setAllStockIndices();
 			addShares(gpwConnector.getAllShareNamesFromUrl());
 			addCurrentQuotationsAndStockIndices();
-			//update all time quotations
 			getAllArchiveQuotations();
 		} catch (IOException e) {
 			e.printStackTrace();
@@ -80,7 +79,7 @@ public class GpwSharesDownloader {
 	}
 	
 	private void addShares(Map<String, String> shares) {
-		shares.forEach((isin, name) -> {
+		shares.forEach((isin, name) -> {		
 			Share share = new Share();
 			share.setIsin(isin);
 			share.setName(name);
@@ -116,7 +115,7 @@ public class GpwSharesDownloader {
 						
 					quotation.setPrice(getValue.apply(2));
 					String change = elements.get(3).child(1).text();
-					quotation.setChange(Double.parseDouble(change.substring(change.length()-6, change.length()-2)));
+					quotation.setChange(Double.parseDouble(change.substring(change.indexOf("(")+1, change.indexOf(")")-1)));
 					quotation.setBid(getValue.apply(4));
 					quotation.setAsk(getValue.apply(5));
 					quotation.setMin(getValue.apply(6));
