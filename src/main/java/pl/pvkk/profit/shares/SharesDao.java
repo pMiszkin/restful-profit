@@ -15,12 +15,12 @@ public class SharesDao {
 	@PersistenceContext
 	private EntityManager em;
 	
-	public void updateQuotationInShare(Share share, Quotation quotation) {
+	public void updateCurrentQuotationInShare(Share share, CurrentQuotation quotation) {
 		em.persist(quotation);
 		em.merge(share);
 	}
 	
-	public void updateQuotationsInShare(Share share, List<Quotation> quotations) {
+	public void updateArchiveQuotationsInShare(Share share, List<ArchiveQuotation> quotations) {
 		quotations.forEach((q) -> {
 				em.persist(q);
 				em.merge(share);
@@ -38,13 +38,13 @@ public class SharesDao {
 		em.persist(share);
 	}
 	
-	public Share findShareByShortcut(String shortcut) {
-		return em.find(Share.class, shortcut);
+	public Share findShareById(String isin) {
+		return em.find(Share.class, isin);
 	}
 	
-	public boolean isShareExists(String shortcut) {
-		Query query = em.createQuery("SELECT COUNT(*) FROM Share WHERE shortcut = :shortcut");
-		query.setParameter("shortcut", shortcut);
+	public boolean isShareExists(String isin) {
+		Query query = em.createQuery("SELECT COUNT(*) FROM Share WHERE isin = :isin");
+		query.setParameter("isin", isin);
 		return (long) query.getSingleResult() > 0;
 	}
 	
@@ -52,13 +52,13 @@ public class SharesDao {
 	/*
 	 * Stock Indices part
 	 */
-	public void addStockIndex(StockIndices stockIndices) {
+	public void addStockIndex(StockIndex stockIndices) {
 		em.persist(stockIndices);
 	}
 	
 	@SuppressWarnings("unchecked")
-	public List<StockIndices> findAllIndices() {
-		List<StockIndices> indices = em.createQuery("SELECT s FROM StockIndices s").getResultList();
+	public List<StockIndex> findAllIndices() {
+		List<StockIndex> indices = em.createQuery("SELECT s FROM StockIndices s").getResultList();
 		return indices;
 	}
 	

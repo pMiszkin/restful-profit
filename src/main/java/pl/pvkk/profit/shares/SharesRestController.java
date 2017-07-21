@@ -30,14 +30,14 @@ public class SharesRestController {
 	}
 	
 	@GetMapping("/company")
-	public HttpEntity<Share> findShare(@RequestParam String shortcut) {
-		Share share = sharesService.findShareByShortcut(shortcut);
+	public HttpEntity<Share> findShare(@RequestParam String isin) {
+		Share share = sharesService.findShareByIsin(isin);
 		return share == null ? new ResponseEntity<>(HttpStatus.NOT_FOUND) : 
 			new ResponseEntity<Share>(share, HttpStatus.OK);
 	}
 	
 	@GetMapping("/indices/all")
-	public HttpEntity<List<StockIndices>> findIndices() {
+	public HttpEntity<List<StockIndex>> findIndices() {
 		return ResponseEntity.ok(sharesService.findAllIndices());
 	}
 

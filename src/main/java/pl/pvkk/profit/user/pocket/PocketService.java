@@ -2,14 +2,13 @@ package pl.pvkk.profit.user.pocket;
 
 import java.math.BigDecimal;
 import java.util.Date;
-import java.util.List;
 import java.util.Map;
 
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
 import org.springframework.transaction.annotation.Transactional;
 
-import pl.pvkk.profit.shares.Quotation;
+import pl.pvkk.profit.shares.CurrentQuotation;
 import pl.pvkk.profit.shares.Share;
 import pl.pvkk.profit.user.trades.Transaction;
 
@@ -24,12 +23,12 @@ public class PocketService {
 		return pocketDao.getPocketById(username);
 	}
 
-	public boolean isShareExistsInPocket(Pocket pocket, String shareShortcut, int shareNumber) {
+	public boolean isShareExistsInPocket(Pocket pocket, String shareIsin, int shareNumber) {
 		Map<String, Integer> shares = pocket.getShares();
 
-		if(!shares.containsKey(shareShortcut.toUpperCase()))
+		if(!shares.containsKey(shareIsin.toUpperCase()))
 				return false;
-		else if(shares.get(shareShortcut) < shareNumber)
+		else if(shares.get(shareIsin) < shareNumber)
 			return false;
 		return true;
 	}
@@ -37,19 +36,19 @@ public class PocketService {
 	@Transactional
 	public void setSharesAndTransactions(Pocket pocket, Share share, int shareNumber) {
 		Map<String, Integer> shares = pocket.getShares();
-		String shareShortcut = share.getShortcut();
-		List<Quotation> quotations = share.getQuotations();
-		double sharePrice = quotations.get(quotations.size()-1).getReferencePrice();
+		String shareIsin = share.getIsin();
+		CurrentQuotation quotation = share.getCurrentQuotation();
+		double sharePrice = quotation.getPrice();
 		
-		if (!shares.containsKey(shareShortcut))
-			shares.put(shareShortcut, shareNumber);
+		if (!shares.containsKey(shareIsin))
+			shares.put(shareIsin, shareNumber);
 		else {
-			int shareFromPocketNumber = shares.get(shareShortcut);
+			int shareFromPocketNumber = shares.get(shareIsin);
 
 			if (shareNumber + shareFromPocketNumber == 0)
-				shares.remove(shareShortcut);
+				shares.remove(shareIsin);
 			else
-				shares.replace(shareShortcut, shareNumber + shareFromPocketNumber);
+				shares.replace(shareIsin, shareNumber + shareFromPocketNumber);
 		}
 		
 		Transaction transaction = new Transaction();

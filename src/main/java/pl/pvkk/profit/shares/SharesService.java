@@ -13,8 +13,8 @@ public class SharesService {
 	private SharesDao sharesDao;
 	
 		
-	public Share findShareByShortcut(String shortcut) {
-		Share share = sharesDao.findShareByShortcut(shortcut.toUpperCase());
+	public Share findShareByIsin(String isin) {
+		Share share = sharesDao.findShareById(isin.toUpperCase());
 
 		return share;
 	}
@@ -23,15 +23,15 @@ public class SharesService {
 		return sharesDao.findAllShares();
 	}
 	
-	public boolean isShareExists(String shortcut){
-		return sharesDao.isShareExists(shortcut);
+	public boolean isShareExists(String isin){
+		return sharesDao.isShareExists(isin);
 	}
 	
 	/*
 	 * Stock Indices Part
 	 */
 	
-	public List<StockIndices> findAllIndices() {
+	public List<StockIndex> findAllIndices() {
 		return sharesDao.findAllIndices();
 	}
 }

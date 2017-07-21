@@ -5,12 +5,13 @@ import javax.persistence.GeneratedValue;
 import javax.persistence.Id;
 
 @Entity
-public class StockIndices {
+public class StockIndex {
 
 	@Id
 	@GeneratedValue
 	private int id;
 	private String name;
+	private String url;
 
 	public int getId() {
 		return id;
@@ -26,6 +27,14 @@ public class StockIndices {
 
 	public void setName(String name) {
 		this.name = name;
+	}
+
+	public String getUrl() {
+		return url;
+	}
+
+	public void setUrl(String url) {
+		this.url = url;
 	}
 
 }

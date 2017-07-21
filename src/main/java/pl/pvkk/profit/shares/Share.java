@@ -8,6 +8,7 @@ import javax.persistence.Entity;
 import javax.persistence.FetchType;
 import javax.persistence.Id;
 import javax.persistence.OneToMany;
+import javax.persistence.OneToOne;
 import javax.persistence.OrderBy;
 
 @Entity
@@ -15,16 +16,17 @@ public class Share {
 
 	private String name;
 	@Id
-	private String shortcut;
-	private String fullName;
-	@OneToMany(fetch = FetchType.EAGER)
-	@OrderBy("date DESC")
-	private List<Quotation> quotations;
+	private String isin;
+	@OneToOne(fetch = FetchType.EAGER)
+	private CurrentQuotation currentQuotation;
+	@OneToMany(fetch = FetchType.LAZY)
+	@OrderBy("date ASC")
+	private List<ArchiveQuotation> archiveQuotations;
 	@ElementCollection
 	private List<String> indices;
 
 	public Share() {
-		quotations = new ArrayList<Quotation>();
+		archiveQuotations = new ArrayList<ArchiveQuotation>();
 	}
 
 	public String getName() {
@@ -35,20 +37,28 @@ public class Share {
 		this.name = name;
 	}
 
-	public String getShortcut() {
-		return shortcut;
+	public String getIsin() {
+		return isin;
 	}
 
-	public void setShortcut(String shortcut) {
-		this.shortcut = shortcut;
+	public void setIsin(String isin) {
+		this.isin = isin;
 	}
 
-	public List<Quotation> getQuotations() {
-		return quotations;
+	public CurrentQuotation getCurrentQuotation() {
+		return currentQuotation;
 	}
 
-	public void setQuotations(List<Quotation> quotations) {
-		this.quotations = quotations;
+	public void setCurrentQuotation(CurrentQuotation currentQuotation) {
+		this.currentQuotation = currentQuotation;
+	}
+
+	public List<ArchiveQuotation> getArchiveQuotations() {
+		return archiveQuotations;
+	}
+
+	public void setArchiveQuotations(List<ArchiveQuotation> archiveQuotations) {
+		this.archiveQuotations = archiveQuotations;
 	}
 
 	public List<String> getIndices() {
@@ -57,14 +67,6 @@ public class Share {
 
 	public void setIndices(List<String> indices) {
 		this.indices = indices;
-	}
-
-	public String getFullName() {
-		return fullName;
-	}
-
-	public void setFullName(String fullName) {
-		this.fullName = fullName;
 	}
 
 }

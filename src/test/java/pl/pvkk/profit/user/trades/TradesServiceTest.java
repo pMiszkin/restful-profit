@@ -5,8 +5,6 @@ import static org.mockito.Matchers.anyObject;
 import static org.mockito.Matchers.anyString;
 import static org.mockito.Mockito.when;
 
-import java.util.LinkedList;
-import java.util.List;
 
 import org.junit.Before;
 import org.junit.Test;
@@ -18,7 +16,7 @@ import org.mockito.runners.MockitoJUnitRunner;
 import org.springframework.http.HttpStatus;
 import org.springframework.http.ResponseEntity;
 
-import pl.pvkk.profit.shares.Quotation;
+import pl.pvkk.profit.shares.CurrentQuotation;
 import pl.pvkk.profit.shares.Share;
 import pl.pvkk.profit.shares.SharesService;
 import pl.pvkk.profit.user.pocket.Pocket;
@@ -48,7 +46,7 @@ public class TradesServiceTest {
 		share = getShareStubData();
 		when(sharesService.isShareExists(anyObject())).thenReturn(true);
 		when(pocketService.getPocketById("login")).thenReturn(pocket);
-		when(sharesService.findShareByShortcut(anyObject())).thenReturn(share);
+		when(sharesService.findShareByIsin(anyObject())).thenReturn(share);
 	}
 
 	/**
@@ -105,13 +103,11 @@ public class TradesServiceTest {
 	private Share getShareStubData() {
 		share = new Share();
 		share.setName("PVKKKK");
-		share.setShortcut("PVK");
+		share.setIsin("PVK");
 		
-		List<Quotation> quotations = new LinkedList<Quotation>();
-		Quotation quotation = new Quotation();
-		quotation.setReferencePrice(50.25);
-		quotations.add(quotation);
-		share.setQuotations(quotations);
+		CurrentQuotation quotation = new CurrentQuotation();
+		quotation.setPrice(50.25);
+		share.setCurrentQuotation(quotation);
 		
 		return share;
 	}

@@ -43,8 +43,8 @@
 									<th scope="col" abbr="Name">Name</th>
 									<th scope="col" abbr="Currency">Currency</th>
 									<th scope="col" abbr="Price">Price</th>
-									<th scope="col" abbr="High">High</th>
-									<th scope="col" abbr="Low">Low</th>
+									<th scope="col" abbr="High">Max</th>
+									<th scope="col" abbr="Low">Min</th>
 									<th scope="col" abbr="Change">Change</th>
 									<th scope="col" abbr="Volume">Volume</th>
 									<th scope="col" abbr="Value">Value (thous.)</th>
@@ -63,16 +63,16 @@
 											sell
 										</button>
 									</td>
-									<td><input type="number" ng-model="toSellNumber[$index]" ng-init="toSellNumber[$index]=user.profile.pocket.shares[x.shortcut]" min="1" style="width:40px;"> /{{user.profile.pocket.shares[x.shortcut]}}</td>
-									<td>{{x.shortcut}}</td>
-									<td><a href="../../shares/company/{{x.shortcut}}">{{x.name}}</a></td>
+									<td><input type="number" ng-model="toSellNumber[$index]" ng-init="toSellNumber[$index]=user.profile.pocket.shares[x.isin]" min="1" style="width:40px;"> /{{user.profile.pocket.shares[x.isin]}}</td>
+									<td>{{x.isin}}</td>
+									<td><a href="../../shares/company/{{x.isin}}">{{x.name}}</a></td>
 									<td>{{x.quotations[0].currency}}</td>
-									<td>{{x.quotations[0].referencePrice}}</td>
-									<td>{{x.quotations[0].high}}</td>
-									<td>{{x.quotations[0].low}}</td>
+									<td>{{x.quotations[0].price}}</td>
+									<td>{{x.quotations[0].max}}</td>
+									<td>{{x.quotations[0].min}}</td>
 									<td>{{x.quotations[0].change}}</td>
-									<td>{{x.quotations[0].cumulatedVolume}}</td>
-									<td>{{x.quotations[0].cumulatedValue}}</td>
+									<td>{{x.quotations[0].volume}}</td>
+									<td>{{x.quotations[0].value}}</td>
 								</tr>
 							</tbody>
 						</table>
@@ -84,7 +84,7 @@
 								<div class="modal-header">
 									<div class="close" data-dismiss="modal">x</div>
 									<h4 class="modal-title">
-										<a href="../../shares/company/{{share.shortcut}}" style="text-decoration:none;color:black;">
+										<a href="../../shares/company/{{share.isin}}" style="text-decoration:none;color:black;">
 											{{share.name}}
 										</a>
 									</h4>
@@ -97,7 +97,7 @@
 										</div>
 										<div class="line_div">
 											<span class="left_span">Buy</span>
-											<span class="right_span">for {{(share.quotations[0].referencePrice*number).toFixed(2)}}$</span>
+											<span class="right_span">for {{(share.quotations[0].price*number).toFixed(2)}}$</span>
 											<span class="right_span"><input type="number" ng-model="number" ng-init="number=1" min="1" style="width:60px;"></span>
 										</div>
 										<div class="line_div">
@@ -106,11 +106,11 @@
 										</div>
 										<div class="line_div">
 											<span class="left_span">Price</span>
-											<span class="right_span">{{share.quotations[0].referencePrice}}$</span>
+											<span class="right_span">{{share.quotations[0].price}}$</span>
 										</div>
 										<div class="line_div">
 											<span class="left_span">Value</span>
-											<span class="right_span">{{share.quotations[0].cumulatedValue}}K</span>
+											<span class="right_span">{{share.quotations[0].value}}K</span>
 										</div>
 									</div>
 									<div class="modal-right">

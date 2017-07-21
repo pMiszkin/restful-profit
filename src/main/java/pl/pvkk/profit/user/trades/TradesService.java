@@ -1,13 +1,11 @@
 package pl.pvkk.profit.user.trades;
 
-import java.util.List;
-
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.http.HttpStatus;
 import org.springframework.http.ResponseEntity;
 import org.springframework.stereotype.Service;
 
-import pl.pvkk.profit.shares.Quotation;
+import pl.pvkk.profit.shares.CurrentQuotation;
 import pl.pvkk.profit.shares.Share;
 import pl.pvkk.profit.shares.SharesService;
 import pl.pvkk.profit.user.pocket.Pocket;
@@ -33,9 +31,9 @@ public class TradesService {
 			return new ResponseEntity<String>(response, HttpStatus.BAD_REQUEST);
 		}
 		
-		Share share = sharesService.findShareByShortcut(shareShortcut);
-		List<Quotation> quotations = share.getQuotations();
-		double sharePrice = quotations.get(quotations.size()-1).getReferencePrice();
+		Share share = sharesService.findShareByIsin(shareShortcut);
+		CurrentQuotation quotation = share.getCurrentQuotation();
+		double sharePrice = quotation.getPrice();
 		
 		if(shareNumber <= 0) {
 			response = "You're trying to buy 0 or less shares";
@@ -71,9 +69,9 @@ public class TradesService {
 			return new ResponseEntity<String>(response, HttpStatus.BAD_REQUEST);
 		}
 		
-		Share share = sharesService.findShareByShortcut(shareShortcut);
-		List<Quotation> quotations = share.getQuotations();
-		double sharePrice = quotations.get(quotations.size()-1).getReferencePrice();
+		Share share = sharesService.findShareByIsin(shareShortcut);
+		CurrentQuotation quotation = share.getCurrentQuotation();
+		double sharePrice = quotation.getPrice();
 		
 		pocketService.setSharesAndTransactions(pocket, share, -shareNumber);
 		
