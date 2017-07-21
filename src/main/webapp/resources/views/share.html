@@ -44,34 +44,34 @@
 							</tr>
 							<tr class="odd">
 								<td>Price</td>
-								<td>{{share.quotations[0].price}}</td>
+								<td>{{share.currentQuotation.price}}</td>
 								<td>Change</td>
-								<td>{{share.quotations[0].change}}</td>
+								<td>{{share.currentQuotation.change}}</td>
 							</tr>
 							<tr class="even">
 								<td>Max</td>
-								<td>{{share.quotations[0].max}}</td>
+								<td>{{share.currentQuotation.max}}</td>
 								<td>Min</td>
-								<td>{{share.quotations[0].min}}</td>
+								<td>{{share.currentQuotation.min}}</td>
 							</tr>
 							<tr class="odd">
 								<td>Volume</td>
-								<td>{{share.quotations[0].volume}}</td>
+								<td>{{share.currentQuotation.volume}}</td>
 								<td>Value</td>
-								<td>{{share.quotations[0].value}}K</td>
+								<td>{{share.currentQuotation.value}}K</td>
 							</tr>
 							<tr class="even">
 								<td>Last quotation time</td>
 								<td>{{formattedDate}}</td>
 								<td>Last transaction date</td>
-								<td>{{share.quotations[0].date}}</td>
+								<td>{{share.currentQuotation.date}}</td>
 							</tr>
 						</table>
 					</div>
 					<div ng-show="authenticated" style="float:left;margin-top:25px;" ng-click="getPocket()">
 						<div>
 							<span><input type="number" ng-model="number" ng-init="number=1" min="1" style="width:60px;"></span>
-							<span>for {{(share.quotations[0].price*number).toFixed(2)}}$</span>
+							<span>for {{(share.currentQuotation.price*number).toFixed(2)}}$</span>
 							<span style="margin-left:20px;"><button class="btn btn-long" ng-click="buyShares()">Buy</button></span>
 						</div>
 						<div>

@@ -43,10 +43,10 @@
 									<option style="display:none" value="">select a type</option>
 									<option value="name" ng-selected=true>name</option>
 									<option value="isin">code</option>
-									<option value="quotations[0].price">price</option>
-									<option value="quotations[0].change">change</option>
-									<option value="quotations[0].volume">volume</option>
-									<option value="quotations[0].value">value</option>
+									<option value="currentQuotation.price">price</option>
+									<option value="currentQuotation.change">change</option>
+									<option value="currentQuotation.volume">volume</option>
+									<option value="currentQuotation.value">value</option>
 								</select>
 								<input type="radio" ng-model="order" ng-value="false" ng-checked="true">
 								<label>ascending</label>
@@ -91,7 +91,7 @@
 							<tbody align="right">
 								<tr dir-paginate="x in filtered = (shares | filter:searchText | filter:{indices:selectedIndex}) 
 									| orderBy:selected:order | itemsPerPage:20"
-									ng-style="x.quotations[0].change < 0 && {'color': 'red'} || x.quotations[0].change > 0 && {'color': 'green'}">
+									ng-style="x.currentQuotation.change < 0 && {'color': 'red'} || x.currentQuotation.change > 0 && {'color': 'green'}">
 									<td>
 										<button class="buy_button btn" data-toggle="modal" data-target="#buyModal" ng-click="open(x)">
 											buy
@@ -99,13 +99,13 @@
 									</td>
 									<td>{{x.isin}}</td>
 									<td><a href="shares/company/{{x.isin}}">{{x.name}}</a></td>
-									<td>{{x.quotations[0].currency}}</td>
-									<td>{{x.quotations[0].price}}</td>
-									<td>{{x.quotations[0].max}}</td>
-									<td>{{x.quotations[0].min}}</td>
-									<td>{{x.quotations[0].change}}</td>
-									<td>{{x.quotations[0].volume}}</td>
-									<td>{{x.quotations[0].value}}</td>
+									<td>{{x.currentQuotation.currency}}</td>
+									<td>{{x.currentQuotation.price}}</td>
+									<td>{{x.currentQuotation.max}}</td>
+									<td>{{x.currentQuotation.min}}</td>
+									<td>{{x.currentQuotation.change}}</td>
+									<td>{{x.currentQuotation.volume}}</td>
+									<td>{{x.currentQuotation.value}}</td>
 								</tr>
 							</tbody>
 						</table>
@@ -129,20 +129,20 @@
 											</div>
 											<div class="line_div">
 												<span class="left_span">Buy</span>
-												<span class="right_span">for {{(share.quotations[0].price*number).toFixed(2)}}$</span>
+												<span class="right_span">for {{(share.currentQuotation.price*number).toFixed(2)}}$</span>
 												<span class="right_span"><input type="number" ng-model="number" ng-init="number=1" min="1" style="width:60px;"></span>
 											</div>
 											<div class="line_div">
 												<span class="left_span">Change</span>
-												<span class="right_span" ng-style="share.quotations[0].change < 0 && {'color': 'red'} || share.quotations[0].change > 0 && {'color': 'green'}">{{share.quotations[0].change}}%</span>
+												<span class="right_span" ng-style="share.currentQuotation.change < 0 && {'color': 'red'} || share.currentQuotation.change > 0 && {'color': 'green'}">{{share.currentQuotation.change}}%</span>
 											</div>
 											<div class="line_div">
 												<span class="left_span">Price</span>
-												<span class="right_span">{{share.quotations[0].price}}$</span>
+												<span class="right_span">{{share.currentQuotation.price}}$</span>
 											</div>
 											<div class="line_div">
 												<span class="left_span">Value</span>
-												<span class="right_span">{{share.quotations[0].value}}K</span>
+												<span class="right_span">{{share.currentQuotation.value}}K</span>
 											</div>
 										</div>
 										<div class="modal-right">

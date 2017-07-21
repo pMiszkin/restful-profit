@@ -58,7 +58,7 @@ public class SharesDao {
 	
 	@SuppressWarnings("unchecked")
 	public List<StockIndex> findAllIndices() {
-		List<StockIndex> indices = em.createQuery("SELECT s FROM StockIndices s").getResultList();
+		List<StockIndex> indices = em.createQuery("SELECT s FROM StockIndex s").getResultList();
 		return indices;
 	}
 	
