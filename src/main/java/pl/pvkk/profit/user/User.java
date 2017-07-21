@@ -9,7 +9,7 @@ import org.hibernate.validator.constraints.Email;
 import org.hibernate.validator.constraints.Length;
 
 @Entity
-@Table(name="\"User\"")
+@Table(name="User_account")
 public class User {
 
 	@Id

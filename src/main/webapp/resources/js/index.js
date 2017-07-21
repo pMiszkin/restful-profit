@@ -67,7 +67,7 @@ angular.module('app', ['angularUtils.directives.dirPagination'])
    			method: 'POST',
     		url: '/transfer/purchases',
     		headers: {'Content-Type': 'application/x-www-form-urlencoded'},
-    		params: {'name': $scope.share.shortcut, 'number': $scope.number}
+    		params: {'name': $scope.share.isin, 'number': $scope.number}
 		}).success(function() {
 			$window.location.href = "/user/profile/"+$rootScope.username;
 		}).error(function(response) {
@@ -128,7 +128,7 @@ angular.module('app', ['angularUtils.directives.dirPagination'])
 	};
 })
 /*
-	* /share/company/{shortcut} controller (share site)
+	* /share/company/{isin} controller (share site)
 */
 .controller('shareController', function($rootScope, $scope, $http, $location, $window) {
 	var share = $location.absUrl();
@@ -140,11 +140,11 @@ angular.module('app', ['angularUtils.directives.dirPagination'])
 		method: 'get',
     	url: '/shares/company',
     	headers: {'Content-Type': 'application/x-www-form-urlencoded'},
-    	params: {'shortcut': share.substr(share.length-3)}
+    	params: {'isin': share.substr(share.length-12)}
 	}).success(function(response) {
 		$scope.share = response;
 		$scope.show_table = true;
-		var date = new Date($scope.share.quotations[0].date);
+		var date = new Date($scope.share.currentQuotation.date);
 		/*format date*/
 		var hour = date.getHours();
 		var min = date.getMinutes();
@@ -156,7 +156,7 @@ angular.module('app', ['angularUtils.directives.dirPagination'])
 
 		$scope.formattedDate = hour+':'+min+':'+sec;
 	}).error(function(response) {
-		$scope.share = {'name': 'Share "'+share.substr(share.length-3)+'" has not found.'};
+		$scope.share = {'name': 'Share "'+share.substr(share.length-12)+'" has not found.'};
 		$scope.show_table = false;
 	});
 	
@@ -165,7 +165,7 @@ angular.module('app', ['angularUtils.directives.dirPagination'])
    			method: 'POST',
     		url: '/transfer/purchases',
     		headers: {'Content-Type': 'application/x-www-form-urlencoded'},
-    		params: {'name': $scope.share.shortcut, 'number': $scope.number}
+    		params: {'name': $scope.share.isin, 'number': $scope.number}
 		}).success(function() {
 			$window.location.href = "/user/profile/"+$rootScope.username;
 		}).error(function(response) {
@@ -201,7 +201,7 @@ angular.module('app', ['angularUtils.directives.dirPagination'])
 						method: 'get',
 				    	url: '/shares/company',
 				    	headers: {'Content-Type': 'application/x-www-form-urlencoded'},
-				    	params: {'shortcut': key}
+				    	params: {'isin': key}
 					}).success(function(response) {
 						$scope.shares.push(response);
 					});
@@ -217,7 +217,7 @@ angular.module('app', ['angularUtils.directives.dirPagination'])
    			method: 'POST',
     		url: '/transfer/purchases',
     		headers: {'Content-Type': 'application/x-www-form-urlencoded'},
-    		params: {'name': $scope.share.shortcut, 'number': $scope.number}
+    		params: {'name': $scope.share.isin, 'number': $scope.number}
 		}).success(function() {
 			$window.location.href = "/user/profile/"+$rootScope.username;
 		}).error(function(response) {
@@ -247,7 +247,7 @@ angular.module('app', ['angularUtils.directives.dirPagination'])
    			method: 'POST',
     		url: '/transfer/sales',
     		headers: {'Content-Type': 'application/x-www-form-urlencoded'},
-    		params: {'name': share.shortcut, 'number': number}
+    		params: {'name': share.isin, 'number': number}
 		}).success(function() {
 			$window.location.href = "/user/profile/"+$rootScope.username;
 		}).error(function(response) {

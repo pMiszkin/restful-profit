@@ -23,7 +23,7 @@ public class UserDao {
 	}
 	
 	public boolean isLoginTaken(String login){
-		Query query = em.createQuery("SELECT COUNT(*) FROM User WHERE login = :login");
+		Query query = em.createQuery("SELECT COUNT(*) FROM User_account WHERE login = :login");
 		query.setParameter("login", login);
 
 		//return true if login is taken
@@ -31,7 +31,7 @@ public class UserDao {
 	}
 
 	public boolean isEmailTaken(String email) {
-		Query query = em.createQuery("SELECT COUNT(*) FROM User WHERE email = :email");
+		Query query = em.createQuery("SELECT COUNT(*) FROM User_account WHERE email = :email");
 		query.setParameter("email", email);
 		return (long) query.getSingleResult() > 0;
 	}
