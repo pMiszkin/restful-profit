@@ -111,7 +111,7 @@ public class GpwSharesDownloader {
 									.replace("\u00A0", ""));  //no-break space
 						} catch(NumberFormatException e) { return (double) 0; }
 					};
-					String currency = elements.get(1).child(1).text();
+					String currency = elements.get(1).child(0).text();
 					quotation.setCurrency(currency.substring(currency.indexOf("(")+1, currency.indexOf(")")-1));
 					quotation.setPrice(getValue.apply(2));
 					String change = elements.get(3).child(1).text();
