@@ -95,7 +95,6 @@ public class GpwSharesDownloader {
 				try {
 					Elements elements = gpwConnector.getCurrentQuotationsAndStockIndices(share.getIsin());
 					//save indices
-					System.out.println(share.getName()+" "+share.getIsin());
 					List<String> indices = new LinkedList<String>();
 					elements.first().getElementsByTag("a").forEach(index -> indices.add(index.text()));
 					share.setIndices(indices);
@@ -112,7 +111,7 @@ public class GpwSharesDownloader {
 						} catch(NumberFormatException e) { return (double) 0; }
 					};
 					String currency = elements.get(1).child(0).text();
-					quotation.setCurrency(currency.substring(currency.indexOf("(")+1, currency.indexOf(")")-1));
+					quotation.setCurrency(currency.substring(currency.indexOf("(")+1, currency.indexOf(")")));
 					quotation.setPrice(getValue.apply(2));
 					String change = elements.get(3).child(1).text();
 					quotation.setChange(Double.parseDouble(change.substring(change.indexOf("(")+1, change.indexOf(")")-1)));
