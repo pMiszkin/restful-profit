@@ -29,7 +29,7 @@ public class SecurityConfig extends WebSecurityConfigurerAdapter {
         	.antMatchers("/user/print/**", "user/register").authenticated()
         	.antMatchers("/login").anonymous()
         	.anyRequest().permitAll()
-        	.and().addFilterAfter(new CsrfHeaderFilter(), CsrfFilter.class);;
+        	.and().addFilterAfter(new CsrfHeaderFilter(), CsrfFilter.class);
 		
 		http
 			.formLogin()

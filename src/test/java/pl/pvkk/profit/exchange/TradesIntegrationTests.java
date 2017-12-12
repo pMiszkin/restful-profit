@@ -1,4 +1,4 @@
-/*package pl.pvkk.profit.exchange;
+package pl.pvkk.profit.exchange;
 
 import static org.springframework.test.web.servlet.request.MockMvcRequestBuilders.post;
 import static org.springframework.test.web.servlet.result.MockMvcResultMatchers.content;
@@ -52,4 +52,3 @@ public class TradesIntegrationTests {
 	}
 
 }
-*/

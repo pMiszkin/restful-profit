@@ -1,4 +1,4 @@
-/*package pl.pvkk.profit.user;
+package pl.pvkk.profit.user;
 
 import static org.springframework.test.web.servlet.request.MockMvcRequestBuilders.get;
 import static org.springframework.test.web.servlet.request.MockMvcRequestBuilders.post;
@@ -107,4 +107,3 @@ public class LoggingIntegrationTests {
 	}
 
 }
-*/
