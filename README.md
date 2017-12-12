@@ -12,15 +12,15 @@ Stock market simulator - RESTful application
 - Angularjs
 
 # Long starting?
-An application has a long start because of one method  - addShares in [GpwSharesDownloader](src/main/java/pl/pvkk/profit/gpw/GpwSharesDownloader.java) with @PostConstruct annotation. It gets content from other site [gpw.pl](https://www.gpw.pl/), downloads quotations at stock exchange and saves them in HSQL database.
+The application runs slowly because of a one method  - addShares in [GpwSharesDownloader](src/main/java/pl/pvkk/profit/gpw/GpwSharesDownloader.java) with @PostConstruct annotation. It gets content from other site [gpw.pl](https://www.gpw.pl/), downloads quotations at stock exchange and saves them in HSQL database.
 
 # About
 Default user is:
 - login: "login"
 - password: "password"
 
-If you want to register a new one you have to set your email address for server.
-![ss](/src/main/webapp/resources/smtp configuration.png?raw=true)
+If you want to register a new one you have to set your email address because in registration process you get a confirmation mail and it's needed to set any server email address
+![ss](/src/main/webapp/resources/smtp configuration.png?raw=true) (application.properties in resources)
 
 You may also change accessibility for other apps in your gmail account. Just turn it off.
 https://www.google.com/settings/security/lesssecureapps

@@ -4,9 +4,9 @@ import org.springframework.context.ApplicationEvent;
 
 import pl.pvkk.profit.user.User;
 
+@SuppressWarnings("serial")
 public class OnRegistrationCompleteEvent extends ApplicationEvent {
 
-	private static final long serialVersionUID = 9113943751727092785L;
 	private final String appUrl;
 	private final User user;
 
