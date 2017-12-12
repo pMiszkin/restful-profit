@@ -17,7 +17,7 @@ Default user is:
 - password: "password"
 
 If you want to register a new one you have to set your email address because in registration process you get a confirmation mail and it's needed to set any server email address
-![ss](/src/main/webapp/resources/smtpconfiguration.png?raw=true) (application.properties in resources)
+![ss](/src/main/webapp/resources/smtpconfiguration.png) (application.properties in resources)
 
 You may also change accessibility for other apps in your gmail account. Just turn it off.
 https://www.google.com/settings/security/lesssecureapps
@@ -38,5 +38,7 @@ Here you have mapped URLs. Each adress works on **localhost:8080**. Also you can
 ```
 
 ![ss](/src/main/webapp/resources/ss.png?raw=true)
+
+#Database scheme
 
 ![ss](/src/main/webapp/resources/OrmDiagram.png?raw=true)
