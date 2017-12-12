@@ -34,16 +34,11 @@ public class GpwSharesDownloader {
 	private SharesDao sharesDao;
 	@Autowired
 	private GpwConnector gpwConnector;
-	//private final String CHART_URL = "https://www.gpw.pl/chart.php?req=O:8:%22stdClass%22:1:{s:1:%220%22;O:8:%22stdClass%22:4:{s:4:%22from%22;i:368135;s:4:%22mode%22;s:1:%22D%22;s:2:%22to%22;i:416608;s:4:%22isin%22;s:12:%22";
-	//private final String CHART_URL2 = "%22;}}%C3%97tamp=1499789609646";
-	//private final String QUOTATIONS_URL = "https://www.gpw.pl/ajaxindex.php?action=GPWQuotations&start=showTable&tab=all&lang=EN&full=0";
-	//private final String STOCK_URL = "https://www.gpw.pl/portfele_indeksow";
-	//private final String INDICES_URL = "https://www.gpw.pl/ajaxindex.php?action=GPWListaSp&start=quotationsTab&gls_isin=";
 	
 	
 	
 	/**
-	 * Data is now stored in files added to the project
+	 * This is an "init" method for download and save all shares quotations
 	 * @throws SQLException 
 	 * @throws IOException
 	 */
