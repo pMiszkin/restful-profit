@@ -1,6 +1,3 @@
-#EDIT 18.07.2017
-
-gpw.pl had a site refactor when i tried to save quotation in local file but they changed urls. Update is coming.. Sorry
 
 # restful-profit
 Stock market simulator - RESTful application
