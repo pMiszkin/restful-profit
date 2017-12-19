@@ -26,6 +26,7 @@ public class UserService {
 		User user = new User();
 		user.setLogin("login");
 		user.setPassword("password");
+		user.setEnabled(true);
 		tryToSaveUser(user);
 	}
 
@@ -46,8 +47,6 @@ public class UserService {
 
 		BCryptPasswordEncoder passwordEncoder = new BCryptPasswordEncoder();
 		user.setPassword(passwordEncoder.encode(user.getPassword()));
-		// user is not authenticated
-		user.setEnabled(false);
 
 		userDao.saveUser(user);
 		return true;
@@ -64,5 +63,9 @@ public class UserService {
 
 	public void setEnabledUser(User user) {
 		userDao.setEnabledUser(user);
+	}
+	
+	public boolean isUserEnabled(String username) {
+		return userDao.getUserByName(username).isEnabled();
 	}
 }

@@ -2,11 +2,18 @@ package pl.pvkk.profit.user.trades;
 
 import java.util.Date;
 
+import javax.persistence.CascadeType;
 import javax.persistence.Entity;
+import javax.persistence.FetchType;
 import javax.persistence.GeneratedValue;
 import javax.persistence.Id;
 import javax.persistence.ManyToOne;
 import javax.persistence.OneToOne;
+
+import com.fasterxml.jackson.annotation.JsonBackReference;
+import com.fasterxml.jackson.annotation.JsonIgnore;
+import com.fasterxml.jackson.annotation.JsonIgnoreProperties;
+import com.fasterxml.jackson.annotation.JsonManagedReference;
 
 import pl.pvkk.profit.shares.Share;
 import pl.pvkk.profit.user.pocket.Pocket;
@@ -19,8 +26,10 @@ public class Transaction {
 	private long id;
 	private Date date;
 	@ManyToOne
+	@JsonIgnoreProperties("purchases")
 	private Pocket buyer;
-	@OneToOne
+	@ManyToOne//(cascade = CascadeType.ALL)//(fetch=FetchType.LAZY)
+	@JsonIgnoreProperties("transactions")
 	private Share share;
 	private int share_number;
 	private double share_price;

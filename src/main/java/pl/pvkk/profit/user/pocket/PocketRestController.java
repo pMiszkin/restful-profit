@@ -9,7 +9,7 @@ import org.springframework.web.bind.annotation.RequestMapping;
 import org.springframework.web.bind.annotation.RestController;
 
 @RestController
-@RequestMapping("pocket")
+@RequestMapping("user/pocket")
 public class PocketRestController {
 
 	@Autowired

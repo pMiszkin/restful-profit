@@ -8,6 +8,7 @@ import org.springframework.stereotype.Service;
 import pl.pvkk.profit.shares.CurrentQuotation;
 import pl.pvkk.profit.shares.Share;
 import pl.pvkk.profit.shares.SharesService;
+import pl.pvkk.profit.user.UserService;
 import pl.pvkk.profit.user.pocket.Pocket;
 import pl.pvkk.profit.user.pocket.PocketService;
 
@@ -20,14 +21,24 @@ public class TradesService {
 	@Autowired
 	private PocketService pocketService;
 	
+	@Autowired
+	private UserService userService;
+	
 
 	public ResponseEntity<String> buyShares(String shareShortcut, int shareNumber, String username) {
 		String response;
-		//Ill do this
+		
+		if(!userService.isUserEnabled(username)) {
+			response = "An e-mail was sended at your address, please confirm your account";
+			System.out.println("b");
+			return new ResponseEntity<String>(response, HttpStatus.UNAUTHORIZED);
+		}
+		
 		Pocket pocket = pocketService.getPocketById(username);
 
 		if(!sharesService.isShareExists(shareShortcut)) {
 			response = "This share doesn't exists!";
+			System.out.println("c");
 			return new ResponseEntity<String>(response, HttpStatus.BAD_REQUEST);
 		}
 		
@@ -37,10 +48,12 @@ public class TradesService {
 		
 		if(shareNumber <= 0) {
 			response = "You're trying to buy 0 or less shares";
+			System.out.println("d");
 			return new ResponseEntity<String>(response, HttpStatus.BAD_REQUEST);
 		}
 		else if(shareNumber*sharePrice > pocket.getMoney().doubleValue()) {
 			response = "You have no money for that";
+			System.out.println("e");
 			return new ResponseEntity<String>(response, HttpStatus.BAD_REQUEST);	
 		}
 		
@@ -78,5 +91,6 @@ public class TradesService {
 		response = "You've sold "+shareNumber+" from "+share.getName()+" company, for "+shareNumber*sharePrice;
 		return new ResponseEntity<String>(response, HttpStatus.OK);
 	}
+	
 	
 }

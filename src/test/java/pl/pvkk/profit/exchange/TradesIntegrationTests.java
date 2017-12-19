@@ -33,20 +33,20 @@ public class TradesIntegrationTests {
 	public void testBuyShares() throws Exception {
 		//fine version
 		this.mockMvc
-			.perform(post("/transfer/purchases?name=06n&number=5")
+			.perform(post("/user/pocket/transfer/purchases?name=06n&number=5")
 					.accept(MediaType.parseMediaType("application/json;charset=UTF-8")))
 			.andExpect(status().isOk())
 			.andExpect(content().contentType("application/json;charset=UTF-8"));
 		
 		//wrong number
 		this.mockMvc
-			.perform(post("/transfer/purchases?name=06n&number=a")
+			.perform(post("/user/pocket/transfer/purchases?name=06n&number=a")
 					.accept(MediaType.parseMediaType("application/json;charset=UTF-8")))
 			.andExpect(status().isBadRequest());
 		
 		//wrong name
 		this.mockMvc
-			.perform(post("/transfer/purchases?name=aasd&number=5")
+			.perform(post("/user/pocket/transfer/purchases?name=aasd&number=5")
 					.accept(MediaType.parseMediaType("application/json;charset=UTF-8")))
 			.andExpect(status().isBadRequest());
 	}

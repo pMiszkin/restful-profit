@@ -2,6 +2,7 @@ package pl.pvkk.profit.user.pocket;
 
 import java.math.BigDecimal;
 import java.util.Date;
+import java.util.List;
 import java.util.Map;
 
 import org.springframework.beans.factory.annotation.Autowired;
@@ -50,7 +51,8 @@ public class PocketService {
 			else
 				shares.replace(shareIsin, shareNumber + shareFromPocketNumber);
 		}
-		
+		List<Transaction> transactions = pocket.getPurchases();
+
 		Transaction transaction = new Transaction();
 		transaction.setBuyer(pocket);
 		transaction.setShare(share);
@@ -58,10 +60,14 @@ public class PocketService {
 		transaction.setShare_price(sharePrice);
 		transaction.setDate(new Date());
 		
+		transactions.add(transaction);
+		System.out.println("wut");
 		pocket.setShares(shares);
+		pocket.setPurchases(transactions);
 		BigDecimal cost = BigDecimal.valueOf(sharePrice*shareNumber);
 		pocket.setMoney(pocket.getMoney().subtract(cost));
-		pocketDao.updateSharesAndMoneyInPocket(pocket, transaction);
+		System.out.println("alright");
+		pocketDao.updateSharesAndMoneyInPocket(pocket, transactions);
 	}
 
 }

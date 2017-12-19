@@ -16,7 +16,7 @@ angular.module('app', ['angularUtils.directives.dirPagination'])
 	}
 
 	$rootScope.getPocket = function() {
-		return $http.get('/pocket/'+$rootScope.username);
+		return $http.get('/user/pocket/'+$rootScope.username);
 	}
 
 })
@@ -65,12 +65,14 @@ angular.module('app', ['angularUtils.directives.dirPagination'])
     $scope.buyShares = function() {
 	 	$http({
    			method: 'POST',
-    		url: '/transfer/purchases',
+    		url: '/user/pocket/transfer/purchases',
     		headers: {'Content-Type': 'application/x-www-form-urlencoded'},
     		params: {'name': $scope.share.isin, 'number': $scope.number}
 		}).success(function() {
+			console.log("asdasd");
 			$window.location.href = "/user/profile/"+$rootScope.username;
 		}).error(function(response) {
+			console.log("gfgfgfgf");
 			$scope.buyingError = true;
 			$scope.buyingErrorResponse = response;
 		});
@@ -163,12 +165,14 @@ angular.module('app', ['angularUtils.directives.dirPagination'])
 	$scope.buyShares = function() {
 	 	$http({
    			method: 'POST',
-    		url: '/transfer/purchases',
+    		url: '/user/pocket/transfer/purchases',
     		headers: {'Content-Type': 'application/x-www-form-urlencoded'},
     		params: {'name': $scope.share.isin, 'number': $scope.number}
 		}).success(function() {
+			console.log("success");
 			$window.location.href = "/user/profile/"+$rootScope.username;
 		}).error(function(response) {
+			console.log("error");
 			$scope.buyingError = true;
 			$scope.buyingErrorResponse = response;
 		});
@@ -215,12 +219,14 @@ angular.module('app', ['angularUtils.directives.dirPagination'])
 	$scope.buyShares = function() {
 	 	$http({
    			method: 'POST',
-    		url: '/transfer/purchases',
+    		url: '/user/pocket/transfer/purchases',
     		headers: {'Content-Type': 'application/x-www-form-urlencoded'},
     		params: {'name': $scope.share.isin, 'number': $scope.number}
 		}).success(function() {
 			$window.location.href = "/user/profile/"+$rootScope.username;
+			console.log("sukces");
 		}).error(function(response) {
+			console.log("berd");
 			$scope.buyingError = true;
 			$scope.buyingErrorResponse = response;
 		});
@@ -245,7 +251,7 @@ angular.module('app', ['angularUtils.directives.dirPagination'])
 	$scope.sellShares = function(share, number) {
 	 	$http({
    			method: 'POST',
-    		url: '/transfer/sales',
+    		url: '/user/pocket/transfer/sales',
     		headers: {'Content-Type': 'application/x-www-form-urlencoded'},
     		params: {'name': share.isin, 'number': number}
 		}).success(function() {

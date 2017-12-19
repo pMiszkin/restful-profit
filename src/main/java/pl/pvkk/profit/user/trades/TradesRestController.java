@@ -11,7 +11,7 @@ import org.springframework.web.bind.annotation.RestController;
 
 
 @RestController
-@RequestMapping("transfer")
+@RequestMapping("user/pocket/transfer")
 public class TradesRestController {
 
 	@Autowired
@@ -24,7 +24,7 @@ public class TradesRestController {
 			@RequestParam("number") int shareNumber) {
 		
 		String username = SecurityContextHolder.getContext().getAuthentication().getName();
-
+		System.out.println("a");
 		return tradesService.buyShares(shareShortcut.toUpperCase(), shareNumber, username);
 	}
 	

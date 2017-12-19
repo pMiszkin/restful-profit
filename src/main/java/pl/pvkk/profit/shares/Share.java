@@ -1,8 +1,10 @@
 package pl.pvkk.profit.shares;
 
 import java.util.ArrayList;
+import java.util.LinkedList;
 import java.util.List;
 
+import javax.persistence.CascadeType;
 import javax.persistence.ElementCollection;
 import javax.persistence.Entity;
 import javax.persistence.FetchType;
@@ -10,6 +12,12 @@ import javax.persistence.Id;
 import javax.persistence.OneToMany;
 import javax.persistence.OneToOne;
 import javax.persistence.OrderBy;
+
+import com.fasterxml.jackson.annotation.JsonBackReference;
+import com.fasterxml.jackson.annotation.JsonIgnoreProperties;
+import com.fasterxml.jackson.annotation.JsonManagedReference;
+
+import pl.pvkk.profit.user.trades.Transaction;
 
 @Entity
 public class Share {
@@ -24,9 +32,13 @@ public class Share {
 	private List<ArchiveQuotation> archiveQuotations;
 	@ElementCollection
 	private List<String> indices;
+	@OneToMany//(cascade = CascadeType.ALL)//(fetch = FetchType.LAZY)
+	@JsonIgnoreProperties("share")
+	private List<Transaction> transactions;
 
 	public Share() {
 		archiveQuotations = new ArrayList<ArchiveQuotation>();
+		transactions = new LinkedList<Transaction>();
 	}
 
 	public String getName() {
@@ -68,5 +80,15 @@ public class Share {
 	public void setIndices(List<String> indices) {
 		this.indices = indices;
 	}
+
+	public List<Transaction> getTransactions() {
+		return transactions;
+	}
+
+	public void setTransactions(List<Transaction> transactions) {
+		this.transactions = transactions;
+	}
+	
+	
 
 }

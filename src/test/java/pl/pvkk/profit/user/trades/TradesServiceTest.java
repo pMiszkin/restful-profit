@@ -19,6 +19,7 @@ import org.springframework.http.ResponseEntity;
 import pl.pvkk.profit.shares.CurrentQuotation;
 import pl.pvkk.profit.shares.Share;
 import pl.pvkk.profit.shares.SharesService;
+import pl.pvkk.profit.user.UserService;
 import pl.pvkk.profit.user.pocket.Pocket;
 import pl.pvkk.profit.user.pocket.PocketService;
 import pl.pvkk.profit.user.trades.TradesService;
@@ -31,6 +32,9 @@ public class TradesServiceTest {
 
 	@Mock
 	private PocketService pocketService;
+	
+	@Mock
+	private UserService userService;
 
 	@InjectMocks
 	private TradesService tradesService;
@@ -47,6 +51,7 @@ public class TradesServiceTest {
 		when(sharesService.isShareExists(anyObject())).thenReturn(true);
 		when(pocketService.getPocketById("login")).thenReturn(pocket);
 		when(sharesService.findShareByIsin(anyObject())).thenReturn(share);
+		when(userService.isUserEnabled("login")).thenReturn(true);
 	}
 
 	/**
@@ -67,7 +72,7 @@ public class TradesServiceTest {
 	public void testBuyShare() {		
 		ResponseEntity<String> response = tradesService.buyShares(anyString(), 5, "login");
 		System.out.println(response);
-		System.out.println(pocket);
+		System.out.println(response.getBody());
 		
 		assertEquals(response.getStatusCode(), HttpStatus.OK);
 	}

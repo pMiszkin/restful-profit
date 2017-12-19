@@ -2,15 +2,19 @@ package pl.pvkk.profit.user.pocket;
 
 import java.math.BigDecimal;
 import java.util.HashMap;
+import java.util.LinkedList;
 import java.util.List;
 import java.util.Map;
 
 import javax.persistence.Column;
 import javax.persistence.ElementCollection;
 import javax.persistence.Entity;
+import javax.persistence.FetchType;
 import javax.persistence.Id;
 import javax.persistence.MapKeyColumn;
 import javax.persistence.OneToMany;
+
+import com.fasterxml.jackson.annotation.JsonIgnoreProperties;
 
 import pl.pvkk.profit.user.trades.Transaction;
 
@@ -24,12 +28,14 @@ public class Pocket {
 	@ElementCollection
 	@MapKeyColumn(name = "share_shortcut")
 	private Map<String, Integer> shares;
-	@OneToMany
+	@OneToMany//(fetch = FetchType.LAZY)
+	@JsonIgnoreProperties("buyer")
 	private List<Transaction> purchases;
 
 	public Pocket() {
 		money = new BigDecimal(5000);
 		shares = new HashMap<String, Integer>();
+		purchases = new LinkedList<Transaction>();
 	}
 
 	public String getUsername() {

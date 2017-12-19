@@ -56,6 +56,8 @@ public class UserRestController {
 			return new ResponseEntity<String>("[\"Any account is registered on this email address.\"]", HttpStatus.BAD_REQUEST);
 		}
 		
+		user.setEnabled(false);
+		
 		//try to send verification email to user
 		try {
 			String appUrl = request.getContextPath();
