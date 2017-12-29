@@ -44,14 +44,13 @@ public class LoggingIntegrationTests {
 		User user = new User();
 		user.setLogin("ernest");
 		user.setPassword("pass1234");
-		
 	    String requestJson=ow.writeValueAsString(user);
 
 		//add example user
 		this.mockMvc
 			.perform(post("/user/add")
-					.contentType(MediaType.APPLICATION_JSON_UTF8)
-					.content(requestJson))
+					.contentType("application/json")
+					.content(requestJson))		
 			.andExpect(status().isOk());
 
 		//and try to get him
@@ -72,7 +71,7 @@ public class LoggingIntegrationTests {
 	    //login is too short
 		this.mockMvc
 			.perform(post("/user/add")
-					.contentType(MediaType.APPLICATION_JSON_UTF8)
+					.contentType(MediaType.APPLICATION_JSON)
 					.content(requestJson))
 			.andExpect(status().isBadRequest());
 		
@@ -94,7 +93,7 @@ public class LoggingIntegrationTests {
 	    //save user
 	    this.mockMvc
 			.perform(post("/user/add")
-					.contentType(MediaType.APPLICATION_JSON_UTF8)
+					.contentType(MediaType.APPLICATION_JSON)
 					.content(requestJson))
 			.andExpect(status().isOk());
 		

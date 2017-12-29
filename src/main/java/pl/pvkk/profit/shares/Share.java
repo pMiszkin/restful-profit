@@ -13,9 +13,7 @@ import javax.persistence.OneToMany;
 import javax.persistence.OneToOne;
 import javax.persistence.OrderBy;
 
-import com.fasterxml.jackson.annotation.JsonBackReference;
 import com.fasterxml.jackson.annotation.JsonIgnoreProperties;
-import com.fasterxml.jackson.annotation.JsonManagedReference;
 
 import pl.pvkk.profit.user.trades.Transaction;
 
@@ -32,7 +30,7 @@ public class Share {
 	private List<ArchiveQuotation> archiveQuotations;
 	@ElementCollection
 	private List<String> indices;
-	@OneToMany//(cascade = CascadeType.ALL)//(fetch = FetchType.LAZY)
+	@OneToMany(fetch = FetchType.LAZY, cascade = CascadeType.ALL)
 	@JsonIgnoreProperties("share")
 	private List<Transaction> transactions;
 

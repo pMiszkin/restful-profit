@@ -30,7 +30,6 @@ public class TradesService {
 		
 		if(!userService.isUserEnabled(username)) {
 			response = "An e-mail was sended at your address, please confirm your account";
-			System.out.println("b");
 			return new ResponseEntity<String>(response, HttpStatus.UNAUTHORIZED);
 		}
 		
@@ -38,7 +37,6 @@ public class TradesService {
 
 		if(!sharesService.isShareExists(shareShortcut)) {
 			response = "This share doesn't exists!";
-			System.out.println("c");
 			return new ResponseEntity<String>(response, HttpStatus.BAD_REQUEST);
 		}
 		
@@ -48,12 +46,10 @@ public class TradesService {
 		
 		if(shareNumber <= 0) {
 			response = "You're trying to buy 0 or less shares";
-			System.out.println("d");
 			return new ResponseEntity<String>(response, HttpStatus.BAD_REQUEST);
 		}
 		else if(shareNumber*sharePrice > pocket.getMoney().doubleValue()) {
 			response = "You have no money for that";
-			System.out.println("e");
 			return new ResponseEntity<String>(response, HttpStatus.BAD_REQUEST);	
 		}
 		

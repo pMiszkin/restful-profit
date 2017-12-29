@@ -67,7 +67,7 @@ public class UserRestController {
 			System.out.println(e);
 			return new ResponseEntity<String>("[\"Email sendind error. Uuups..\"]", HttpStatus.BAD_REQUEST);
 		}
-		
+		System.out.println("OOOOK");
 		return new ResponseEntity<String>(HttpStatus.OK);		
 	}
 

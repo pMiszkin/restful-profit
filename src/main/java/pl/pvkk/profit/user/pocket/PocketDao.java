@@ -1,7 +1,5 @@
 package pl.pvkk.profit.user.pocket;
 
-import java.util.List;
-
 import javax.persistence.EntityManager;
 import javax.persistence.PersistenceContext;
 
@@ -22,10 +20,8 @@ public class PocketDao {
 		return pocket;
 	}
 	
-	public void updateSharesAndMoneyInPocket(Pocket pocket, List<Transaction> transactions){
-		transactions.forEach(t -> {
-			em.persist(t);
-			em.merge(pocket);
-		});
+	public void updateSharesAndMoneyInPocket(Pocket pocket, Transaction transaction){
+		em.persist(transaction);
+		em.merge(pocket);
 	}
 }

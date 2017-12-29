@@ -28,7 +28,7 @@ public class Pocket {
 	@ElementCollection
 	@MapKeyColumn(name = "share_shortcut")
 	private Map<String, Integer> shares;
-	@OneToMany//(fetch = FetchType.LAZY)
+	@OneToMany(fetch = FetchType.LAZY)
 	@JsonIgnoreProperties("buyer")
 	private List<Transaction> purchases;
 

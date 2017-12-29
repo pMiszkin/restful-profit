@@ -1,6 +1,7 @@
 package pl.pvkk.profit.user.pocket;
 
 import java.math.BigDecimal;
+import java.util.ArrayList;
 import java.util.Date;
 import java.util.List;
 import java.util.Map;
@@ -51,7 +52,7 @@ public class PocketService {
 			else
 				shares.replace(shareIsin, shareNumber + shareFromPocketNumber);
 		}
-		List<Transaction> transactions = pocket.getPurchases();
+		List<Transaction> transactions = new ArrayList<Transaction>(pocket.getPurchases());
 
 		Transaction transaction = new Transaction();
 		transaction.setBuyer(pocket);
@@ -61,13 +62,11 @@ public class PocketService {
 		transaction.setDate(new Date());
 		
 		transactions.add(transaction);
-		System.out.println("wut");
 		pocket.setShares(shares);
 		pocket.setPurchases(transactions);
 		BigDecimal cost = BigDecimal.valueOf(sharePrice*shareNumber);
 		pocket.setMoney(pocket.getMoney().subtract(cost));
-		System.out.println("alright");
-		pocketDao.updateSharesAndMoneyInPocket(pocket, transactions);
+		pocketDao.updateSharesAndMoneyInPocket(pocket, transaction);
 	}
 
 }
