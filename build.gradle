@@ -33,7 +33,7 @@ dependencies {
 	compile('org.springframework.boot:spring-boot-starter-web-services')
 	compile('org.springframework.boot:spring-boot-starter-security')	
 	//mail sender
-	compile('org.springframework:spring-context-support:4.3.5.RELEASE') 
+	compile('org.springframework:spring-context-support:4.3.13.RELEASE') 
 	compile group: 'javax.mail', name: 'mail', version: '1.4.7'
 	//json
 	compile group: 'com.fasterxml.jackson.core', name: 'jackson-databind', version: '2.8.9'

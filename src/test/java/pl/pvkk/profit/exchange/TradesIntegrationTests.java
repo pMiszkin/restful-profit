@@ -74,5 +74,6 @@ public class TradesIntegrationTests {
 					.accept(MediaType.parseMediaType("text/plain;charset=UTF-8")))
 			.andExpect(status().isBadRequest());
 	}
+	
 
 }

@@ -20,6 +20,9 @@ import com.fasterxml.jackson.databind.ObjectMapper;
 import com.fasterxml.jackson.databind.ObjectWriter;
 import com.fasterxml.jackson.databind.SerializationFeature;
 
+import pl.pvkk.profit.shares.CurrentQuotation;
+import pl.pvkk.profit.shares.Share;
+
 @RunWith(SpringRunner.class)
 @SpringBootTest
 @Transactional
@@ -30,6 +33,8 @@ public class LoggingIntegrationTests {
 	
 	private MockMvc mockMvc;
 	private ObjectWriter ow;
+	
+	private Share share;
 	
 	@Before
 	public void setup() {
@@ -44,6 +49,7 @@ public class LoggingIntegrationTests {
 		User user = new User();
 		user.setLogin("ernest");
 		user.setPassword("pass1234");
+		user.setEmail("example@example.example");
 	    String requestJson=ow.writeValueAsString(user);
 
 		//add example user
@@ -65,7 +71,7 @@ public class LoggingIntegrationTests {
 		User user = new User();
 		user.setLogin("ern");
 		user.setPassword("pass");
-		
+		user.setEmail("example@example.example");
 	    String requestJson=ow.writeValueAsString(user);
 
 	    //login is too short
@@ -87,7 +93,7 @@ public class LoggingIntegrationTests {
 		User user = new User();
 		user.setLogin("ernest");
 		user.setPassword("pass1234");
-		
+		user.setEmail("example@example.example");
 	    String requestJson=ow.writeValueAsString(user);
 		
 	    //save user
@@ -104,5 +110,4 @@ public class LoggingIntegrationTests {
 					.content(requestJson))
 			.andExpect(status().isBadRequest());
 	}
-
 }
