@@ -13,6 +13,7 @@ import javax.annotation.PostConstruct;
 import org.jsoup.nodes.Element;
 import org.jsoup.select.Elements;
 import org.springframework.beans.factory.annotation.Autowired;
+import org.springframework.scheduling.annotation.Scheduled;
 import org.springframework.stereotype.Service;
 
 import pl.pvkk.profit.shares.ArchiveQuotation;
@@ -38,7 +39,7 @@ public class GpwSharesDownloader {
 	
 	
 	/**
-	 * This is an "init" method for download and save all shares quotations
+	 * This is the "init" method for download and save all shares quotations
 	 * @throws SQLException 
 	 * @throws IOException
 	 */
@@ -55,14 +56,10 @@ public class GpwSharesDownloader {
 		}
 	}
 	
-	/*@Scheduled(fixedRate = 900000, initialDelay = 900000)
+	@Scheduled(fixedRate = 900000, initialDelay = 900000)
 	public void updateQuotations() {
-		try {
-			updateShares(getAllSharesFromUrl());
-		} catch (IOException e) {
-			e.printStackTrace();
-		}
-	}*/
+		addCurrentQuotationsAndStockIndices();
+	}
 	
 	private void setAllStockIndices() throws IOException {
 		for(Element element : gpwConnector.getAllStockIndices()) {
@@ -87,6 +84,21 @@ public class GpwSharesDownloader {
 		List<Share> shares = sharesDao.findAllShares();
 		
 		shares.stream().forEach(share -> {
+				//move current quotation to archive quotation
+				if(share.getCurrentQuotation()!=null) {
+					List<ArchiveQuotation> quotations = new LinkedList<ArchiveQuotation>();
+					
+					ArchiveQuotation newArchiveQuotation = new ArchiveQuotation();
+					CurrentQuotation quotation = share.getCurrentQuotation();
+					newArchiveQuotation.setPrice(quotation.getPrice());
+					newArchiveQuotation.setDate(quotation.getDate());
+					//quotation.setOpen(qData.getO());   WUT
+					newArchiveQuotation.setMax(quotation.getMax());
+					newArchiveQuotation.setMin(quotation.getMin());
+					newArchiveQuotation.setVolume(quotation.getVolume());
+					
+					quotations.add(newArchiveQuotation);
+				}
 				try {
 					Elements elements = gpwConnector.getCurrentQuotationsAndStockIndices(share.getIsin());
 					//save indices
@@ -151,4 +163,5 @@ public class GpwSharesDownloader {
 			sharesDao.updateArchiveQuotationsInShare(share, quotations);
 		}
 	}
+
 }
