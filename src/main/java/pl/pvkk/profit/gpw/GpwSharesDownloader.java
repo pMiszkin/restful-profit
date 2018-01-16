@@ -44,7 +44,7 @@ public class GpwSharesDownloader {
 	 * @throws IOException
 	 */
 	
-	@PostConstruct
+	//@PostConstruct
 	public void addShares() throws SQLException {
 		try {
 			setAllStockIndices();
@@ -56,7 +56,7 @@ public class GpwSharesDownloader {
 		}
 	}
 	
-	@Scheduled(fixedRate = 900000, initialDelay = 900000)
+	//@Scheduled(fixedRate = 900000, initialDelay = 900000)
 	public void updateQuotations() {
 		addCurrentQuotationsAndStockIndices();
 	}

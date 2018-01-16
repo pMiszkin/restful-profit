@@ -31,6 +31,6 @@ public class registrationConfirmRestController {
 		
 		user.setEnabled(true); 
 	    userService.setEnabledUser(user); 
-		return "That was good confirmation bruh u r cool";
+		return "It was good confirmation bruv u r cool";
 	}
 }
