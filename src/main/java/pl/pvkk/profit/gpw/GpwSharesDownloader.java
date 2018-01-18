@@ -13,6 +13,7 @@ import javax.annotation.PostConstruct;
 import org.jsoup.nodes.Element;
 import org.jsoup.select.Elements;
 import org.springframework.beans.factory.annotation.Autowired;
+import org.springframework.context.annotation.Profile;
 import org.springframework.scheduling.annotation.Scheduled;
 import org.springframework.stereotype.Service;
 
@@ -36,15 +37,13 @@ public class GpwSharesDownloader {
 	@Autowired
 	private GpwConnector gpwConnector;
 	
-	
-	
 	/**
 	 * This is the "init" method for download and save all shares quotations
 	 * @throws SQLException 
 	 * @throws IOException
 	 */
-	
-	//@PostConstruct
+	@PostConstruct
+	@Profile("prod")
 	public void addShares() throws SQLException {
 		try {
 			setAllStockIndices();
@@ -56,7 +55,8 @@ public class GpwSharesDownloader {
 		}
 	}
 	
-	//@Scheduled(fixedRate = 900000, initialDelay = 900000)
+	@Scheduled(fixedRate = 900000, initialDelay = 900000)
+	@Profile("prod")
 	public void updateQuotations() {
 		addCurrentQuotationsAndStockIndices();
 	}

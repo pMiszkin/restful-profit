@@ -5,8 +5,11 @@ import java.util.Properties;
 import javax.persistence.EntityManagerFactory;
 import javax.sql.DataSource;
 
+import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.context.annotation.Bean;
 import org.springframework.context.annotation.Configuration;
+import org.springframework.context.annotation.PropertySource;
+import org.springframework.core.env.Environment;
 import org.springframework.jdbc.datasource.DriverManagerDataSource;
 import org.springframework.orm.jpa.JpaTransactionManager;
 import org.springframework.orm.jpa.JpaVendorAdapter;
@@ -15,8 +18,12 @@ import org.springframework.orm.jpa.vendor.HibernateJpaVendorAdapter;
 import org.springframework.transaction.PlatformTransactionManager;
 
 @Configuration
+@PropertySource("${spring.profiles.active}.properties")
 public class HibernateConfig {
 
+	@Autowired
+	private Environment env;
+	
 	@Bean
 	public LocalContainerEntityManagerFactoryBean entityManagerFactory() {
 	    LocalContainerEntityManagerFactoryBean em = new LocalContainerEntityManagerFactoryBean();
@@ -30,20 +37,20 @@ public class HibernateConfig {
 
 	Properties additionalProperties() {
 	    Properties properties = new Properties();
-	    properties.setProperty("hibernate.hbm2ddl.auto", "create");
-	    properties.setProperty("hibernate.dialect", "org.hibernate.dialect.PostgreSQLDialect");
-	    properties.setProperty("hibernate.show_sql", "true");
-	    properties.setProperty("hibernate.transaction", "true");
+	    properties.setProperty("hibernate.hbm2ddl.auto", env.getProperty("hibernate.hbm2ddl.auto"));
+	    properties.setProperty("hibernate.dialect", env.getProperty("hibernate.dialect"));
+	    properties.setProperty("hibernate.show_sql", env.getProperty("hibernate.show_sql"));
+	    properties.setProperty("hibernate.transaction", env.getProperty("hibernate.transaction"));
 	    return properties;
 	}
 	
 	@Bean
 	public DataSource dataSource() {
 	    DriverManagerDataSource dataSource = new DriverManagerDataSource();
-	    dataSource.setDriverClassName("org.postgresql.Driver");
-	    dataSource.setUrl("jdbc:postgresql://localhost:5432/restfuldb");
-	    dataSource.setUsername("restful");
-	    dataSource.setPassword("XhuPS5%");
+	    dataSource.setDriverClassName(env.getProperty("datasource.driver"));
+	    dataSource.setUrl(env.getProperty("datasource.url"));
+	    dataSource.setUsername(env.getProperty("datasource.username"));
+	    dataSource.setPassword(env.getProperty("datasource.password"));
 	    return dataSource;
 	}
 	

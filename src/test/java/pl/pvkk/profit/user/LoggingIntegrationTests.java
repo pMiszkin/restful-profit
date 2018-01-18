@@ -20,8 +20,6 @@ import com.fasterxml.jackson.databind.ObjectMapper;
 import com.fasterxml.jackson.databind.ObjectWriter;
 import com.fasterxml.jackson.databind.SerializationFeature;
 
-import pl.pvkk.profit.shares.CurrentQuotation;
-import pl.pvkk.profit.shares.Share;
 
 @RunWith(SpringRunner.class)
 @SpringBootTest
@@ -34,7 +32,6 @@ public class LoggingIntegrationTests {
 	private MockMvc mockMvc;
 	private ObjectWriter ow;
 	
-	private Share share;
 	
 	@Before
 	public void setup() {
