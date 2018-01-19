@@ -18,7 +18,7 @@ import org.springframework.orm.jpa.vendor.HibernateJpaVendorAdapter;
 import org.springframework.transaction.PlatformTransactionManager;
 
 @Configuration
-@PropertySource("${spring.profiles.active}.properties")
+@PropertySource("classpath:${spring.profiles.active}.properties")
 public class HibernateConfig {
 
 	@Autowired

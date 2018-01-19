@@ -1,9 +1,6 @@
 package pl.pvkk.profit.user;
 
-import javax.annotation.PostConstruct;
-
 import org.springframework.beans.factory.annotation.Autowired;
-import org.springframework.context.annotation.Profile;
 import org.springframework.http.HttpEntity;
 import org.springframework.http.HttpStatus;
 import org.springframework.http.ResponseEntity;
@@ -25,8 +22,7 @@ public class UserService {
 	@Autowired
 	private VerificationTokenRepository tokenRepository;
 	
-	@PostConstruct
-	@Profile("prod")
+	
 	public void addFirstUser() {
 		User user = new User();
 		user.setLogin("login");
