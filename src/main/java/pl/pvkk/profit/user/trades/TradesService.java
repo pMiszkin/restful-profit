@@ -62,7 +62,7 @@ public class TradesService {
 	
 	public ResponseEntity<String> sellShares(String shareShortcut, int shareNumber, String username) {
 		String response;
-		//Ill do this
+
 		Pocket pocket = pocketService.getPocketById(username);
 		
 		if(!sharesService.isShareExists(shareShortcut)) {
@@ -87,6 +87,4 @@ public class TradesService {
 		response = "You've sold "+shareNumber+" from "+share.getName()+" company, for "+shareNumber*sharePrice;
 		return new ResponseEntity<String>(response, HttpStatus.OK);
 	}
-	
-	
 }

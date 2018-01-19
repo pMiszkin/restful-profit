@@ -86,7 +86,4 @@ public class Share {
 	public void setTransactions(List<Transaction> transactions) {
 		this.transactions = transactions;
 	}
-	
-	
-
 }

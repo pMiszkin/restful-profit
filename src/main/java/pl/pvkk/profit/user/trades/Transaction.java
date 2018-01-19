@@ -74,5 +74,4 @@ public class Transaction {
 	public void setShare_price(double share_price) {
 		this.share_price = share_price;
 	}
-
 }

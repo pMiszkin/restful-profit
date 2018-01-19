@@ -55,5 +55,4 @@ public class QuotationsHistory {
 		return "QuotationsHistory [mode=" + mode + ", isin=" + isin + ", from=" + from + ", to=" + to + ", data=" + data
 				+ "]";
 	}
-
 }

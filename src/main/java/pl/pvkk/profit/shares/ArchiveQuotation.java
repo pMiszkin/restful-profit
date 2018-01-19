@@ -68,5 +68,4 @@ public class ArchiveQuotation {
 	public void setVolume(double volume) {
 		this.volume = volume;
 	}
-
 }

@@ -8,12 +8,9 @@ import java.util.List;
 import java.util.Map;
 import java.util.function.Function;
 
-import javax.annotation.PostConstruct;
-
 import org.jsoup.nodes.Element;
 import org.jsoup.select.Elements;
 import org.springframework.beans.factory.annotation.Autowired;
-import org.springframework.context.annotation.Profile;
 import org.springframework.scheduling.annotation.Scheduled;
 import org.springframework.stereotype.Service;
 
@@ -160,5 +157,4 @@ public class GpwSharesDownloader {
 			sharesDao.updateArchiveQuotationsInShare(share, quotations);
 		}
 	}
-
 }

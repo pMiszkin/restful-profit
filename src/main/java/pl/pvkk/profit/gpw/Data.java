@@ -67,5 +67,4 @@ public class Data {
 	public String toString() {
 		return "Data [t=" + t + ", o=" + o + ", c=" + c + ", h=" + h + ", l=" + l + ", v=" + v + "]";
 	}
-
 }

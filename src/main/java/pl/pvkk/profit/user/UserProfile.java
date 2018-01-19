@@ -30,5 +30,4 @@ public class UserProfile {
 	public void setPocket(Pocket pocket) {
 		this.pocket = pocket;
 	}
-
 }

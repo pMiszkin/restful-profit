@@ -67,9 +67,3 @@ public class GpwConnector {
 		return mapper.readValue(body.substring(1, body.length()-1), QuotationsHistory.class);
 	}
 }
-
-
-
-
-
-

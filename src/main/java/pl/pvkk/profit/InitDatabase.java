@@ -25,6 +25,5 @@ public class InitDatabase {
 	public void addShares() throws SQLException {
 		downloader.addShares();
 		userService.addFirstUser();
-	}
-	
+	}	
 }

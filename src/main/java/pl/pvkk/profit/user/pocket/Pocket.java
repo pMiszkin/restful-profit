@@ -69,5 +69,4 @@ public class Pocket {
 	public void setPurchases(List<Transaction> purchases) {
 		this.purchases = purchases;
 	}
-
 }

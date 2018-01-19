@@ -25,7 +25,6 @@ public class SharesDao {
 				em.persist(q);
 				em.merge(share);
 		});
-		//em.persist(quotations);
 	}
 	
 	@SuppressWarnings("unchecked")
@@ -61,5 +60,4 @@ public class SharesDao {
 		List<StockIndex> indices = em.createQuery("SELECT s FROM StockIndex s").getResultList();
 		return indices;
 	}
-	
 }

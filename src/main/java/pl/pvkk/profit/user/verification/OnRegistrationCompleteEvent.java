@@ -24,5 +24,4 @@ public class OnRegistrationCompleteEvent extends ApplicationEvent {
 	public User getUser() {
 		return user;
 	}
-
 }

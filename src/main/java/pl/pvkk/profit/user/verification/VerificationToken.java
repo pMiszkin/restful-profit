@@ -79,5 +79,4 @@ public class VerificationToken {
 	public void setExpiryDate(Date expiryDate) {
 		this.expiryDate = expiryDate;
 	}
-
 }

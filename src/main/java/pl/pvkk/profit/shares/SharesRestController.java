@@ -40,5 +40,4 @@ public class SharesRestController {
 	public HttpEntity<List<StockIndex>> findIndices() {
 		return ResponseEntity.ok(sharesService.findAllIndices());
 	}
-
 }

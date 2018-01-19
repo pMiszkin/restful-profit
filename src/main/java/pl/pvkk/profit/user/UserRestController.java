@@ -68,5 +68,4 @@ public class UserRestController {
 		}
 		return new ResponseEntity<String>(HttpStatus.OK);		
 	}
-
 }

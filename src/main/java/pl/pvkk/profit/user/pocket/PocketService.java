@@ -68,5 +68,4 @@ public class PocketService {
 		pocket.setMoney(pocket.getMoney().subtract(cost));
 		pocketDao.updateSharesAndMoneyInPocket(pocket, transaction);
 	}
-
 }

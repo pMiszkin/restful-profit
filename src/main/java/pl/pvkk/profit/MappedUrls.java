@@ -50,7 +50,7 @@ public class MappedUrls {
 			Paranamer info = new CachingParanamer(new AnnotationParanamer(new BytecodeReadingParanamer()));
 			String params;
 			
-			//important part@@@@@@@@@@@@@@@@@@@@@@@
+			//important part
 			for(RequestMappingInfo requestMappingInfo : handlerMethods.keySet()) {
 				RequestMethodsRequestCondition methods = requestMappingInfo.getMethodsCondition();
 				Method method = handlerMethods.get(requestMappingInfo).getMethod();	

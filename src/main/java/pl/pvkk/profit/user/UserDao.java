@@ -15,7 +15,6 @@ public class UserDao {
 	@PersistenceContext
 	private EntityManager em;
 	
-	//@Transactional(readOnly=true)
 	public User getUserByName(String username){
 		User user = em.find(User.class, username);
 		user.setPassword("not your business");
@@ -51,5 +50,4 @@ public class UserDao {
 	public void setEnabledUser(User user) {
 		em.merge(user);
 	}
-
 }
