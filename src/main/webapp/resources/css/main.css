@@ -6,6 +6,7 @@ body {
 
 h1 {
 	border-bottom: 1px solid #c5c5c5;
+	font-family: serif;
 }
 
 .top_bar {
@@ -68,6 +69,8 @@ h1 {
 
 .search_select {
 	width: 155px;
+	min-height: 26px;
+	background: white;
 }
 
 .pagination {
