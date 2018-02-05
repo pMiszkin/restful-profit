@@ -19,6 +19,9 @@ import org.springframework.web.bind.annotation.RequestMapping;
 import org.springframework.web.bind.annotation.ResponseStatus;
 import org.springframework.web.bind.annotation.RestController;
 
+import pl.pvkk.profit.user.exceptions.EmailIsTakenException;
+import pl.pvkk.profit.user.exceptions.LoginIsTakenException;
+
 
 @RestController
 @RequestMapping("user")

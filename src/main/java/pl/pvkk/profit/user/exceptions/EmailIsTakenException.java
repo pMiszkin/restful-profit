@@ -1,4 +1,4 @@
-package pl.pvkk.profit.user;
+package pl.pvkk.profit.user.exceptions;
 
 public class EmailIsTakenException extends RuntimeException {
 

@@ -9,6 +9,8 @@ import org.springframework.security.crypto.password.PasswordEncoder;
 import org.springframework.stereotype.Service;
 import org.springframework.transaction.annotation.Transactional;
 
+import pl.pvkk.profit.user.exceptions.EmailIsTakenException;
+import pl.pvkk.profit.user.exceptions.LoginIsTakenException;
 import pl.pvkk.profit.user.verification.OnRegistrationCompleteEvent;
 import pl.pvkk.profit.user.verification.VerificationToken;
 import pl.pvkk.profit.user.verification.VerificationTokenRepository;
