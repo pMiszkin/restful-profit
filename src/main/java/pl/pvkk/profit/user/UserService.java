@@ -33,14 +33,9 @@ public class UserService {
 
 	@Transactional
 	public ResponseEntity<String> tryToSaveUser(User user) {
-		if (userDao.isEmailTaken(user.getEmail()))
-			return new ResponseEntity<String>("[\"Any account is registered on this email address.\"]", HttpStatus.BAD_REQUEST);
-		else if(userDao.isLoginTaken(user.getLogin())) 
-			return new ResponseEntity<String>("[\"Your login is taken.\"]", HttpStatus.BAD_REQUEST);
-		
+		checkIsUserDataTaken(user);
 		setUserDataBeforeSave(user);
 		userDao.saveUser(user);
-		
 		//try to send verification email to user
 		try {
 			eventPublisher.publishEvent(new OnRegistrationCompleteEvent(user));
@@ -63,5 +58,12 @@ public class UserService {
 	private void setUserDataBeforeSave(User user) {
 		user.setEnabled(false);
 		user.setPassword(passwordEncoder.encode(user.getPassword()));
+	}
+	
+	private void checkIsUserDataTaken(User user) {
+		if (userDao.isEmailTaken(user.getEmail()))
+			throw new EmailIsTakenException();
+		else if(userDao.isLoginTaken(user.getLogin())) 
+			throw new LoginIsTakenException();
 	}
 }
