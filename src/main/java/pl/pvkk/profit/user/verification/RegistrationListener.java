@@ -9,15 +9,14 @@ import org.springframework.mail.javamail.JavaMailSender;
 import org.springframework.stereotype.Component;
 
 import pl.pvkk.profit.user.User;
-import pl.pvkk.profit.user.UserService;
 
 @Component
 public class RegistrationListener implements ApplicationListener<OnRegistrationCompleteEvent> {
 	@Autowired
-	private UserService service;
-	@Autowired
 	private JavaMailSender mailSender;
-
+	@Autowired
+	private VerificationTokenRepository tokenRepository;
+	
 	@Override
 	public void onApplicationEvent(OnRegistrationCompleteEvent event) {
 		this.confirmRegistration(event);
@@ -26,7 +25,7 @@ public class RegistrationListener implements ApplicationListener<OnRegistrationC
 	private void confirmRegistration(OnRegistrationCompleteEvent event) {
 		User user = event.getUser();
 		String token = UUID.randomUUID().toString();
-		service.createVerificationToken(user, token);
+		createVerificationToken(user, token);
 
 		String recipientAddress = user.getEmail();
 		String subject = "Registration Confirmation";
@@ -40,8 +39,9 @@ public class RegistrationListener implements ApplicationListener<OnRegistrationC
 				System.lineSeparator() + "http://localhost:8080" + confirmationUrl);
 		mailSender.send(email);
 	}
+	
+	private void createVerificationToken(User user, String token) {
+		VerificationToken myToken = new VerificationToken(token, user);
+		tokenRepository.save(myToken);
+	}
 }
-
-
-
-

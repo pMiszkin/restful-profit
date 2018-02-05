@@ -35,7 +35,8 @@ public class UserRestController {
 	@GetMapping("/print/{username}")
 	public HttpEntity<User> printUser(@PathVariable String username) {
 		User user = userDao.getUserByName(username);
-		return userService.tryToPrintUser(user);
+		return user == null ? new ResponseEntity<>(HttpStatus.NOT_FOUND)
+				: new ResponseEntity<User>(user, HttpStatus.OK);
 	}
 	
 	/**

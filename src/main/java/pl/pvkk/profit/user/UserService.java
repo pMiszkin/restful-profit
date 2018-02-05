@@ -2,7 +2,6 @@ package pl.pvkk.profit.user;
 
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.context.ApplicationEventPublisher;
-import org.springframework.http.HttpEntity;
 import org.springframework.http.HttpStatus;
 import org.springframework.http.ResponseEntity;
 import org.springframework.security.crypto.password.PasswordEncoder;
@@ -13,8 +12,6 @@ import pl.pvkk.profit.user.exceptions.EmailIsTakenException;
 import pl.pvkk.profit.user.exceptions.EmailSendingException;
 import pl.pvkk.profit.user.exceptions.LoginIsTakenException;
 import pl.pvkk.profit.user.verification.OnRegistrationCompleteEvent;
-import pl.pvkk.profit.user.verification.VerificationToken;
-import pl.pvkk.profit.user.verification.VerificationTokenRepository;
 
 @Service
 public class UserService {
@@ -24,16 +21,8 @@ public class UserService {
 	@Autowired
 	private PasswordEncoder passwordEncoder;
 	@Autowired
-	private VerificationTokenRepository tokenRepository;
-	@Autowired
 	private ApplicationEventPublisher eventPublisher;
 	
-	
-	public HttpEntity<User> tryToPrintUser(User user) {
-		return user == null ? new ResponseEntity<>(HttpStatus.NOT_FOUND)
-				: new ResponseEntity<User>(user, HttpStatus.OK);
-	}
-
 	@Transactional
 	public ResponseEntity<String> tryToSaveUser(User user) {
 		checkIsUserDataTaken(user);
@@ -45,11 +34,6 @@ public class UserService {
 	
 	public boolean isUserEnabled(String username) {
 		return userDao.getUserByName(username).isEnabled();
-	}
-	
-	public void createVerificationToken(User user, String token) {
-		VerificationToken myToken = new VerificationToken(token, user);
-		tokenRepository.save(myToken);
 	}
 	
 	private void checkIsUserDataTaken(User user) {

@@ -42,11 +42,8 @@ public class LoggingIntegrationTests {
 	}
 	
 	@Test
-	public void testAddAndPrintUser() throws Exception {
-		User user = new User();
-		user.setLogin("ernest");
-		user.setPassword("pass1234");
-		user.setEmail("example@example.example");
+	public void saveAndPrintUser() throws Exception {
+		User user = UsersForTesting.getProperUser();
 	    String requestJson=ow.writeValueAsString(user);
 
 		//add example user
@@ -64,11 +61,8 @@ public class LoggingIntegrationTests {
 	}
 	
 	@Test
-	public void testAddUserWithWrongData() throws Exception {
-		User user = new User();
-		user.setLogin("ern");
-		user.setPassword("pass");
-		user.setEmail("example@example.example");
+	public void saveUserWithTooShortLogin() throws Exception {
+		User user = UsersForTesting.getTooShortLoginUser();
 	    String requestJson=ow.writeValueAsString(user);
 
 	    //login is too short
@@ -86,21 +80,16 @@ public class LoggingIntegrationTests {
 	}
 	
 	@Test
-	public void testAddTakenLogin() throws Exception {
-		User user = new User();
-		user.setLogin("ernest");
-		user.setPassword("pass1234");
-		user.setEmail("example@example.example");
+	public void saveTheSameUserTwice() throws Exception {
+		User user = UsersForTesting.getProperUser();
 	    String requestJson=ow.writeValueAsString(user);
-		
-	    //save user
+	    
 	    this.mockMvc
 			.perform(post("/user/add")
 					.contentType(MediaType.APPLICATION_JSON)
 					.content(requestJson))
 			.andExpect(status().isOk());
-		
-	    //try to save the same user two times
+		//the same operation as above
 	    this.mockMvc
 			.perform(post("/user/add")
 					.contentType(MediaType.APPLICATION_JSON_UTF8)
