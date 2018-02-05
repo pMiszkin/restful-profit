@@ -10,6 +10,7 @@ import org.springframework.stereotype.Service;
 import org.springframework.transaction.annotation.Transactional;
 
 import pl.pvkk.profit.user.exceptions.EmailIsTakenException;
+import pl.pvkk.profit.user.exceptions.EmailSendingException;
 import pl.pvkk.profit.user.exceptions.LoginIsTakenException;
 import pl.pvkk.profit.user.verification.OnRegistrationCompleteEvent;
 import pl.pvkk.profit.user.verification.VerificationToken;
@@ -27,7 +28,7 @@ public class UserService {
 	@Autowired
 	private ApplicationEventPublisher eventPublisher;
 	
-
+	
 	public HttpEntity<User> tryToPrintUser(User user) {
 		return user == null ? new ResponseEntity<>(HttpStatus.NOT_FOUND)
 				: new ResponseEntity<User>(user, HttpStatus.OK);
@@ -38,14 +39,12 @@ public class UserService {
 		checkIsUserDataTaken(user);
 		setUserDataBeforeSave(user);
 		userDao.saveUser(user);
-		//try to send verification email to user
-		try {
-			eventPublisher.publishEvent(new OnRegistrationCompleteEvent(user));
-		}
-		catch(Exception e){
-			return new ResponseEntity<String>("[\"Email sendind error. Uuups..\"]", HttpStatus.BAD_REQUEST);
-		}
+		sendVerificationEmail(user);
 		return new ResponseEntity<String>(HttpStatus.OK);
+	}
+	
+	public boolean isUserEnabled(String username) {
+		return userDao.getUserByName(username).isEnabled();
 	}
 	
 	public void createVerificationToken(User user, String token) {
@@ -53,8 +52,11 @@ public class UserService {
 		tokenRepository.save(myToken);
 	}
 	
-	public boolean isUserEnabled(String username) {
-		return userDao.getUserByName(username).isEnabled();
+	private void checkIsUserDataTaken(User user) {
+		if (userDao.isEmailTaken(user.getEmail()))
+			throw new EmailIsTakenException();
+		if(userDao.isLoginTaken(user.getLogin())) 
+			throw new LoginIsTakenException();
 	}
 	
 	private void setUserDataBeforeSave(User user) {
@@ -62,10 +64,12 @@ public class UserService {
 		user.setPassword(passwordEncoder.encode(user.getPassword()));
 	}
 	
-	private void checkIsUserDataTaken(User user) {
-		if (userDao.isEmailTaken(user.getEmail()))
-			throw new EmailIsTakenException();
-		else if(userDao.isLoginTaken(user.getLogin())) 
-			throw new LoginIsTakenException();
+	private void sendVerificationEmail(User user) {
+		try {
+			eventPublisher.publishEvent(new OnRegistrationCompleteEvent(user));
+		}
+		catch(Exception e){
+			throw new EmailSendingException();
+		}
 	}
 }

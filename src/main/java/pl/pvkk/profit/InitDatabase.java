@@ -30,6 +30,7 @@ public class InitDatabase {
 	
 	private User makeFirstUser() {
 		User user = new User();
+		user.setEmail("asdasd@asd.asd");
 		user.setLogin("login");
 		user.setPassword("password");
 		user.setEnabled(true);

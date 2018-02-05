@@ -123,8 +123,7 @@ angular.module('app', ['angularUtils.directives.dirPagination'])
 		.success(function(data, status) {
 			$window.location.href = "/login";
 		}).error(function(response) {
-			console.log(response);
-			$scope.error_msg = response;
+			$scope.error_msg = response.message;
 			$scope.error = true;
 		});
 	};
