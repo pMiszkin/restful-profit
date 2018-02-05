@@ -129,8 +129,7 @@ public class GpwSharesDownloader {
 				} catch (IOException e) { e.printStackTrace(); }
 				
 		});
-	}	
-
+	}
 	
 	//get all time quotations from history
 	private void getAllArchiveQuotations() throws IOException {

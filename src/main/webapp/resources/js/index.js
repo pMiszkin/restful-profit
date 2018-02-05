@@ -129,7 +129,7 @@ angular.module('app', ['angularUtils.directives.dirPagination'])
 		});
 	};
 })
-/*
+/**
 	* /share/company/{isin} controller (share site)
 */
 .controller('shareController', function($rootScope, $scope, $http, $location, $window) {
@@ -186,7 +186,7 @@ angular.module('app', ['angularUtils.directives.dirPagination'])
 		}
 	});
 })
-/*
+/**
 	* user profile page /user/profile/{username}
 */
 .controller('userController', function($rootScope, $scope, $http, $location, $window)  {

@@ -17,10 +17,8 @@ public class TradesService {
 
 	@Autowired
 	private SharesService sharesService;
-	
 	@Autowired
 	private PocketService pocketService;
-	
 	@Autowired
 	private UserService userService;
 	

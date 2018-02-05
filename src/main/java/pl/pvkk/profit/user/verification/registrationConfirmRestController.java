@@ -8,17 +8,19 @@ import org.springframework.web.bind.annotation.RequestParam;
 import org.springframework.web.bind.annotation.RestController;
 
 import pl.pvkk.profit.user.User;
-import pl.pvkk.profit.user.UserService;
+import pl.pvkk.profit.user.UserDao;
 
 @RestController
 public class registrationConfirmRestController {
 
 	@Autowired
-	private UserService userService;
+	private VerificationTokenRepository tokenRepository;
+	@Autowired
+	private UserDao userDao;
 
 	@GetMapping("registrationConfirm")
 	public String confirmUser(@RequestParam("token") String token) {
-		VerificationToken verificationToken = userService.getVerificationToken(token);
+		VerificationToken verificationToken = tokenRepository.findByToken(token);
 		if (verificationToken == null) {
 			return "Ouuuhh this token aint exists.";
 		}
@@ -30,7 +32,7 @@ public class registrationConfirmRestController {
 		}
 		
 		user.setEnabled(true); 
-	    userService.setEnabledUser(user); 
+	    userDao.setEnabledUser(user); 
 		return "It was good confirmation bruv u r cool";
 	}
 }

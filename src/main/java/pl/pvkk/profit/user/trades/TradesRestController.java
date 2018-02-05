@@ -34,7 +34,6 @@ public class TradesRestController {
 			@RequestParam("number") int shareNumber) {
 		
 		String username = SecurityContextHolder.getContext().getAuthentication().getName();
-		
 		return tradesService.sellShares(shareShortcut.toUpperCase(), shareNumber, username);
 	}
 }

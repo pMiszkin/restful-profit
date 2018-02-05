@@ -9,6 +9,7 @@ import org.springframework.context.annotation.Profile;
 import org.springframework.stereotype.Service;
 
 import pl.pvkk.profit.gpw.GpwSharesDownloader;
+import pl.pvkk.profit.user.User;
 import pl.pvkk.profit.user.UserService;
 
 @Service
@@ -24,6 +25,14 @@ public class InitDatabase {
 	@PostConstruct
 	public void addShares() throws SQLException {
 		downloader.addShares();
-		userService.addFirstUser();
+		userService.tryToSaveUser(makeFirstUser());
 	}	
+	
+	private User makeFirstUser() {
+		User user = new User();
+		user.setLogin("login");
+		user.setPassword("password");
+		user.setEnabled(true);
+		return user;
+	}
 }

@@ -27,43 +27,42 @@ public class GpwConnector {
 	private final String USER_AGENT = "Mozilla/5.0 (Windows NT 6.1) AppleWebKit/537.36 (KHTML, like Gecko) Chrome/41.0.2228.0 Safari/537.36";
 	
 	public Elements getAllStockIndices() throws IOException {
-		Connection connect = Jsoup.connect(INDICES_URL).userAgent(USER_AGENT);
-		Document content = connect.get();
+		Document content = getContentFromUrl(INDICES_URL);
 		Document table = Jsoup.parse(content.getElementsByTag("html").text(), "ISO-8859-9");
 		Elements td = table.getElementsByClass("left");
-		//remove table header
-		td.remove(0);
-		
+		td.remove(0); //remove table header
 		return td;
 	}
 	
-	//returns map as map<isin, shareName>
+	/** 
+	 * @return map as map<isin, shareName>
+	 * @throws IOException
+	 */
 	public Map<String, String> getAllShareNamesFromUrl() throws IOException {
-		Connection connect = Jsoup.connect(ALL_SHARES_URL).userAgent(USER_AGENT);
-		Document content = connect.get();
+		Document content = getContentFromUrl(ALL_SHARES_URL);
 		Element table = content.getElementById("footable");
-		Map<String, String> shares = new HashMap<String, String>();
 		Element tbody = table.getElementsByTag("tbody").first();
+		Map<String, String> shares = new HashMap<String, String>();
 		for(Element tr : tbody.children())
 			shares.put(tr.child(1).text(), tr.child(0).text());
-
 		return shares;
 	}
 	
 	public Elements getCurrentQuotationsAndStockIndices(String isin) throws IOException {
-		Connection connect = Jsoup.connect(CURR_QUOTATION_URL+isin).userAgent(USER_AGENT);
-		Document content = connect.get();
+		Document content = getContentFromUrl(CURR_QUOTATION_URL+isin);
 		Element tbody = content.getElementsByTag("tbody").first();
-		
 		return tbody.children();
 	}
 	
 	public QuotationsHistory getArchiveQuotations(String isin) throws IOException {
-		Connection connect = Jsoup.connect(CHART1_URL+isin+CHART2_URL).userAgent(USER_AGENT);
-		Document content = connect.get();
+		Document content = getContentFromUrl(CHART1_URL+isin+CHART2_URL);
 		String body = content.getElementsByTag("body").text();
 		ObjectMapper mapper = new ObjectMapper();
-		
 		return mapper.readValue(body.substring(1, body.length()-1), QuotationsHistory.class);
+	}
+	
+	private Document getContentFromUrl(String url) throws IOException {
+		Connection connect = Jsoup.connect(url).userAgent(USER_AGENT);
+		return connect.get();
 	}
 }
