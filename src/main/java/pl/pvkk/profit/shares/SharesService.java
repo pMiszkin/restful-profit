@@ -1,9 +1,11 @@
 package pl.pvkk.profit.shares;
 
-import java.util.List;
+import java.util.Date;
 
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
+
+import pl.pvkk.profit.gpw.ArchivalQuotationUnformatted;
 
 
 @Service
@@ -12,26 +14,31 @@ public class SharesService {
 	@Autowired
 	private SharesDao sharesDao;
 	
-		
 	public Share findShareByIsin(String isin) {
-		Share share = sharesDao.findShareById(isin.toUpperCase());
-
-		return share;
+		return sharesDao.findShareById(isin.toUpperCase());
 	}
 	
-	public List<Share> findAllShares() {
-		return sharesDao.findAllShares();
+	public ArchiveQuotation convertToArchive(CurrentQuotation current) {
+		ArchiveQuotation archive = new ArchiveQuotation();
+		archive.setPrice(current.getPrice());
+		archive.setDate(current.getDate());
+		//archive.setOpen(qData.getO());   WUT
+		archive.setMax(current.getMax());
+		archive.setMin(current.getMin());
+		archive.setVolume(current.getVolume());
+		return archive;
 	}
 	
-	public boolean isShareExists(String isin){
-		return sharesDao.isShareExists(isin);
-	}
-	
-	/*
-	 * Stock Indices Part
-	 */
-	
-	public List<StockIndex> findAllIndices() {
-		return sharesDao.findAllIndices();
+	public ArchiveQuotation convertToArchive(ArchivalQuotationUnformatted unformatted) {
+		ArchiveQuotation archive = new ArchiveQuotation();
+		Date date = new Date();
+		date.setTime(unformatted.getT()*360L);
+		archive.setDate(date);
+		archive.setPrice(unformatted.getC());
+		//archive.setOpen(unformatted.getO());   WUT
+		archive.setMax(unformatted.getH());
+		archive.setMin(unformatted.getL());
+		archive.setVolume(unformatted.getV());
+		return archive;
 	}
 }

@@ -18,6 +18,9 @@ import org.springframework.http.ResponseEntity;
 
 import pl.pvkk.profit.shares.CurrentQuotation;
 import pl.pvkk.profit.shares.Share;
+import pl.pvkk.profit.shares.ShareNotFoundException;
+import pl.pvkk.profit.shares.ShareNumberLessThanOneException;
+import pl.pvkk.profit.shares.SharesDao;
 import pl.pvkk.profit.shares.SharesService;
 import pl.pvkk.profit.user.UserService;
 import pl.pvkk.profit.user.pocket.Pocket;
@@ -29,10 +32,10 @@ public class TradesServiceTest {
 
 	@Mock
 	private SharesService sharesService;
-
+	@Mock
+	private SharesDao sharesDao;
 	@Mock
 	private PocketService pocketService;
-	
 	@Mock
 	private UserService userService;
 
@@ -48,7 +51,7 @@ public class TradesServiceTest {
 		
 		pocket = getPocketStubData();
 		share = getShareStubData();
-		when(sharesService.isShareExists(anyObject())).thenReturn(true);
+		when(sharesDao.isShareExists(anyObject())).thenReturn(true);
 		when(pocketService.getPocketById("login")).thenReturn(pocket);
 		when(sharesService.findShareByIsin(anyObject())).thenReturn(share);
 		when(userService.isUserEnabled("login")).thenReturn(true);
@@ -59,18 +62,15 @@ public class TradesServiceTest {
 	 * 
 	 * Testing buying shares first - buyShares(String shareShortcut, int shareNumber) method.
 	 */
-	@Test
+	@Test(expected = ShareNotFoundException.class)
 	public void testBuyShareWhatDoesntExist() {
-		when(sharesService.isShareExists(anyObject())).thenReturn(false);
-
-		ResponseEntity<String> response = tradesService.buyShares(anyString(), 5, "login");
-		System.out.println(response);
-		assertEquals(response.getStatusCode(), HttpStatus.BAD_REQUEST);
+		when(sharesDao.isShareExists(anyObject())).thenReturn(false);
+		tradesService.buyShares("login", anyString(),  5);
 	}
 
 	@Test
 	public void testBuyShare() {		
-		ResponseEntity<String> response = tradesService.buyShares(anyString(), 5, "login");
+		ResponseEntity<String> response = tradesService.buyShares("login", anyString(), 5);
 		System.out.println(response);
 		System.out.println(response.getBody());
 		
@@ -79,18 +79,15 @@ public class TradesServiceTest {
 
 	@Test
 	public void testBuyShareWithoutMoney() {
-		ResponseEntity<String> response = tradesService.buyShares(anyString(), 50000, "login");
+		ResponseEntity<String> response = tradesService.buyShares("login", anyString(), 50000);
 		System.out.println(response);
 		
 		assertEquals(response.getStatusCode(), HttpStatus.BAD_REQUEST);
 	}
 
-	@Test
+	@Test(expected = ShareNumberLessThanOneException.class)
 	public void testBuyMinusAmountOfShare() {
-		ResponseEntity<String> response = tradesService.buyShares(anyString(), -5, "login");
-		System.out.println(response);
-		
-		assertEquals(response.getStatusCode(), HttpStatus.BAD_REQUEST);
+		tradesService.buyShares("login", anyString(), -5);
 	}
 
 	/**

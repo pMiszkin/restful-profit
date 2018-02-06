@@ -4,17 +4,25 @@ import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.http.HttpStatus;
 import org.springframework.http.ResponseEntity;
 import org.springframework.stereotype.Service;
+import org.springframework.transaction.annotation.Transactional;
 
 import pl.pvkk.profit.shares.CurrentQuotation;
 import pl.pvkk.profit.shares.Share;
+import pl.pvkk.profit.shares.ShareNotFoundException;
+import pl.pvkk.profit.shares.ShareNumberLessThanOneException;
+import pl.pvkk.profit.shares.SharesDao;
 import pl.pvkk.profit.shares.SharesService;
 import pl.pvkk.profit.user.UserService;
+import pl.pvkk.profit.user.exceptions.UserIsNotEnabledException;
 import pl.pvkk.profit.user.pocket.Pocket;
 import pl.pvkk.profit.user.pocket.PocketService;
 
 @Service
+@Transactional
 public class TradesService {
 
+	@Autowired
+	private SharesDao sharesDao;
 	@Autowired
 	private SharesService sharesService;
 	@Autowired
@@ -22,67 +30,46 @@ public class TradesService {
 	@Autowired
 	private UserService userService;
 	
-
-	public ResponseEntity<String> buyShares(String shareShortcut, int shareNumber, String username) {
-		String response;
-		
-		if(!userService.isUserEnabled(username)) {
-			response = "An e-mail was sended at your address, please confirm your account";
-			return new ResponseEntity<String>(response, HttpStatus.UNAUTHORIZED);
-		}
-		
-		Pocket pocket = pocketService.getPocketById(username);
-
-		if(!sharesService.isShareExists(shareShortcut)) {
-			response = "This share doesn't exists!";
-			return new ResponseEntity<String>(response, HttpStatus.BAD_REQUEST);
-		}
-		
+	public ResponseEntity<String> buyShares(String username, String shareShortcut, int shareNumber) {
+		Pocket pocket = getPocketIfPossible(username, shareShortcut, shareNumber);
 		Share share = sharesService.findShareByIsin(shareShortcut);
-		CurrentQuotation quotation = share.getCurrentQuotation();
-		double sharePrice = quotation.getPrice();
-		
-		if(shareNumber <= 0) {
-			response = "You're trying to buy 0 or less shares";
-			return new ResponseEntity<String>(response, HttpStatus.BAD_REQUEST);
-		}
-		else if(shareNumber*sharePrice > pocket.getMoney().doubleValue()) {
-			response = "You have no money for that";
+		double sharePrice = getSharePrice(share);
+		if(shareNumber*sharePrice > pocket.getMoney().doubleValue()) {
+			String response = "You have no money for that";
 			return new ResponseEntity<String>(response, HttpStatus.BAD_REQUEST);	
 		}
-		
 		pocketService.setSharesAndTransactions(pocket, share, shareNumber);
 		
-		response = "You've bought "+shareNumber+" shares from "+share.getName()+" company, for "+shareNumber*sharePrice;
+		String response = "You've bought "+shareNumber+" shares from "+share.getName()+" company, for "+shareNumber*sharePrice;
 		return new ResponseEntity<String>(response, HttpStatus.OK);
 	}
 	
-	
-	public ResponseEntity<String> sellShares(String shareShortcut, int shareNumber, String username) {
-		String response;
-
-		Pocket pocket = pocketService.getPocketById(username);
-		
-		if(!sharesService.isShareExists(shareShortcut)) {
-			response = "This share doesn't exists!";
-			return new ResponseEntity<String>(response, HttpStatus.BAD_REQUEST);
-		}
-		if(shareNumber <= 0){
-			response = "You're trying to sell 0 or less shares";
-			return new ResponseEntity<String>(response, HttpStatus.BAD_REQUEST);
-		}
+	public ResponseEntity<String> sellShares(String username, String shareShortcut, int shareNumber) {
+		Pocket pocket = getPocketIfPossible(username, shareShortcut, shareNumber);
 		if(!pocketService.isShareExistsInPocket(pocket, shareShortcut, shareNumber)) {
-			response = "You don't have so many shares";
+			String response = "You don't have so many shares";
 			return new ResponseEntity<String>(response, HttpStatus.BAD_REQUEST);
 		}
-		
 		Share share = sharesService.findShareByIsin(shareShortcut);
-		CurrentQuotation quotation = share.getCurrentQuotation();
-		double sharePrice = quotation.getPrice();
-		
+		double sharePrice = getSharePrice(share);
 		pocketService.setSharesAndTransactions(pocket, share, -shareNumber);
 		
-		response = "You've sold "+shareNumber+" from "+share.getName()+" company, for "+shareNumber*sharePrice;
+		String response = "You've sold "+shareNumber+" from "+share.getName()+" company, for "+shareNumber*sharePrice;
 		return new ResponseEntity<String>(response, HttpStatus.OK);
+	}
+	
+	private Pocket getPocketIfPossible(String username, String shareShortcut, int shareNumber) {
+		if(!userService.isUserEnabled(username)) 
+			throw new UserIsNotEnabledException();
+		else if(!sharesDao.isShareExists(shareShortcut))
+			throw new ShareNotFoundException();
+		else if(shareNumber < 1)
+			throw new ShareNumberLessThanOneException();
+		return pocketService.getPocketById(username);
+	}
+	
+	private double getSharePrice(Share share) {
+		CurrentQuotation quotation = share.getCurrentQuotation();
+		return quotation.getPrice();
 	}
 }

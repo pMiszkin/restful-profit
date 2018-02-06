@@ -18,15 +18,12 @@ public class SharesRestController {
 
 	@Autowired
 	private SharesService sharesService;	
+	@Autowired
+	private SharesDao sharesDao;
 	
 	@GetMapping("/all")
 	public HttpEntity<List<Share>> findAllShares() {
-		//return stock exchange table
-		try{
-			return ResponseEntity.ok(sharesService.findAllShares());
-		} catch(Exception e){
-			return new ResponseEntity<>(HttpStatus.NOT_FOUND);
-		}
+		return ResponseEntity.ok(sharesDao.findAllShares());
 	}
 	
 	@GetMapping("/company")
@@ -38,6 +35,6 @@ public class SharesRestController {
 	
 	@GetMapping("/indices/all")
 	public HttpEntity<List<StockIndex>> findIndices() {
-		return ResponseEntity.ok(sharesService.findAllIndices());
+		return ResponseEntity.ok(sharesDao.findAllIndices());
 	}
 }

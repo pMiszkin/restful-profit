@@ -1,12 +1,12 @@
 package pl.pvkk.profit.gpw;
 
 import java.io.IOException;
-import java.sql.SQLException;
 import java.util.Date;
 import java.util.LinkedList;
 import java.util.List;
 import java.util.Map;
 import java.util.function.Function;
+import java.util.stream.Collectors;
 
 import org.jsoup.nodes.Element;
 import org.jsoup.select.Elements;
@@ -18,6 +18,7 @@ import pl.pvkk.profit.shares.ArchiveQuotation;
 import pl.pvkk.profit.shares.CurrentQuotation;
 import pl.pvkk.profit.shares.Share;
 import pl.pvkk.profit.shares.SharesDao;
+import pl.pvkk.profit.shares.SharesService;
 import pl.pvkk.profit.shares.StockIndex;
 
 
@@ -32,14 +33,15 @@ public class GpwSharesDownloader {
 	@Autowired
 	private SharesDao sharesDao;
 	@Autowired
+	private SharesService sharesService;
+	@Autowired
 	private GpwConnector gpwConnector;
 	
 	/**
 	 * This is the "init" method for download and save all shares quotations
-	 * @throws SQLException 
 	 * @throws IOException
 	 */
-	public void addShares() throws SQLException {
+	public void addShares() {
 		try {
 			setAllStockIndices();
 			addShares(gpwConnector.getAllShareNamesFromUrl());
@@ -80,18 +82,9 @@ public class GpwSharesDownloader {
 		shares.stream().forEach(share -> {
 				//move current quotation to archive quotation
 				if(share.getCurrentQuotation()!=null) {
-					List<ArchiveQuotation> quotations = new LinkedList<ArchiveQuotation>();
-					
-					ArchiveQuotation newArchiveQuotation = new ArchiveQuotation();
-					CurrentQuotation quotation = share.getCurrentQuotation();
-					newArchiveQuotation.setPrice(quotation.getPrice());
-					newArchiveQuotation.setDate(quotation.getDate());
-					//quotation.setOpen(qData.getO());   WUT
-					newArchiveQuotation.setMax(quotation.getMax());
-					newArchiveQuotation.setMin(quotation.getMin());
-					newArchiveQuotation.setVolume(quotation.getVolume());
-					
-					quotations.add(newArchiveQuotation);
+					List<ArchiveQuotation> archiveQuotations = new LinkedList<>();
+					ArchiveQuotation archive = sharesService.convertToArchive(share.getCurrentQuotation());
+					archiveQuotations.add(archive);
 				}
 				try {
 					Elements elements = gpwConnector.getCurrentQuotationsAndStockIndices(share.getIsin());
@@ -111,6 +104,7 @@ public class GpwSharesDownloader {
 									.replace("\u00A0", ""));  //no-break space
 						} catch(NumberFormatException e) { return (double) 0; }
 					};
+					
 					String currency = elements.get(1).child(0).text();
 					quotation.setCurrency(currency.substring(currency.indexOf("(")+1, currency.indexOf(")")));
 					quotation.setPrice(getValue.apply(2));
@@ -131,27 +125,18 @@ public class GpwSharesDownloader {
 		});
 	}
 	
-	//get all time quotations from history
+	/**
+	 * get all time quotations from quotation history
+	 * @throws IOException
+	 */
 	private void getAllArchiveQuotations() throws IOException {
 		List<Share> shares = sharesDao.findAllShares();
 		for( Share share : shares ) {
-			QuotationsHistory qHistory = gpwConnector.getArchiveQuotations(share.getIsin());
-			List<ArchiveQuotation> quotations = new LinkedList<ArchiveQuotation>();
-			
-			for(Data qData : qHistory.getData()) {
-				ArchiveQuotation quotation = new ArchiveQuotation();
-				Date date = new Date();
-				date.setTime(qData.getT()*360L);
-				quotation.setDate(date);
-				quotation.setPrice(qData.getC());
-				//quotation.setOpen(qData.getO());   WUT
-				quotation.setMax(qData.getH());
-				quotation.setMin(qData.getL());
-				quotation.setVolume(qData.getV());
-				
-				quotations.add(quotation);
-			}
-			
+			ArchivalQuotationHistory quotationHistory = gpwConnector.getArchiveQuotations(share.getIsin());
+			List<ArchivalQuotationUnformatted> unformatted = quotationHistory.getArchivalQuotationUnformatted();
+			List<ArchiveQuotation> quotations = unformatted.stream()
+					.map(sharesService::convertToArchive)
+					.collect(Collectors.toList());
 			share.setArchiveQuotations(quotations);
 			sharesDao.updateArchiveQuotationsInShare(share, quotations);
 		}

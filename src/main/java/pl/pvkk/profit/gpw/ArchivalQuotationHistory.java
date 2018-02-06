@@ -2,13 +2,13 @@ package pl.pvkk.profit.gpw;
 
 import java.util.List;
 
-public class QuotationsHistory {
+public class ArchivalQuotationHistory {
 
 	private String mode;
 	private String isin;
 	private int from;
 	private int to;
-	private List<Data> data;
+	private List<ArchivalQuotationUnformatted> qUnformatted;
 
 	public String getMode() {
 		return mode;
@@ -42,17 +42,17 @@ public class QuotationsHistory {
 		this.to = to;
 	}
 
-	public List<Data> getData() {
-		return data;
+	public List<ArchivalQuotationUnformatted> getArchivalQuotationUnformatted() {
+		return qUnformatted;
 	}
 
-	public void setData(List<Data> data) {
-		this.data = data;
+	public void setArchivalQuotationUnformatted(List<ArchivalQuotationUnformatted> qUnformatted) {
+		this.qUnformatted = qUnformatted;
 	}
 
 	@Override
 	public String toString() {
-		return "QuotationsHistory [mode=" + mode + ", isin=" + isin + ", from=" + from + ", to=" + to + ", data=" + data
+		return "QuotationsHistory [mode=" + mode + ", isin=" + isin + ", from=" + from + ", to=" + to + ", data=" + qUnformatted
 				+ "]";
 	}
 }

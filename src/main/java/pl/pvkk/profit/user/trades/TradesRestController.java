@@ -24,7 +24,7 @@ public class TradesRestController {
 			@RequestParam("number") int shareNumber) {
 		
 		String username = SecurityContextHolder.getContext().getAuthentication().getName();
-		return tradesService.buyShares(shareShortcut.toUpperCase(), shareNumber, username);
+		return tradesService.buyShares(username, shareShortcut.toUpperCase(), shareNumber);
 	}
 	
 	@PostMapping(value = "/sales", produces = "text/plain;charset=UTF-8")
@@ -34,6 +34,6 @@ public class TradesRestController {
 			@RequestParam("number") int shareNumber) {
 		
 		String username = SecurityContextHolder.getContext().getAuthentication().getName();
-		return tradesService.sellShares(shareShortcut.toUpperCase(), shareNumber, username);
+		return tradesService.sellShares(username, shareShortcut.toUpperCase(), shareNumber);
 	}
 }

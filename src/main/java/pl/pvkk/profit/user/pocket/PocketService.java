@@ -29,7 +29,7 @@ public class PocketService {
 		Map<String, Integer> shares = pocket.getShares();
 
 		if(!shares.containsKey(shareIsin.toUpperCase()))
-				return false;
+			return false;
 		else if(shares.get(shareIsin) < shareNumber)
 			return false;
 		return true;

@@ -1,6 +1,6 @@
 package pl.pvkk.profit.gpw;
 
-public class Data {
+public class ArchivalQuotationUnformatted {
 
 	//as Date
 	private int t;

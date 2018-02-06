@@ -54,11 +54,11 @@ public class GpwConnector {
 		return tbody.children();
 	}
 	
-	public QuotationsHistory getArchiveQuotations(String isin) throws IOException {
+	public ArchivalQuotationHistory getArchiveQuotations(String isin) throws IOException {
 		Document content = getContentFromUrl(CHART1_URL+isin+CHART2_URL);
 		String body = content.getElementsByTag("body").text();
 		ObjectMapper mapper = new ObjectMapper();
-		return mapper.readValue(body.substring(1, body.length()-1), QuotationsHistory.class);
+		return mapper.readValue(body.substring(1, body.length()-1), ArchivalQuotationHistory.class);
 	}
 	
 	private Document getContentFromUrl(String url) throws IOException {
