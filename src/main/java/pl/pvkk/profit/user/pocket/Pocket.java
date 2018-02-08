@@ -1,8 +1,8 @@
 package pl.pvkk.profit.user.pocket;
 
 import java.math.BigDecimal;
+import java.util.ArrayList;
 import java.util.HashMap;
-import java.util.LinkedList;
 import java.util.List;
 import java.util.Map;
 
@@ -35,7 +35,7 @@ public class Pocket {
 	public Pocket() {
 		money = new BigDecimal(5000);
 		shares = new HashMap<String, Integer>();
-		purchases = new LinkedList<Transaction>();
+		purchases = new ArrayList<Transaction>();
 	}
 
 	public String getUsername() {

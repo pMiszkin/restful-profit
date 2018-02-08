@@ -13,11 +13,11 @@ import org.springframework.web.bind.annotation.RestController;
 public class PocketRestController {
 
 	@Autowired
-	private PocketService pocketService;
+	private PocketDao pocketDao;
 	
 	@GetMapping("/{username}")
 	public ResponseEntity<Pocket> getPocketData(@PathVariable String username){
-		Pocket pocket = pocketService.getPocketById(username);
+		Pocket pocket = pocketDao.getPocketById(username);
 		return pocket == null ? new ResponseEntity<>(HttpStatus.NOT_FOUND) : 
 			new ResponseEntity<Pocket>(pocket, HttpStatus.OK);
 	}

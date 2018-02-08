@@ -18,6 +18,11 @@ public class SharesService {
 		return sharesDao.findShareById(isin.toUpperCase());
 	}
 	
+	public double getQurrentQuotationPrice(Share share) {
+		CurrentQuotation quotation = share.getCurrentQuotation();
+		return quotation.getPrice();
+	}
+	
 	public ArchiveQuotation convertToArchive(CurrentQuotation current) {
 		ArchiveQuotation archive = new ArchiveQuotation();
 		archive.setPrice(current.getPrice());

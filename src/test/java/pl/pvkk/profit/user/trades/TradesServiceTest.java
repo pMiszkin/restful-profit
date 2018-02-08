@@ -24,7 +24,7 @@ import pl.pvkk.profit.shares.SharesDao;
 import pl.pvkk.profit.shares.SharesService;
 import pl.pvkk.profit.user.UserService;
 import pl.pvkk.profit.user.pocket.Pocket;
-import pl.pvkk.profit.user.pocket.PocketService;
+import pl.pvkk.profit.user.pocket.PocketDao;
 import pl.pvkk.profit.user.trades.TradesService;
 
 @RunWith(MockitoJUnitRunner.class)
@@ -35,7 +35,7 @@ public class TradesServiceTest {
 	@Mock
 	private SharesDao sharesDao;
 	@Mock
-	private PocketService pocketService;
+	private PocketDao pocketDao;
 	@Mock
 	private UserService userService;
 
@@ -52,7 +52,7 @@ public class TradesServiceTest {
 		pocket = getPocketStubData();
 		share = getShareStubData();
 		when(sharesDao.isShareExists(anyObject())).thenReturn(true);
-		when(pocketService.getPocketById("login")).thenReturn(pocket);
+		when(pocketDao.getPocketById("login")).thenReturn(pocket);
 		when(sharesService.findShareByIsin(anyObject())).thenReturn(share);
 		when(userService.isUserEnabled("login")).thenReturn(true);
 	}
