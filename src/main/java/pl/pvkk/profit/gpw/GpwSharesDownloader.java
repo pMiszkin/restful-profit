@@ -14,12 +14,12 @@ import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.scheduling.annotation.Scheduled;
 import org.springframework.stereotype.Service;
 
-import pl.pvkk.profit.shares.ArchiveQuotation;
-import pl.pvkk.profit.shares.CurrentQuotation;
-import pl.pvkk.profit.shares.Share;
+import pl.pvkk.profit.domain.shares.ArchivalQuotation;
+import pl.pvkk.profit.domain.shares.CurrentQuotation;
+import pl.pvkk.profit.domain.shares.Share;
+import pl.pvkk.profit.domain.shares.StockIndex;
 import pl.pvkk.profit.shares.SharesDao;
 import pl.pvkk.profit.shares.SharesService;
-import pl.pvkk.profit.shares.StockIndex;
 
 
 /**
@@ -82,9 +82,9 @@ public class GpwSharesDownloader {
 		shares.stream().forEach(share -> {
 				//move current quotation to archive quotation
 				if(share.getCurrentQuotation()!=null) {
-					List<ArchiveQuotation> archiveQuotations = new LinkedList<>();
-					ArchiveQuotation archive = sharesService.convertToArchive(share.getCurrentQuotation());
-					archiveQuotations.add(archive);
+					List<ArchivalQuotation> archivalQuotations = new LinkedList<>();
+					ArchivalQuotation archive = sharesService.convertToArchive(share.getCurrentQuotation());
+					archivalQuotations.add(archive);
 				}
 				try {
 					Elements elements = gpwConnector.getCurrentQuotationsAndStockIndices(share.getIsin());
@@ -134,7 +134,7 @@ public class GpwSharesDownloader {
 		for( Share share : shares ) {
 			ArchivalQuotationHistory quotationHistory = gpwConnector.getArchiveQuotations(share.getIsin());
 			List<ArchivalQuotationUnformatted> unformatted = quotationHistory.getArchivalQuotationUnformatted();
-			List<ArchiveQuotation> quotations = unformatted.stream()
+			List<ArchivalQuotation> quotations = unformatted.stream()
 					.map(sharesService::convertToArchive)
 					.collect(Collectors.toList());
 			share.setArchiveQuotations(quotations);

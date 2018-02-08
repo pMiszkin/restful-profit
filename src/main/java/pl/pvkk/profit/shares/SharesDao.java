@@ -8,6 +8,11 @@ import javax.persistence.Query;
 import org.springframework.stereotype.Repository;
 import org.springframework.transaction.annotation.Transactional;
 
+import pl.pvkk.profit.domain.shares.ArchivalQuotation;
+import pl.pvkk.profit.domain.shares.CurrentQuotation;
+import pl.pvkk.profit.domain.shares.Share;
+import pl.pvkk.profit.domain.shares.StockIndex;
+
 @Repository
 @Transactional
 public class SharesDao {
@@ -20,7 +25,7 @@ public class SharesDao {
 		em.merge(share);
 	}
 	
-	public void updateArchiveQuotationsInShare(Share share, List<ArchiveQuotation> quotations) {
+	public void updateArchiveQuotationsInShare(Share share, List<ArchivalQuotation> quotations) {
 		quotations.forEach((q) -> {
 				em.persist(q);
 				em.merge(share);

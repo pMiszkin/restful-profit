@@ -7,7 +7,8 @@ import org.springframework.web.bind.annotation.GetMapping;
 import org.springframework.web.bind.annotation.RequestParam;
 import org.springframework.web.bind.annotation.RestController;
 
-import pl.pvkk.profit.user.User;
+import pl.pvkk.profit.domain.user.User;
+import pl.pvkk.profit.domain.user.VerificationToken;
 import pl.pvkk.profit.user.UserDao;
 
 @RestController

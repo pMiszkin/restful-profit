@@ -6,7 +6,9 @@ import javax.persistence.Query;
 import org.springframework.stereotype.Repository;
 import org.springframework.transaction.annotation.Transactional;
 
-import pl.pvkk.profit.user.pocket.Pocket;
+import pl.pvkk.profit.domain.user.Pocket;
+import pl.pvkk.profit.domain.user.User;
+import pl.pvkk.profit.domain.user.UserProfile;
 
 @Repository
 @Transactional

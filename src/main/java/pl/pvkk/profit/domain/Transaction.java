@@ -1,4 +1,4 @@
-package pl.pvkk.profit.user.trades;
+package pl.pvkk.profit.domain;
 
 import java.util.Date;
 
@@ -8,8 +8,9 @@ import javax.persistence.GeneratedValue;
 import javax.persistence.Id;
 import javax.persistence.ManyToOne;
 import com.fasterxml.jackson.annotation.JsonIgnoreProperties;
-import pl.pvkk.profit.shares.Share;
-import pl.pvkk.profit.user.pocket.Pocket;
+
+import pl.pvkk.profit.domain.shares.Share;
+import pl.pvkk.profit.domain.user.Pocket;
 
 @Entity
 public class Transaction {

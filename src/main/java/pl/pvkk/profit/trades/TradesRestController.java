@@ -1,4 +1,4 @@
-package pl.pvkk.profit.user.trades;
+package pl.pvkk.profit.trades;
 
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.http.ResponseEntity;

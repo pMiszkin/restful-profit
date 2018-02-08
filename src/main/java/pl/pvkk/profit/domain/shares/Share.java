@@ -1,4 +1,4 @@
-package pl.pvkk.profit.shares;
+package pl.pvkk.profit.domain.shares;
 
 import java.util.ArrayList;
 import java.util.LinkedList;
@@ -15,7 +15,7 @@ import javax.persistence.OrderBy;
 
 import com.fasterxml.jackson.annotation.JsonIgnoreProperties;
 
-import pl.pvkk.profit.user.trades.Transaction;
+import pl.pvkk.profit.domain.Transaction;
 
 @Entity
 public class Share {
@@ -27,7 +27,7 @@ public class Share {
 	private CurrentQuotation currentQuotation;
 	@OneToMany(fetch = FetchType.LAZY)
 	@OrderBy("date ASC")
-	private List<ArchiveQuotation> archiveQuotations;
+	private List<ArchivalQuotation> archivalQuotations;
 	@ElementCollection
 	private List<String> indices;
 	@OneToMany(fetch = FetchType.LAZY, cascade = CascadeType.ALL)
@@ -35,7 +35,7 @@ public class Share {
 	private List<Transaction> transactions;
 
 	public Share() {
-		archiveQuotations = new ArrayList<ArchiveQuotation>();
+		archivalQuotations = new ArrayList<ArchivalQuotation>();
 		transactions = new LinkedList<Transaction>();
 	}
 
@@ -63,12 +63,12 @@ public class Share {
 		this.currentQuotation = currentQuotation;
 	}
 
-	public List<ArchiveQuotation> getArchiveQuotations() {
-		return archiveQuotations;
+	public List<ArchivalQuotation> getArchiveQuotations() {
+		return archivalQuotations;
 	}
 
-	public void setArchiveQuotations(List<ArchiveQuotation> archiveQuotations) {
-		this.archiveQuotations = archiveQuotations;
+	public void setArchiveQuotations(List<ArchivalQuotation> archivalQuotations) {
+		this.archivalQuotations = archivalQuotations;
 	}
 
 	public List<String> getIndices() {

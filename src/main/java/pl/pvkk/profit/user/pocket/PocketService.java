@@ -7,9 +7,11 @@ import java.util.Map;
 
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
-import pl.pvkk.profit.shares.Share;
+
+import pl.pvkk.profit.domain.Transaction;
+import pl.pvkk.profit.domain.shares.Share;
+import pl.pvkk.profit.domain.user.Pocket;
 import pl.pvkk.profit.shares.SharesService;
-import pl.pvkk.profit.user.trades.Transaction;
 
 @Service
 public class PocketService {

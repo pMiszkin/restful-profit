@@ -16,16 +16,16 @@ import org.mockito.runners.MockitoJUnitRunner;
 import org.springframework.http.HttpStatus;
 import org.springframework.http.ResponseEntity;
 
-import pl.pvkk.profit.shares.CurrentQuotation;
-import pl.pvkk.profit.shares.Share;
+import pl.pvkk.profit.domain.shares.CurrentQuotation;
+import pl.pvkk.profit.domain.shares.Share;
+import pl.pvkk.profit.domain.user.Pocket;
 import pl.pvkk.profit.shares.ShareNotFoundException;
 import pl.pvkk.profit.shares.ShareNumberLessThanOneException;
 import pl.pvkk.profit.shares.SharesDao;
 import pl.pvkk.profit.shares.SharesService;
+import pl.pvkk.profit.trades.TradesService;
 import pl.pvkk.profit.user.UserService;
-import pl.pvkk.profit.user.pocket.Pocket;
 import pl.pvkk.profit.user.pocket.PocketDao;
-import pl.pvkk.profit.user.trades.TradesService;
 
 @RunWith(MockitoJUnitRunner.class)
 public class TradesServiceTest {

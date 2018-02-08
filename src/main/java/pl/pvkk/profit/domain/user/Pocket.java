@@ -1,4 +1,4 @@
-package pl.pvkk.profit.user.pocket;
+package pl.pvkk.profit.domain.user;
 
 import java.math.BigDecimal;
 import java.util.ArrayList;
@@ -16,7 +16,7 @@ import javax.persistence.OneToMany;
 
 import com.fasterxml.jackson.annotation.JsonIgnoreProperties;
 
-import pl.pvkk.profit.user.trades.Transaction;
+import pl.pvkk.profit.domain.Transaction;
 
 @Entity
 public class Pocket {

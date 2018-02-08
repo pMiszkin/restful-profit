@@ -1,4 +1,4 @@
-package pl.pvkk.profit.shares;
+package pl.pvkk.profit.domain.shares;
 
 import java.util.Date;
 

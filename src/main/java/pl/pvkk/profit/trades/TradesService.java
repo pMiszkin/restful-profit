@@ -1,4 +1,4 @@
-package pl.pvkk.profit.user.trades;
+package pl.pvkk.profit.trades;
 
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.http.HttpStatus;
@@ -6,14 +6,14 @@ import org.springframework.http.ResponseEntity;
 import org.springframework.stereotype.Service;
 import org.springframework.transaction.annotation.Transactional;
 
-import pl.pvkk.profit.shares.Share;
+import pl.pvkk.profit.domain.shares.Share;
+import pl.pvkk.profit.domain.user.Pocket;
 import pl.pvkk.profit.shares.ShareNotFoundException;
 import pl.pvkk.profit.shares.ShareNumberLessThanOneException;
 import pl.pvkk.profit.shares.SharesDao;
 import pl.pvkk.profit.shares.SharesService;
 import pl.pvkk.profit.user.UserService;
 import pl.pvkk.profit.user.exceptions.UserIsNotEnabledException;
-import pl.pvkk.profit.user.pocket.Pocket;
 import pl.pvkk.profit.user.pocket.PocketDao;
 import pl.pvkk.profit.user.pocket.PocketService;
 

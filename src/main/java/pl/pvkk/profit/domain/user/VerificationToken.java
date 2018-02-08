@@ -1,4 +1,4 @@
-package pl.pvkk.profit.user.verification;
+package pl.pvkk.profit.domain.user;
 
 import java.sql.Timestamp;
 import java.util.Calendar;
@@ -11,8 +11,6 @@ import javax.persistence.GenerationType;
 import javax.persistence.Id;
 import javax.persistence.JoinColumn;
 import javax.persistence.OneToOne;
-
-import pl.pvkk.profit.user.User;
 
 @Entity
 public class VerificationToken {

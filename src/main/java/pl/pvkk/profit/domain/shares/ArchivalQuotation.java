@@ -1,4 +1,4 @@
-package pl.pvkk.profit.shares;
+package pl.pvkk.profit.domain.shares;
 
 import java.util.Date;
 
@@ -9,7 +9,7 @@ import javax.persistence.Temporal;
 import javax.persistence.TemporalType;
 
 @Entity
-public class ArchiveQuotation {
+public class ArchivalQuotation {
 
 	@Id
 	@GeneratedValue

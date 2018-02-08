@@ -1,10 +1,8 @@
-package pl.pvkk.profit.user;
+package pl.pvkk.profit.domain.user;
 
 import javax.persistence.Entity;
 import javax.persistence.Id;
 import javax.persistence.OneToOne;
-
-import pl.pvkk.profit.user.pocket.Pocket;
 
 @Entity
 public class UserProfile {
