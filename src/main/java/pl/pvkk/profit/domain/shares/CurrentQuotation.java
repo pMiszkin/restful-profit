@@ -1,7 +1,9 @@
 package pl.pvkk.profit.domain.shares;
 
 import java.util.Date;
+import java.util.List;
 
+import javax.persistence.ElementCollection;
 import javax.persistence.Entity;
 import javax.persistence.GeneratedValue;
 import javax.persistence.Id;
@@ -14,6 +16,8 @@ public class CurrentQuotation {
 	@Id
 	@GeneratedValue
 	private long id;
+	@ElementCollection
+	private List<String> indices;
 	@Temporal(value = TemporalType.TIMESTAMP)
 	private Date date;
 	private String currency;
@@ -32,6 +36,14 @@ public class CurrentQuotation {
 
 	public void setId(long id) {
 		this.id = id;
+	}
+
+	public List<String> getIndices() {
+		return indices;
+	}
+
+	public void setIndices(List<String> indices) {
+		this.indices = indices;
 	}
 
 	public Date getDate() {

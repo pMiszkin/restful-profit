@@ -5,7 +5,6 @@ import java.util.LinkedList;
 import java.util.List;
 
 import javax.persistence.CascadeType;
-import javax.persistence.ElementCollection;
 import javax.persistence.Entity;
 import javax.persistence.FetchType;
 import javax.persistence.Id;
@@ -28,8 +27,6 @@ public class Share {
 	@OneToMany(fetch = FetchType.LAZY)
 	@OrderBy("date ASC")
 	private List<ArchivalQuotation> archivalQuotations;
-	@ElementCollection
-	private List<String> indices;
 	@OneToMany(fetch = FetchType.LAZY, cascade = CascadeType.ALL)
 	@JsonIgnoreProperties("share")
 	private List<Transaction> transactions;
@@ -69,14 +66,6 @@ public class Share {
 
 	public void setArchiveQuotations(List<ArchivalQuotation> archivalQuotations) {
 		this.archivalQuotations = archivalQuotations;
-	}
-
-	public List<String> getIndices() {
-		return indices;
-	}
-
-	public void setIndices(List<String> indices) {
-		this.indices = indices;
 	}
 
 	public List<Transaction> getTransactions() {

@@ -23,7 +23,7 @@ public class InitDatabase {
 	private UserService userService;
 	
 	@PostConstruct
-	public void addShares() throws SQLException {
+	public void init() throws SQLException {
 		downloader.addShares();
 		userService.tryToSaveUser(makeFirstUser());
 	}	

@@ -4,22 +4,21 @@ import java.io.IOException;
 import java.util.Date;
 import java.util.LinkedList;
 import java.util.List;
-import java.util.Map;
-import java.util.function.Function;
-import java.util.stream.Collectors;
-
-import org.jsoup.nodes.Element;
-import org.jsoup.select.Elements;
+import java.util.Set;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.scheduling.annotation.Scheduled;
 import org.springframework.stereotype.Service;
+import org.springframework.transaction.annotation.Transactional;
 
 import pl.pvkk.profit.domain.shares.ArchivalQuotation;
 import pl.pvkk.profit.domain.shares.CurrentQuotation;
 import pl.pvkk.profit.domain.shares.Share;
 import pl.pvkk.profit.domain.shares.StockIndex;
+import pl.pvkk.profit.gpw.connection.AllStockIndicesGetter;
+import pl.pvkk.profit.gpw.connection.ArchivalQuotationsGetter;
+import pl.pvkk.profit.gpw.connection.CurrentQuotationGetter;
+import pl.pvkk.profit.gpw.connection.SharesBasicDataGetter;
 import pl.pvkk.profit.shares.SharesDao;
-import pl.pvkk.profit.shares.SharesService;
 
 
 /**
@@ -33,20 +32,19 @@ public class GpwSharesDownloader {
 	@Autowired
 	private SharesDao sharesDao;
 	@Autowired
-	private SharesService sharesService;
-	@Autowired
-	private GpwConnector gpwConnector;
+	private ArchivalQuotationService archivalQuotationService;
 	
 	/**
 	 * This is the "init" method for download and save all shares quotations
 	 * @throws IOException
 	 */
+	@Transactional()
 	public void addShares() {
 		try {
-			setAllStockIndices();
-			addShares(gpwConnector.getAllShareNamesFromUrl());
+			addAllStockIndices();
+			addSharesBasicData();
 			addCurrentQuotationsAndStockIndices();
-			getAllArchiveQuotations();
+			addAllArchiveQuotations();
 		} catch (IOException e) {
 			e.printStackTrace();
 		}
@@ -57,88 +55,52 @@ public class GpwSharesDownloader {
 		addCurrentQuotationsAndStockIndices();
 	}
 	
-	private void setAllStockIndices() throws IOException {
-		for(Element element : gpwConnector.getAllStockIndices()) {
-			StockIndex stockIndex = new StockIndex();
-			stockIndex.setName(element.text());
-			stockIndex.setUrl(element.child(0).attr("href"));
-			sharesDao.addStockIndex(stockIndex);
-		}
+	private void addAllStockIndices() throws IOException {
+		AllStockIndicesGetter getter = new AllStockIndicesGetter();
+		Set<StockIndex> indices = getter.getAllStockIndices();
+		indices.parallelStream().forEach(sharesDao::addStockIndex);
 	}
 	
-	private void addShares(Map<String, String> shares) {
-		shares.forEach((isin, name) -> {		
-			Share share = new Share();
-			share.setIsin(isin);
-			share.setName(name);
-			sharesDao.createShare(share);
-		});
+	private void addSharesBasicData() throws IOException {
+		SharesBasicDataGetter getter = new SharesBasicDataGetter();
+		Set<Share> shares = getter.getAllShareBasicData();
+		shares.parallelStream().forEach(sharesDao::createShare);
 	}
 	
 	private void addCurrentQuotationsAndStockIndices() {
 		Date date = new Date();
 		List<Share> shares = sharesDao.findAllShares();
 		
-		shares.stream().forEach(share -> {
-				//move current quotation to archive quotation
-				if(share.getCurrentQuotation()!=null) {
-					List<ArchivalQuotation> archivalQuotations = new LinkedList<>();
-					ArchivalQuotation archive = sharesService.convertToArchive(share.getCurrentQuotation());
-					archivalQuotations.add(archive);
-				}
-				try {
-					Elements elements = gpwConnector.getCurrentQuotationsAndStockIndices(share.getIsin());
-					//save indices
-					List<String> indices = new LinkedList<String>();
-					elements.first().getElementsByTag("a").forEach(index -> indices.add(index.text()));
-					share.setIndices(indices);
-					//save quotations
-					CurrentQuotation quotation = new CurrentQuotation();
-					quotation.setDate(date);
-					//parser
-					Function<Integer, Double> getValue = index -> {
-						try {
-							return Double.parseDouble(elements.get(index).child(1)
-									.text()
-									.replace(",",".")
-									.replace("\u00A0", ""));  //no-break space
-						} catch(NumberFormatException e) { return (double) 0; }
-					};
-					
-					String currency = elements.get(1).child(0).text();
-					quotation.setCurrency(currency.substring(currency.indexOf("(")+1, currency.indexOf(")")));
-					quotation.setPrice(getValue.apply(2));
-					String change = elements.get(3).child(1).text();
-					quotation.setChange(Double.parseDouble(change.substring(change.indexOf("(")+1, change.indexOf(")")-1)));
-					quotation.setBid(getValue.apply(4));
-					quotation.setAsk(getValue.apply(5));
-					quotation.setMin(getValue.apply(6));
-					quotation.setMax(getValue.apply(7));
-					quotation.setVolume(getValue.apply(8));
-					quotation.setValue(getValue.apply(9));
-					
-					share.setCurrentQuotation(quotation);
-					sharesDao.updateCurrentQuotationInShare(share, quotation);
-										
-				} catch (IOException e) { e.printStackTrace(); }
-				
+		shares.forEach(share -> {
+			//move current quotation to archive quotation
+			if(share.getCurrentQuotation()!=null) {
+				List<ArchivalQuotation> archivalQuotations = new LinkedList<>();
+				ArchivalQuotation archive = archivalQuotationService.convertToArchive(share.getCurrentQuotation());
+				archivalQuotations.add(archive);
+			}
+			try {
+				CurrentQuotationGetter getter = new CurrentQuotationGetter(share.getIsin());
+				CurrentQuotation quotation = getter.getCurrentQuotation(date);
+				share.setCurrentQuotation(quotation);
+				sharesDao.updateCurrentQuotationInShare(share, quotation);
+			} catch (IOException e) {
+				e.printStackTrace();
+			}
+
 		});
 	}
 	
 	/**
-	 * get all time quotations from quotation history
+	 * add all time quotations from quotation history
 	 * @throws IOException
 	 */
-	private void getAllArchiveQuotations() throws IOException {
+	private void addAllArchiveQuotations() throws IOException {
 		List<Share> shares = sharesDao.findAllShares();
 		for( Share share : shares ) {
-			ArchivalQuotationHistory quotationHistory = gpwConnector.getArchiveQuotations(share.getIsin());
-			List<ArchivalQuotationUnformatted> unformatted = quotationHistory.getArchivalQuotationUnformatted();
-			List<ArchivalQuotation> quotations = unformatted.stream()
-					.map(sharesService::convertToArchive)
-					.collect(Collectors.toList());
+			ArchivalQuotationsGetter getter = new ArchivalQuotationsGetter(share.getIsin());
+			List<ArchivalQuotation> quotations = getter.getArchivalQuotations();
 			share.setArchiveQuotations(quotations);
 			sharesDao.updateArchiveQuotationsInShare(share, quotations);
 		}
-	}
+	} 
 }
