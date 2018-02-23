@@ -56,7 +56,6 @@ public class CurrentQuotationGetter extends GpwUrlConnector {
 	
 	private void setChange() {
 		String rowText = rows.get(3).child(1).text();
-		System.out.println("rowText: "+rowText);
 		String changeText = rowText.substring(rowText.indexOf("(")+1, rowText.indexOf(")")-1);
 		double change = Double.parseDouble(changeText);
 		quotation.setChange(change);
@@ -64,11 +63,10 @@ public class CurrentQuotationGetter extends GpwUrlConnector {
 	
 	private double parseRowWithNumber(int rowIndex) {
 		String text = rows.get(rowIndex).child(1).text();
-		System.out.println("text: "+text);
 		String parsedText = text.replace(",",".")
 				.replace("\u00A0", ""); // no-break space
 		try {
-			return Double.parseDouble(text);
+			return Double.parseDouble(parsedText);
 		} catch(NumberFormatException e) {
 			return (double) 0;
 		}
