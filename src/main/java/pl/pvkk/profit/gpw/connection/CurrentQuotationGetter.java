@@ -50,24 +50,26 @@ public class CurrentQuotationGetter extends GpwUrlConnector {
 	
 	private void setCurrency() {
 		String rowText = rows.get(1).child(0).text();
-		String currency = getTextBetweenBrackets(rowText);
+		String currency = rowText.substring(rowText.indexOf("(")+1, rowText.indexOf(")"));
 		quotation.setCurrency(currency);
 	}
 	
 	private void setChange() {
 		String rowText = rows.get(3).child(1).text();
-		String changeText = getTextBetweenBrackets(rowText);
+		System.out.println("rowText: "+rowText);
+		String changeText = rowText.substring(rowText.indexOf("(")+1, rowText.indexOf(")")-1);
 		double change = Double.parseDouble(changeText);
 		quotation.setChange(change);
 	}
 	
 	private double parseRowWithNumber(int rowIndex) {
+		String text = rows.get(rowIndex).child(1).text();
+		System.out.println("text: "+text);
+		String parsedText = text.replace(",",".")
+				.replace("\u00A0", ""); // no-break space
 		try {
-			return Double.parseDouble(rows.get(rowIndex).child(1)
-					.text()
-					.replace(",",".")
-					.replace("\u00A0", ""));  //no-break space
-		} catch(NumberFormatException e) { 
+			return Double.parseDouble(text);
+		} catch(NumberFormatException e) {
 			return (double) 0;
 		}
 	}

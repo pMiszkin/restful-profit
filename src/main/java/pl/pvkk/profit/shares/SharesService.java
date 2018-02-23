@@ -16,9 +16,13 @@ public class SharesService {
 	public Share findShareByIsin(String isin) {
 		return sharesDao.findShareById(isin.toUpperCase());
 	}
-	
-	public double getQurrentQuotationPrice(Share share) {
-		CurrentQuotation quotation = share.getCurrentQuotation();
-		return quotation.getPrice();
+
+	public boolean isShareExists(String isin) {
+		return sharesDao.isShareExists(isin);
+	}
+
+	public double getSumOfCosts(Share share, int shareNumber) {
+		double sharePrice = share.getQurrentQuotationPrice();
+		return sharePrice*shareNumber;
 	}
 }

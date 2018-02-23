@@ -36,6 +36,11 @@ public class Share {
 		transactions = new LinkedList<Transaction>();
 	}
 
+	public double getQurrentQuotationPrice() {
+		CurrentQuotation quotation = getCurrentQuotation();
+		return quotation.getPrice();
+	}
+
 	public String getName() {
 		return name;
 	}

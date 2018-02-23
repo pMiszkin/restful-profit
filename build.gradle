@@ -37,7 +37,7 @@ dependencies {
 	compile group: 'javax.mail', name: 'mail', version: '1.4.7'
 	//json
 	compile group: 'com.fasterxml.jackson.core', name: 'jackson-databind', version: '2.8.9'
-	//testCompile group: 'org.springframework.security', name: 'spring-security-test', version: '4.2.3.RELEASE'
+	testCompile group: 'org.springframework.security', name: 'spring-security-test', version: '4.2.3.RELEASE'
 	
 	
 	// Outside

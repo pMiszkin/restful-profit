@@ -38,6 +38,22 @@ public class Pocket {
 		purchases = new ArrayList<Transaction>();
 	}
 
+	public void addShares(String shareIsin, int shareNumber) {
+        if (shares.containsKey(shareIsin)) {
+            int shareSum = shares.get(shareIsin) + shareNumber;
+            shares.replace(shareIsin, shareSum);
+            if(shareSum == 0)
+                shares.remove(shareIsin);
+        }
+        else {
+            shares.put(shareIsin, shareNumber);
+        }
+    }
+
+    public void addPurchase(Transaction transaction) {
+	    purchases.add(transaction);
+    }
+
 	public String getUsername() {
 		return username;
 	}

@@ -1,17 +1,20 @@
 package pl.pvkk.profit.trades;
 
 import org.springframework.beans.factory.annotation.Autowired;
+import org.springframework.http.HttpStatus;
 import org.springframework.http.ResponseEntity;
 import org.springframework.security.access.prepost.PreAuthorize;
 import org.springframework.security.core.context.SecurityContextHolder;
-import org.springframework.web.bind.annotation.PostMapping;
-import org.springframework.web.bind.annotation.RequestMapping;
-import org.springframework.web.bind.annotation.RequestParam;
-import org.springframework.web.bind.annotation.RestController;
+import org.springframework.validation.annotation.Validated;
+import org.springframework.web.bind.annotation.*;
+
+import javax.validation.ConstraintViolationException;
+import javax.validation.constraints.Min;
 
 
 @RestController
 @RequestMapping("user/pocket/transfer")
+@Validated
 public class TradesRestController {
 
 	@Autowired
@@ -20,20 +23,28 @@ public class TradesRestController {
 	@PostMapping(value = "/purchases", produces = "text/plain;charset=UTF-8")
 	@PreAuthorize("hasRole('ROLE_USER')")
 	public ResponseEntity<String> buyShares(
-			@RequestParam("name") String shareShortcut,
-			@RequestParam("number") int shareNumber) {
-		
+			@RequestParam("name") String shareIsin,
+			@Min(1) @RequestParam("number") int shareNumber) {
+
 		String username = SecurityContextHolder.getContext().getAuthentication().getName();
-		return tradesService.buyShares(username, shareShortcut.toUpperCase(), shareNumber);
+		String response = tradesService.tryToMakeTransaction(username, shareIsin.toUpperCase(), shareNumber);
+		return new ResponseEntity<>(response, HttpStatus.OK);
 	}
 	
 	@PostMapping(value = "/sales", produces = "text/plain;charset=UTF-8")
 	@PreAuthorize("hasRole('ROLE_USER')")
 	public ResponseEntity<String> sellShares(
-			@RequestParam("name") String shareShortcut,
-			@RequestParam("number") int shareNumber) {
-		
+			@RequestParam("name") String shareIsin,
+			@Min(1) @RequestParam("number") int shareNumber) {
+
 		String username = SecurityContextHolder.getContext().getAuthentication().getName();
-		return tradesService.sellShares(username, shareShortcut.toUpperCase(), shareNumber);
+		String response = tradesService.tryToMakeTransaction(username, shareIsin.toUpperCase(), -shareNumber);
+		return new ResponseEntity<>(response, HttpStatus.OK);
+	}
+
+	@ExceptionHandler
+	@ResponseStatus(HttpStatus.BAD_REQUEST)
+	public String constraintViolationHandler(ConstraintViolationException e) {
+		return "Share number " + e.getConstraintViolations().iterator().next().getMessage();
 	}
 }
