@@ -51,7 +51,7 @@ public class TradesRestControllerIntegration {
                 .andExpect(status().isBadRequest())
                 .andExpect(content().string("Share number must be greater than or equal to 1"));
     }
-    
+
     private ResultActions performPost(String url) throws Exception {
         return mockMvc.perform(post(url)
                 .param("name", shareShortcut)
