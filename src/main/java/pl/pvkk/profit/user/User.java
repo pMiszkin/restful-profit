@@ -20,7 +20,7 @@ public class User {
 	@Length(min = 5, max = 255)
 	private String password;
 	@OneToOne
-	private UserProfile profile;
+	private Pocket pocket;
 	// default is false before user email authentication
 	private boolean enabled;
 
@@ -49,12 +49,12 @@ public class User {
 		this.password = password;
 	}
 
-	public UserProfile getProfile() {
-		return profile;
+	public Pocket getPocket() {
+		return pocket;
 	}
 
-	public void setProfile(UserProfile profile) {
-		this.profile = profile;
+	public void setPocket(Pocket pocket) {
+		this.pocket = pocket;
 	}
 
 	public boolean isEnabled() {
@@ -67,6 +67,6 @@ public class User {
 
 	@Override
 	public String toString() {
-		return "User [login=" + login + ", email=" + email + ", password=" + password + ", profile=" + profile + "]";
+		return "User [login=" + login + ", email=" + email + ", password=" + password + ", pocket=" + pocket + "]";
 	}
 }

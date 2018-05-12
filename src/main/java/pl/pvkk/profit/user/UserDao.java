@@ -34,14 +34,10 @@ public class UserDao {
 	}
 	
 	public void saveUser(User user){
-		UserProfile profile = new UserProfile();
 		Pocket pocket = new Pocket();
-		profile.setUsername(user.getLogin());
 		pocket.setUsername(user.getLogin());
-		profile.setPocket(pocket);
-		user.setProfile(profile);
+		user.setPocket(pocket);
 		em.persist(user);
-		em.persist(profile);
 		em.persist(pocket);
 	}
 
