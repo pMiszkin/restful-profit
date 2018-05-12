@@ -1,18 +1,16 @@
 package pl.pvkk.profit;
 
-import java.sql.SQLException;
-
-import javax.annotation.PostConstruct;
-
 import org.springframework.beans.factory.annotation.Autowired;
+import org.springframework.boot.context.event.ApplicationReadyEvent;
+import org.springframework.context.annotation.Configuration;
 import org.springframework.context.annotation.Profile;
-import org.springframework.stereotype.Service;
+import org.springframework.context.event.EventListener;
 
 import pl.pvkk.profit.gpw.GpwSharesDownloader;
 import pl.pvkk.profit.user.User;
 import pl.pvkk.profit.user.UserService;
 
-@Service
+@Configuration
 @Profile("prod")
 public class InitDatabase {
 
@@ -22,11 +20,11 @@ public class InitDatabase {
 	@Autowired
 	private UserService userService;
 	
-	@PostConstruct
-	public void init() throws SQLException {
+	@EventListener(ApplicationReadyEvent.class)
+	public void init() {
 		downloader.addShares();
 		userService.tryToSaveUser(makeFirstUser());
-	}	
+	}
 	
 	private User makeFirstUser() {
 		User user = new User();
