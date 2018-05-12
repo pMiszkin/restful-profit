@@ -2,8 +2,9 @@ package pl.pvkk.profit.user.pocket;
 
 import org.junit.Assert;
 import org.junit.Test;
-import pl.pvkk.profit.domain.user.Pocket;
+
 import pl.pvkk.profit.shares.ShareNotFoundException;
+import pl.pvkk.profit.user.Pocket;
 import pl.pvkk.profit.user.exceptions.NotEnoughSharesInPocketException;
 import pl.pvkk.profit.user.exceptions.UserIsNotEnabledException;
 

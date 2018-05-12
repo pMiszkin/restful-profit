@@ -6,7 +6,7 @@ import java.util.Set;
 
 import org.jsoup.nodes.Element;
 
-import pl.pvkk.profit.domain.shares.Share;
+import pl.pvkk.profit.shares.Share;
 
 public class SharesBasicDataGetter extends GpwUrlConnector {
 

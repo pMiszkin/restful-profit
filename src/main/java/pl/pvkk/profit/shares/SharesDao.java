@@ -8,10 +8,8 @@ import javax.persistence.Query;
 import org.springframework.stereotype.Repository;
 import org.springframework.transaction.annotation.Transactional;
 
-import pl.pvkk.profit.domain.shares.ArchivalQuotation;
-import pl.pvkk.profit.domain.shares.CurrentQuotation;
-import pl.pvkk.profit.domain.shares.Share;
-import pl.pvkk.profit.domain.shares.StockIndex;
+import pl.pvkk.profit.shares.quotations.ArchivalQuotation;
+import pl.pvkk.profit.shares.quotations.CurrentQuotation;
 
 @Repository
 @Transactional

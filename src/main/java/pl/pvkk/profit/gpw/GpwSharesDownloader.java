@@ -10,15 +10,15 @@ import org.springframework.scheduling.annotation.Scheduled;
 import org.springframework.stereotype.Service;
 import org.springframework.transaction.annotation.Transactional;
 
-import pl.pvkk.profit.domain.shares.ArchivalQuotation;
-import pl.pvkk.profit.domain.shares.CurrentQuotation;
-import pl.pvkk.profit.domain.shares.Share;
-import pl.pvkk.profit.domain.shares.StockIndex;
 import pl.pvkk.profit.gpw.connection.AllStockIndicesGetter;
 import pl.pvkk.profit.gpw.connection.ArchivalQuotationsGetter;
 import pl.pvkk.profit.gpw.connection.CurrentQuotationGetter;
 import pl.pvkk.profit.gpw.connection.SharesBasicDataGetter;
+import pl.pvkk.profit.shares.Share;
 import pl.pvkk.profit.shares.SharesDao;
+import pl.pvkk.profit.shares.StockIndex;
+import pl.pvkk.profit.shares.quotations.ArchivalQuotation;
+import pl.pvkk.profit.shares.quotations.CurrentQuotation;
 
 
 /**

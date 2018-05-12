@@ -8,8 +8,8 @@ import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.context.annotation.Profile;
 import org.springframework.stereotype.Service;
 
-import pl.pvkk.profit.domain.user.User;
 import pl.pvkk.profit.gpw.GpwSharesDownloader;
+import pl.pvkk.profit.user.User;
 import pl.pvkk.profit.user.UserService;
 
 @Service

@@ -1,7 +1,6 @@
 package pl.pvkk.profit.shares;
 
-import pl.pvkk.profit.domain.shares.CurrentQuotation;
-import pl.pvkk.profit.domain.shares.Share;
+import pl.pvkk.profit.shares.quotations.CurrentQuotation;
 
 public class StubShares {
 

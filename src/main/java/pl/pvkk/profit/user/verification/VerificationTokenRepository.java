@@ -2,8 +2,8 @@ package pl.pvkk.profit.user.verification;
 
 import org.springframework.data.jpa.repository.JpaRepository;
 
-import pl.pvkk.profit.domain.user.User;
-import pl.pvkk.profit.domain.user.VerificationToken;
+import pl.pvkk.profit.user.User;
+import pl.pvkk.profit.user.VerificationToken;
 
 public interface VerificationTokenRepository extends JpaRepository<VerificationToken, Long> {
 

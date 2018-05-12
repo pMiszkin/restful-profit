@@ -1,7 +1,5 @@
 package pl.pvkk.profit.user;
 
-import pl.pvkk.profit.domain.user.User;
-
 public class UsersForTesting {
 
 	public static User getProperUser() {

@@ -8,10 +8,10 @@ import org.springframework.beans.factory.annotation.Autowired;
 
 import com.fasterxml.jackson.databind.ObjectMapper;
 
-import pl.pvkk.profit.domain.shares.ArchivalQuotation;
 import pl.pvkk.profit.gpw.ArchivalQuotationHistory;
 import pl.pvkk.profit.gpw.ArchivalQuotationService;
 import pl.pvkk.profit.gpw.ArchivalQuotationUnformatted;
+import pl.pvkk.profit.shares.quotations.ArchivalQuotation;
 
 public class ArchivalQuotationsGetter extends GpwUrlConnector {
 

@@ -1,4 +1,4 @@
-package pl.pvkk.profit.domain.shares;
+package pl.pvkk.profit.shares;
 
 import java.util.ArrayList;
 import java.util.LinkedList;
@@ -14,7 +14,9 @@ import javax.persistence.OrderBy;
 
 import com.fasterxml.jackson.annotation.JsonIgnoreProperties;
 
-import pl.pvkk.profit.domain.Transaction;
+import pl.pvkk.profit.shares.quotations.ArchivalQuotation;
+import pl.pvkk.profit.shares.quotations.CurrentQuotation;
+import pl.pvkk.profit.trades.Transaction;
 
 @Entity
 public class Share {

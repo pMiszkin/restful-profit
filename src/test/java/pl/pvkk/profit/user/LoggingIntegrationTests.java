@@ -20,8 +20,6 @@ import com.fasterxml.jackson.databind.ObjectMapper;
 import com.fasterxml.jackson.databind.ObjectWriter;
 import com.fasterxml.jackson.databind.SerializationFeature;
 
-import pl.pvkk.profit.domain.user.User;
-
 
 @RunWith(SpringRunner.class)
 @SpringBootTest

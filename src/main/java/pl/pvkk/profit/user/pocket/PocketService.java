@@ -6,10 +6,10 @@ import java.util.Map;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
 
-import pl.pvkk.profit.domain.Transaction;
-import pl.pvkk.profit.domain.user.Pocket;
 import pl.pvkk.profit.shares.ShareNotFoundException;
 import pl.pvkk.profit.shares.SharesService;
+import pl.pvkk.profit.trades.Transaction;
+import pl.pvkk.profit.user.Pocket;
 import pl.pvkk.profit.user.UserService;
 import pl.pvkk.profit.user.exceptions.NotEnoughMoneyException;
 import pl.pvkk.profit.user.exceptions.NotEnoughSharesInPocketException;

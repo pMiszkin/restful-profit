@@ -1,4 +1,4 @@
-package pl.pvkk.profit.domain.user;
+package pl.pvkk.profit.user;
 
 import javax.persistence.Entity;
 import javax.persistence.Id;

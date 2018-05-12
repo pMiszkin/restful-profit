@@ -1,4 +1,4 @@
-package pl.pvkk.profit.domain.shares;
+package pl.pvkk.profit.shares;
 
 import javax.persistence.Entity;
 import javax.persistence.GeneratedValue;

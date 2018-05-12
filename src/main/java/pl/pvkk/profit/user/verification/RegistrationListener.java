@@ -8,8 +8,8 @@ import org.springframework.mail.SimpleMailMessage;
 import org.springframework.mail.javamail.JavaMailSender;
 import org.springframework.stereotype.Component;
 
-import pl.pvkk.profit.domain.user.User;
-import pl.pvkk.profit.domain.user.VerificationToken;
+import pl.pvkk.profit.user.User;
+import pl.pvkk.profit.user.VerificationToken;
 
 @Component
 public class RegistrationListener implements ApplicationListener<OnRegistrationCompleteEvent> {

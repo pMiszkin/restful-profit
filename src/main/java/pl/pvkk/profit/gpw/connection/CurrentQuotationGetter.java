@@ -8,7 +8,7 @@ import java.util.List;
 import org.jsoup.nodes.Element;
 import org.jsoup.select.Elements;
 
-import pl.pvkk.profit.domain.shares.CurrentQuotation;
+import pl.pvkk.profit.shares.quotations.CurrentQuotation;
 
 public class CurrentQuotationGetter extends GpwUrlConnector {
 

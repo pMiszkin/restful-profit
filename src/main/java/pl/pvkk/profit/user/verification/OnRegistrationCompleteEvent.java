@@ -2,7 +2,7 @@ package pl.pvkk.profit.user.verification;
 
 import org.springframework.context.ApplicationEvent;
 
-import pl.pvkk.profit.domain.user.User;
+import pl.pvkk.profit.user.User;
 
 @SuppressWarnings("serial")
 public class OnRegistrationCompleteEvent extends ApplicationEvent {

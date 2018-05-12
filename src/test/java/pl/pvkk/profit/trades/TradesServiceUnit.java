@@ -8,10 +8,11 @@ import org.mockito.InjectMocks;
 import org.mockito.Mock;
 import org.mockito.MockitoAnnotations;
 import org.mockito.runners.MockitoJUnitRunner;
-import pl.pvkk.profit.domain.shares.Share;
-import pl.pvkk.profit.domain.user.Pocket;
+
+import pl.pvkk.profit.shares.Share;
 import pl.pvkk.profit.shares.SharesService;
 import pl.pvkk.profit.shares.StubShares;
+import pl.pvkk.profit.user.Pocket;
 import pl.pvkk.profit.user.pocket.PocketService;
 
 import java.math.BigDecimal;

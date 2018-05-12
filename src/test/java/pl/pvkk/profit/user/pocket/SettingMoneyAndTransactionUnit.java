@@ -4,8 +4,9 @@ import org.junit.Assert;
 import org.junit.Test;
 import org.junit.runner.RunWith;
 import org.mockito.runners.MockitoJUnitRunner;
-import pl.pvkk.profit.domain.Transaction;
-import pl.pvkk.profit.domain.user.Pocket;
+
+import pl.pvkk.profit.trades.Transaction;
+import pl.pvkk.profit.user.Pocket;
 import pl.pvkk.profit.user.exceptions.NotEnoughMoneyException;
 
 import java.math.BigDecimal;

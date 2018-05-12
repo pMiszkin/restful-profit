@@ -7,10 +7,9 @@ import org.springframework.http.ResponseEntity;
 import org.springframework.stereotype.Service;
 import org.springframework.transaction.annotation.Transactional;
 
-import pl.pvkk.profit.domain.Transaction;
-import pl.pvkk.profit.domain.shares.Share;
-import pl.pvkk.profit.domain.user.Pocket;
+import pl.pvkk.profit.shares.Share;
 import pl.pvkk.profit.shares.SharesService;
+import pl.pvkk.profit.user.Pocket;
 import pl.pvkk.profit.user.pocket.PocketService;
 
 import java.math.BigDecimal;

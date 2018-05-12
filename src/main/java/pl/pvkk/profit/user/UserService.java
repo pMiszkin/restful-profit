@@ -8,7 +8,6 @@ import org.springframework.security.crypto.password.PasswordEncoder;
 import org.springframework.stereotype.Service;
 import org.springframework.transaction.annotation.Transactional;
 
-import pl.pvkk.profit.domain.user.User;
 import pl.pvkk.profit.user.exceptions.EmailIsTakenException;
 import pl.pvkk.profit.user.exceptions.EmailSendingException;
 import pl.pvkk.profit.user.exceptions.LoginIsTakenException;

@@ -6,10 +6,6 @@ import javax.persistence.Query;
 import org.springframework.stereotype.Repository;
 import org.springframework.transaction.annotation.Transactional;
 
-import pl.pvkk.profit.domain.user.Pocket;
-import pl.pvkk.profit.domain.user.User;
-import pl.pvkk.profit.domain.user.UserProfile;
-
 @Repository
 @Transactional
 public class UserDao {

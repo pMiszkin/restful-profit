@@ -4,8 +4,8 @@ import java.util.Date;
 
 import org.springframework.stereotype.Service;
 
-import pl.pvkk.profit.domain.shares.ArchivalQuotation;
-import pl.pvkk.profit.domain.shares.CurrentQuotation;
+import pl.pvkk.profit.shares.quotations.ArchivalQuotation;
+import pl.pvkk.profit.shares.quotations.CurrentQuotation;
 
 @Service
 public class ArchivalQuotationService {

@@ -9,7 +9,7 @@ import org.jsoup.nodes.Document;
 import org.jsoup.nodes.Element;
 import org.jsoup.select.Elements;
 
-import pl.pvkk.profit.domain.shares.StockIndex;
+import pl.pvkk.profit.shares.StockIndex;
 
 public class AllStockIndicesGetter extends GpwUrlConnector {
 

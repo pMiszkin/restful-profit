@@ -8,7 +8,7 @@ import org.springframework.web.bind.annotation.PathVariable;
 import org.springframework.web.bind.annotation.RequestMapping;
 import org.springframework.web.bind.annotation.RestController;
 
-import pl.pvkk.profit.domain.user.Pocket;
+import pl.pvkk.profit.user.Pocket;
 
 @RestController
 @RequestMapping("user/pocket")
