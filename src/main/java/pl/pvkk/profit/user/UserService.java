@@ -8,9 +8,7 @@ import org.springframework.security.crypto.password.PasswordEncoder;
 import org.springframework.stereotype.Service;
 import org.springframework.transaction.annotation.Transactional;
 
-import pl.pvkk.profit.user.exceptions.EmailIsTakenException;
 import pl.pvkk.profit.user.exceptions.EmailSendingException;
-import pl.pvkk.profit.user.exceptions.LoginIsTakenException;
 import pl.pvkk.profit.user.verification.OnRegistrationCompleteEvent;
 
 @Service
@@ -38,9 +36,9 @@ public class UserService {
 	
 	private void checkIsUserDataTaken(User user) {
 		if (userDao.isEmailTaken(user.getEmail()))
-			throw new EmailIsTakenException();
+			throw new IllegalArgumentException("Any account is registered on this email address");
 		if(userDao.isLoginTaken(user.getLogin())) 
-			throw new LoginIsTakenException();
+			throw new IllegalArgumentException("Your login is taken.");
 	}
 	
 	private void setUserDataBeforeSave(User user) {

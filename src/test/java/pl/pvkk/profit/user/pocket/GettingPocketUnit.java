@@ -1,16 +1,15 @@
 package pl.pvkk.profit.user.pocket;
 
+import static org.mockito.Mockito.when;
+
+import java.util.Map;
+
 import org.junit.Assert;
 import org.junit.Test;
 
 import pl.pvkk.profit.shares.ShareNotFoundException;
 import pl.pvkk.profit.user.Pocket;
-import pl.pvkk.profit.user.exceptions.NotEnoughSharesInPocketException;
 import pl.pvkk.profit.user.exceptions.UserIsNotEnabledException;
-
-import java.util.Map;
-
-import static org.mockito.Mockito.when;
 
 public class GettingPocketUnit extends PocketServiceInitializerForUnit {
 
@@ -41,12 +40,12 @@ public class GettingPocketUnit extends PocketServiceInitializerForUnit {
         Assert.assertNotEquals(new Pocket(), pocket);
     }
 
-    @Test(expected = NotEnoughSharesInPocketException.class)
+    @Test(expected = IllegalArgumentException.class)
     public void sellSharesWhichDontContain() {
         shareNumber = -4;
         properTransaction(new Pocket());
     }
-    @Test(expected = NotEnoughSharesInPocketException.class)
+    @Test(expected = IllegalArgumentException.class)
     public void sellMoreThanYouHave() {
         shareNumber = -4;
         Pocket pocket = new Pocket();

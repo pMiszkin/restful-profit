@@ -1,15 +1,12 @@
 package pl.pvkk.profit.user.pocket;
 
+import java.math.BigDecimal;
+
 import org.junit.Assert;
 import org.junit.Test;
-import org.junit.runner.RunWith;
-import org.mockito.runners.MockitoJUnitRunner;
 
 import pl.pvkk.profit.trades.Transaction;
 import pl.pvkk.profit.user.Pocket;
-import pl.pvkk.profit.user.exceptions.NotEnoughMoneyException;
-
-import java.math.BigDecimal;
 
 public class SettingMoneyAndTransactionUnit extends PocketServiceInitializerForUnit {
 
@@ -27,7 +24,7 @@ public class SettingMoneyAndTransactionUnit extends PocketServiceInitializerForU
         Assert.assertEquals(BigDecimal.ZERO, pocket.getMoney());
     }
 
-    @Test(expected = NotEnoughMoneyException.class)
+    @Test(expected = IllegalArgumentException.class)
     public void buyWithoutEnoughMoney() {
         pocketService.setMoneyIfPossible(new Pocket(), new BigDecimal(-7000));
     }

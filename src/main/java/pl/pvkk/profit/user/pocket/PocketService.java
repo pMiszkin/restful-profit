@@ -11,8 +11,6 @@ import pl.pvkk.profit.shares.SharesService;
 import pl.pvkk.profit.trades.Transaction;
 import pl.pvkk.profit.user.Pocket;
 import pl.pvkk.profit.user.UserService;
-import pl.pvkk.profit.user.exceptions.NotEnoughMoneyException;
-import pl.pvkk.profit.user.exceptions.NotEnoughSharesInPocketException;
 import pl.pvkk.profit.user.exceptions.UserIsNotEnabledException;
 
 @Service
@@ -37,7 +35,7 @@ public class PocketService {
 		BigDecimal money = pocket.getMoney();
 		money = money.add(cost);
 		if(money.compareTo(BigDecimal.ZERO) < 0)
-			throw new NotEnoughMoneyException();
+			throw new IllegalArgumentException("You don't have enough money");
 		pocket.setMoney(money);
 	}
 
@@ -55,6 +53,6 @@ public class PocketService {
 
 	private void areEnoughSharesInPocket(Map<String, Integer> pocketShares, String shareIsin, int shareNumber) {
 		if(!pocketShares.containsKey(shareIsin) || pocketShares.get(shareIsin)+shareNumber < 0 )
-			throw new NotEnoughSharesInPocketException();
+			throw new IllegalArgumentException("You don't have enough shares in pocket");
 	}
 }
