@@ -11,7 +11,7 @@ import org.mockito.runners.MockitoJUnitRunner;
 
 import pl.pvkk.profit.shares.Share;
 import pl.pvkk.profit.shares.SharesService;
-import pl.pvkk.profit.shares.StubShares;
+import pl.pvkk.profit.shares.SimpleShares;
 import pl.pvkk.profit.user.Pocket;
 import pl.pvkk.profit.user.pocket.PocketService;
 
@@ -37,9 +37,9 @@ public class TradesServiceUnit {
     public void setUp() {
         MockitoAnnotations.initMocks(this);
         username = "randomUsername";
-        shareIsin = StubShares.getProperShare().getIsin();
+        shareIsin = SimpleShares.getSimpleShare().getIsin();
         shareNumber = 5;
-        share = StubShares.getProperShare();
+        share = SimpleShares.getSimpleShare();
     }
 
     @Test

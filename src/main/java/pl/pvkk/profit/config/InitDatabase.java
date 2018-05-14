@@ -1,4 +1,4 @@
-package pl.pvkk.profit;
+package pl.pvkk.profit.config;
 
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.boot.context.event.ApplicationReadyEvent;
@@ -10,6 +10,7 @@ import pl.pvkk.profit.gpw.GpwSharesDownloader;
 import pl.pvkk.profit.user.User;
 import pl.pvkk.profit.user.UserService;
 
+//TODO should it be configuration?
 @Configuration
 @Profile("prod")
 public class InitDatabase {

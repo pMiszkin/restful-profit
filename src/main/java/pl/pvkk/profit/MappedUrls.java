@@ -35,6 +35,7 @@ public class MappedUrls {
 	 * it gets all REST and views mapped urls and shows accepted parameters 
 	 * @return List<String>
 	 */
+	//TODO REFACTOR THAT
 	@GetMapping("mappedurls")
 	public List<String> getAllMappedUrls() {
 		Map<String, RequestMappingHandlerMapping> matchingBeans = BeanFactoryUtils

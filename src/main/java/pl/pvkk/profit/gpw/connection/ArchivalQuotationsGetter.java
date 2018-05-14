@@ -17,6 +17,7 @@ public class ArchivalQuotationsGetter extends GpwUrlConnector {
 
 	private final static String URL_PREFIX = "https://www.gpw.pl/chart-json.php?req=[{%22isin%22:%22";
 	private final static String URL_SUFFIX = "%22,%22mode%22:%22ARCH%22,%22from%22:null,%22to%22:null}]";
+	
 	@Autowired
 	private ArchivalQuotationService archivalQuotationService;	
 	

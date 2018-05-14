@@ -2,9 +2,9 @@ package pl.pvkk.profit.shares;
 
 import pl.pvkk.profit.shares.quotations.CurrentQuotation;
 
-public class StubShares {
+public class SimpleShares {
 
-    public static Share getProperShare() {
+    public static Share getSimpleShare() {
         Share share = new Share();
         share.setIsin("randomShareIsin");
         share.setName("randomShareName");
