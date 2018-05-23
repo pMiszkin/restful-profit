@@ -1,3 +1,5 @@
+Refactoring in progress, yeah I know that code is beetwen bad and worse
+
 
 # restful-profit
 Stock market simulator - RESTful application
@@ -41,4 +43,4 @@ Here you have mapped URLs. Each adress works on **localhost:8080**. Also you can
 
 # Database scheme
 
-![ss](/src/main/webapp/resources/OrmDiagram.png?raw=true)
+![ss](/src/main/webapp/resources/OrmDiagram.jpg?raw=true)
