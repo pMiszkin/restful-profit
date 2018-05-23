@@ -5,23 +5,21 @@ import java.util.Date;
 import java.util.LinkedList;
 import java.util.List;
 
+import org.jsoup.nodes.Document;
 import org.jsoup.nodes.Element;
 import org.jsoup.select.Elements;
 
 import pl.pvkk.profit.shares.quotations.CurrentQuotation;
 
-public class CurrentQuotationGetter extends GpwUrlConnector {
+public class CurrentQuotationGetter {
 
 	private final static String URL_PREFIX="https://www.gpw.pl/ajaxindex.php?start=quotationsTab&format=html&action=GPWListaSp&gls_isin=";
 	private Elements rows;
 	private CurrentQuotation quotation = new CurrentQuotation();
-	
-	public CurrentQuotationGetter(String shareIsin) throws IOException {
-		super(URL_PREFIX+shareIsin);
-	}
-	
-	public CurrentQuotation getCurrentQuotation(Date date) {
-		setTableRows();
+
+	public CurrentQuotation getCurrentQuotation(String shareIsin, Date date) throws IOException {
+		Document content = GpwUrlConnector.getPageContent(URL_PREFIX+shareIsin);
+		setTableRows(content);
 		setIndices();
 		setCurrency();
 		quotation.setPrice(parseRowWithNumber(2));
@@ -36,7 +34,7 @@ public class CurrentQuotationGetter extends GpwUrlConnector {
 		return quotation;
 	}
 
-	private void setTableRows() {
+	private void setTableRows(Document content) {
 		Element tbody = content.getElementsByTag("tbody").first();
 		rows = tbody.children();
 	}

@@ -11,15 +11,12 @@ import org.jsoup.select.Elements;
 
 import pl.pvkk.profit.shares.StockIndex;
 
-public class AllStockIndicesGetter extends GpwUrlConnector {
+public class AllStockIndicesGetter {
 
 	private final static String URL = "https://www.gpw.pl/ajaxindex.php?action=GPWIndexes&start=showTable&tab=all&lang=PL";
 
-	public AllStockIndicesGetter() throws IOException {
-		super(URL);
-	}
-
-	public Set<StockIndex> getAllStockIndices() {
+	public Set<StockIndex> getAllStockIndices() throws IOException {
+		Document content = GpwUrlConnector.getPageContent(URL);
 		Elements html = content.getElementsByTag("html");
 		Document table = Jsoup.parse(html.text(), "ISO-8859-9");
 		Elements td = table.getElementsByClass("left");

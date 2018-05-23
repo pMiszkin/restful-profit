@@ -79,8 +79,8 @@ public class GpwSharesDownloader {
 				archivalQuotations.add(archive);
 			}
 			try {
-				CurrentQuotationGetter getter = new CurrentQuotationGetter(share.getIsin());
-				CurrentQuotation quotation = getter.getCurrentQuotation(date);
+				CurrentQuotationGetter getter = new CurrentQuotationGetter();
+				CurrentQuotation quotation = getter.getCurrentQuotation(share.getIsin(), date);
 				share.setCurrentQuotation(quotation);
 				sharesDao.updateCurrentQuotationInShare(share, quotation);
 			} catch (IOException e) {
@@ -96,8 +96,8 @@ public class GpwSharesDownloader {
 	private void addAllArchivalQuotations() throws IOException {
 		List<Share> shares = sharesDao.findAllShares();
 		for( Share share : shares ) {
-			ArchivalQuotationsGetter getter = new ArchivalQuotationsGetter(share.getIsin());
-			List<ArchivalQuotation> quotations = getter.getArchivalQuotations();
+			ArchivalQuotationsGetter getter = new ArchivalQuotationsGetter();
+			List<ArchivalQuotation> quotations = getter.getArchivalQuotations(share.getIsin());
 			share.setArchiveQuotations(quotations);
 			sharesDao.updateArchiveQuotationsInShare(share, quotations);
 		}
