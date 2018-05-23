@@ -23,7 +23,7 @@ import pl.pvkk.profit.shares.quotations.CurrentQuotation;
 
 /**
  * This class downloads shares, quotations and stock indices from another site - gpw.pl
- * Here is really heavy @PostConstruct method so you can just comment it but
+ * Here is really heavy addShares() method so you can just comment it but
  * you won't have filled "Share" and "StockIndices" database tables
  */
 @Service
@@ -44,7 +44,7 @@ public class GpwSharesDownloader {
 			addAllStockIndices();
 			addSharesBasicData();
 			addCurrentQuotationsAndStockIndices();
-			addAllArchiveQuotations();
+			addAllArchivalQuotations();
 		} catch (IOException e) {
 			e.printStackTrace();
 		}
@@ -79,8 +79,8 @@ public class GpwSharesDownloader {
 				archivalQuotations.add(archive);
 			}
 			try {
-				CurrentQuotationGetter getter = new CurrentQuotationGetter(share.getIsin());
-				CurrentQuotation quotation = getter.getCurrentQuotation(date);
+				CurrentQuotationGetter getter = new CurrentQuotationGetter();
+				CurrentQuotation quotation = getter.getCurrentQuotation(share.getIsin(), date);
 				share.setCurrentQuotation(quotation);
 				sharesDao.updateCurrentQuotationInShare(share, quotation);
 			} catch (IOException e) {
@@ -91,14 +91,13 @@ public class GpwSharesDownloader {
 	}
 	
 	/**
-	 * add all time quotations from quotation history
-	 * @throws IOException
+	 * add all quotations from the history
 	 */
-	private void addAllArchiveQuotations() throws IOException {
+	private void addAllArchivalQuotations() throws IOException {
 		List<Share> shares = sharesDao.findAllShares();
 		for( Share share : shares ) {
-			ArchivalQuotationsGetter getter = new ArchivalQuotationsGetter(share.getIsin());
-			List<ArchivalQuotation> quotations = getter.getArchivalQuotations();
+			ArchivalQuotationsGetter getter = new ArchivalQuotationsGetter();
+			List<ArchivalQuotation> quotations = getter.getArchivalQuotations(share.getIsin());
 			share.setArchiveQuotations(quotations);
 			sharesDao.updateArchiveQuotationsInShare(share, quotations);
 		}

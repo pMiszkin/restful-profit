@@ -12,7 +12,7 @@ import pl.pvkk.profit.user.UserDao;
 import pl.pvkk.profit.user.VerificationToken;
 
 @RestController
-public class registrationConfirmRestController {
+public class RegistrationConfirmRestController {
 
 	@Autowired
 	private VerificationTokenRepository tokenRepository;
