@@ -89,7 +89,7 @@
 								</tr>
 							</thead>
 							<tbody align="right">
-								<tr dir-paginate="x in filtered = (shares | filter:searchText | filter:{indices:selectedIndex}) 
+								<tr dir-paginate="x in filtered = (shares | filter:searchText | filter:{ currentQuotation:{indices:selectedIndex} }) 
 									| orderBy:selected:order | itemsPerPage:20"
 									ng-style="x.currentQuotation.change < 0 && {'color': 'red'} || x.currentQuotation.change > 0 && {'color': 'green'}">
 									<td>

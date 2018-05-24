@@ -31,7 +31,7 @@
 				<div class="column_menu" ng-controller="shareController">
 					<h1>{{share.name}}</h1>
 					<div style="float:right;width:20%;">
-						<p ng-repeat="index in share.indices" style="text-align:right;"><a href="#">{{index}}</a></p>
+						<p ng-repeat="index in share.currentQuotation.indices" style="text-align:right;"><a href="#">{{index}}</a></p>
 					</div>
 					<p style="margin:0;">{{share.isin}}</p>
 					<div class="share_table_div" ng-if="show_table">

@@ -1,39 +1,46 @@
 package pl.pvkk.profit.shares;
 
 import javax.persistence.Entity;
-import javax.persistence.GeneratedValue;
 import javax.persistence.Id;
 
 @Entity
 public class StockIndex {
 
 	@Id
-	@GeneratedValue
-	private int id;
 	private String name;
 	private String url;
-
-	public int getId() {
-		return id;
+	
+	protected StockIndex(){}
+	
+	private StockIndex(Builder builder) {
+		this.name = builder.name;
+		this.url = builder.url;
 	}
-
-	public void setId(int id) {
-		this.id = id;
-	}
-
+	
 	public String getName() {
 		return name;
-	}
-
-	public void setName(String name) {
-		this.name = name;
 	}
 
 	public String getUrl() {
 		return url;
 	}
-
-	public void setUrl(String url) {
-		this.url = url;
+	
+	public static class Builder {
+		private String name;
+		private String url;
+		
+		public Builder setName(String name) {
+			this.name = name;
+			return this;
+		}
+		
+		public Builder setUrl(String url) {
+			this.url = url;
+			return this;
+		}
+		
+		public StockIndex build() {
+			return new StockIndex(this);
+		}
 	}
 }
