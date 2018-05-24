@@ -6,7 +6,7 @@ import org.springframework.context.annotation.Configuration;
 import org.springframework.context.annotation.Profile;
 import org.springframework.context.event.EventListener;
 
-import pl.pvkk.profit.gpw.GpwSharesDownloader;
+import pl.pvkk.profit.gpw.GpwSharesInitializer;
 import pl.pvkk.profit.user.User;
 import pl.pvkk.profit.user.UserService;
 
@@ -16,7 +16,7 @@ import pl.pvkk.profit.user.UserService;
 public class InitDatabase {
 
 	@Autowired
-	private GpwSharesDownloader downloader;
+	private GpwSharesInitializer downloader;
 	
 	@Autowired
 	private UserService userService;

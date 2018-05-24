@@ -10,13 +10,12 @@ import org.springframework.scheduling.annotation.Scheduled;
 import org.springframework.stereotype.Service;
 import org.springframework.transaction.annotation.Transactional;
 
-import pl.pvkk.profit.gpw.connection.AllStockIndicesGetter;
+import pl.pvkk.profit.gpw.connection.StockIndicesDownloader;
 import pl.pvkk.profit.gpw.connection.ArchivalQuotationsGetter;
 import pl.pvkk.profit.gpw.connection.CurrentQuotationGetter;
 import pl.pvkk.profit.gpw.connection.SharesBasicDataGetter;
 import pl.pvkk.profit.shares.Share;
 import pl.pvkk.profit.shares.SharesDao;
-import pl.pvkk.profit.shares.StockIndex;
 import pl.pvkk.profit.shares.quotations.ArchivalQuotation;
 import pl.pvkk.profit.shares.quotations.CurrentQuotation;
 
@@ -27,7 +26,7 @@ import pl.pvkk.profit.shares.quotations.CurrentQuotation;
  * you won't have filled "Share" and "StockIndices" database tables
  */
 @Service
-public class GpwSharesDownloader {
+public class GpwSharesInitializer {
 
 	@Autowired
 	private SharesDao sharesDao;
@@ -56,15 +55,16 @@ public class GpwSharesDownloader {
 	}
 	
 	private void addAllStockIndices() throws IOException {
-		AllStockIndicesGetter getter = new AllStockIndicesGetter();
-		Set<StockIndex> indices = getter.getAllStockIndices();
-		indices.parallelStream().forEach(sharesDao::addStockIndex);
+		StockIndicesDownloader
+				.downloadStockIndices()
+				.stream()
+				.forEach(sharesDao::addStockIndex);
 	}
 	
 	private void addSharesBasicData() throws IOException {
 		SharesBasicDataGetter getter = new SharesBasicDataGetter();
 		Set<Share> shares = getter.getAllShareBasicData();
-		shares.parallelStream().forEach(sharesDao::createShare);
+		shares.stream().forEach(sharesDao::createShare);
 	}
 	
 	private void addCurrentQuotationsAndStockIndices() {

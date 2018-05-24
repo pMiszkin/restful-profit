@@ -11,6 +11,8 @@ import pl.pvkk.profit.user.UserService;
 
 import java.util.Random;
 
+
+//TODO remove unnecessary mocks
 @RunWith(MockitoJUnitRunner.class)
 public abstract class PocketServiceInitializerForUnit {
 
