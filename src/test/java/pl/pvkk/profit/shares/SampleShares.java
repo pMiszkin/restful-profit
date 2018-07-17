@@ -3,7 +3,7 @@ package pl.pvkk.profit.shares;
 import pl.pvkk.profit.shares.quotations.CurrentQuotation;
 
 public class SampleShares {
-
+	
     public static Share getSampleShare() {
         Share share = new Share();
         share.setIsin("randomShareIsin");

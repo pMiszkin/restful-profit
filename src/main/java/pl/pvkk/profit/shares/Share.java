@@ -31,13 +31,9 @@ public class Share {
 	@OneToMany(fetch = FetchType.LAZY)
 	@OrderBy("date ASC")
 	private List<ArchivalQuotation> archivalQuotations ;
-	@OneToMany(fetch = FetchType.LAZY, cascade = CascadeType.ALL)
-	@JsonIgnoreProperties("share")
-	private List<Transaction> transactions;
 
 	public Share() {
 		archivalQuotations = new ArrayList<ArchivalQuotation>();
-		transactions = new LinkedList<Transaction>();
 	}
 	
 	public Share(String name, String isin) {
@@ -81,13 +77,5 @@ public class Share {
 
 	public void setArchiveQuotations(List<ArchivalQuotation> archivalQuotations) {
 		this.archivalQuotations = archivalQuotations;
-	}
-
-	public List<Transaction> getTransactions() {
-		return transactions;
-	}
-
-	public void setTransactions(List<Transaction> transactions) {
-		this.transactions = transactions;
 	}
 }
