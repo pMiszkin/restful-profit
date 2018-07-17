@@ -26,6 +26,8 @@ public class SecurityConfig extends WebSecurityConfigurerAdapter {
 	@Autowired
 	DataSource dataSource;
 	
+	//TODO on the second application startup i got a warn "Encoded password does not look like BCrypt"
+	// PROBABLY because there was another PasswordEncoder Bean
 	@Bean
     public PasswordEncoder passwordEncoder() {
         return new BCryptPasswordEncoder();

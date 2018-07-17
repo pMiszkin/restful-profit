@@ -4,16 +4,16 @@ import java.io.IOException;
 import java.util.Date;
 import java.util.LinkedList;
 import java.util.List;
-import java.util.Set;
+
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.scheduling.annotation.Scheduled;
 import org.springframework.stereotype.Service;
 import org.springframework.transaction.annotation.Transactional;
 
-import pl.pvkk.profit.gpw.connection.StockIndicesDownloader;
 import pl.pvkk.profit.gpw.connection.ArchivalQuotationsGetter;
 import pl.pvkk.profit.gpw.connection.CurrentQuotationGetter;
-import pl.pvkk.profit.gpw.connection.SharesBasicDataGetter;
+import pl.pvkk.profit.gpw.connection.SharesDownloader;
+import pl.pvkk.profit.gpw.connection.StockIndicesDownloader;
 import pl.pvkk.profit.shares.Share;
 import pl.pvkk.profit.shares.SharesDao;
 import pl.pvkk.profit.shares.quotations.ArchivalQuotation;
@@ -56,15 +56,16 @@ public class GpwSharesInitializer {
 	
 	private void addAllStockIndices() throws IOException {
 		StockIndicesDownloader
-				.downloadStockIndices()
+				.download()
 				.stream()
 				.forEach(sharesDao::addStockIndex);
 	}
 	
 	private void addSharesBasicData() throws IOException {
-		SharesBasicDataGetter getter = new SharesBasicDataGetter();
-		Set<Share> shares = getter.getAllShareBasicData();
-		shares.stream().forEach(sharesDao::createShare);
+		SharesDownloader
+				.download()
+				.stream()
+				.forEach(sharesDao::createShare);
 	}
 	
 	private void addCurrentQuotationsAndStockIndices() {

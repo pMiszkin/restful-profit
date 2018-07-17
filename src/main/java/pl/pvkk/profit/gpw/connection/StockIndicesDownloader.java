@@ -1,5 +1,7 @@
 package pl.pvkk.profit.gpw.connection;
 
+import static pl.pvkk.profit.gpw.connection.GpwUrlConnector.getPageContent;
+
 import java.io.IOException;
 import java.util.HashSet;
 import java.util.Set;
@@ -15,9 +17,10 @@ public final class StockIndicesDownloader {
 
 	private final static String URL = "https://www.gpw.pl/ajaxindex.php?action=GPWIndexes&start=showTable&tab=all&lang=PL";
 
-	public static Set<StockIndex> downloadStockIndices() throws IOException {
-		Document content = GpwUrlConnector.getPageContent(URL);
-		Elements tableRows = extractRows(content);
+	private StockIndicesDownloader() {}
+	
+	public static Set<StockIndex> download() throws IOException {
+		Elements tableRows = extractRows(getPageContent(URL));
 		Set<StockIndex> indices = new HashSet<>();
 		//TODO convert into stream?
 		for(Element row : tableRows) {

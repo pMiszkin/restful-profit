@@ -17,10 +17,9 @@ public class StockIndicesDownloaderIntegration {
 	
 	@Test
 	public void downloadStockIndices() {
-		StockIndicesDownloader getter = new StockIndicesDownloader();
 		Set<StockIndex> indices = null;
 		try {
-			indices = getter.downloadStockIndices();
+			indices = StockIndicesDownloader.download();
 		} catch(IOException e) {}
 		Assert.assertEquals(1, filterByNameCount(indices, "WIG20"));
 		Assert.assertEquals(1, filterByNameCount(indices, "WIG-MEDIA"));

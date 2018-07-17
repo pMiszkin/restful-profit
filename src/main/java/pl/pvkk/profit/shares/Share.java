@@ -18,6 +18,8 @@ import pl.pvkk.profit.shares.quotations.ArchivalQuotation;
 import pl.pvkk.profit.shares.quotations.CurrentQuotation;
 import pl.pvkk.profit.trades.Transaction;
 
+
+//TODO make it immutable
 @Entity
 public class Share {
 
@@ -28,7 +30,7 @@ public class Share {
 	private CurrentQuotation currentQuotation;
 	@OneToMany(fetch = FetchType.LAZY)
 	@OrderBy("date ASC")
-	private List<ArchivalQuotation> archivalQuotations;
+	private List<ArchivalQuotation> archivalQuotations ;
 	@OneToMany(fetch = FetchType.LAZY, cascade = CascadeType.ALL)
 	@JsonIgnoreProperties("share")
 	private List<Transaction> transactions;
@@ -36,6 +38,12 @@ public class Share {
 	public Share() {
 		archivalQuotations = new ArrayList<ArchivalQuotation>();
 		transactions = new LinkedList<Transaction>();
+	}
+	
+	public Share(String name, String isin) {
+		super();
+		this.name = name;
+		this.isin = isin;
 	}
 
 	public double getQurrentQuotationPrice() {
